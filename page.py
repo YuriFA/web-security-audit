@@ -7,6 +7,7 @@ class Page(object):
         self.request = response.request
         self.html = response.text
         self.headers = response.headers
+        self.cookies = response.cookies
         self.status_code = response.status_code
         self.document = BeautifulSoup(self.html, 'html.parser')
 
@@ -18,6 +19,15 @@ class Page(object):
     def url_parameters(self):
         _, _, url = self.url.partition("?")
         return parse_qsl(url)
+
+    def get_forms(self, blacklist=[]):
+        """ Generator for all forms on the page. """
+        for form in self.document.find_all('form'):
+
+            if any(search(x, form.get(action)) for x in blacklist):
+                continue
+
+            yield form
 
     def get_links(self, blacklist=[]):
         """ Generator for all links on the page. """

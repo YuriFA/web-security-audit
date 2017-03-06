@@ -14,18 +14,19 @@ class NotAPage(Exception):
 class RedirectedToExternal(Exception):
     """ Response return 3** code and redirected to external link """
 
+class BadStatusCode(Exception):
+    """Response with status code not equal 2**"""
+
 class Client(object):
-    def __init__(self, headers=None):
-        self.headers = headers
+    def __init__(self):
         self.cookie_jar = CookieJar()
 
-
-    def get_page(self, url):
+    def get_page(self, url, headers=None):
         try:
-            r = requests.get(url, headers=self.headers, cookies=self.cookie_jar)
-            # print r.status_code
+            r = requests.get(url, headers=headers, cookies=self.cookie_jar)
+            r.raise_for_status()
         except requests.exceptions.HTTPError as error:
-            print(error)
+            r = error
         except requests.exceptions.RequestException as error:
             print(error)
             sys.exit(1)

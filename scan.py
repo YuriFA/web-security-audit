@@ -2,17 +2,22 @@ import optparse
 import sys
 import os
 
-from ghost import Ghost
 from crawler import Crawler
+from attacks import all_attacks
+from utils import get_url_host
+from client import Client
 
 VERSION = '0.0.1'
 
 def main(options):
     target_url = options.url
-    all_pages = Crawler(target_url)
+    client = Client()
+    all_pages = Crawler(target_url, client)
 
     for page in all_pages:
         print page.status_code, page.url
+        for attack in all_attacks():
+            attack(page, client)
 
 if __name__ == "__main__":
     parser = optparse.OptionParser(version=VERSION)
