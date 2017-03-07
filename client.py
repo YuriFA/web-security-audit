@@ -20,9 +20,15 @@ class BadStatusCode(Exception):
 class Client(object):
     def __init__(self):
         self.cookie_jar = CookieJar()
+        self.default_headers = {
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
+        }
 
     def get_page(self, url, headers=None):
         try:
+            if not headers:
+                headers = self.default_headers
+
             r = requests.get(url, headers=headers, cookies=self.cookie_jar)
             r.raise_for_status()
         except requests.exceptions.HTTPError as error:
