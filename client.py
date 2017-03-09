@@ -24,14 +24,18 @@ class Client(object):
             # 'Accept-Encoding': 'gzip, deflate, sdch',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'
         }
+        self.session = requests.Session()
 
-    def get_page(self, url, headers=None):
+    def get_req(self, url, headers=None):
+        # print 'GET requests', url
+        if not headers:
+            headers = self.default_headers
+
         try:
-            if not headers:
-                headers = self.default_headers
-
             r = requests.get(url, headers=headers, cookies=self.cookie_jar)
             r.raise_for_status()
+        except Exception as e:
+            raise e
         except requests.exceptions.HTTPError as error:
             r = error
         except requests.exceptions.RequestException as error:
@@ -45,3 +49,29 @@ class Client(object):
             raise RedirectedToExternal()
 
         return Page(r)
+
+    def post_req(self, url, data={}, headers=None):
+        # print 'POST requests', url, data
+        if not headers:
+            headers = self.default_headers
+
+        try:
+            r = self.session.post(url, data=data, headers=headers)
+            r.raise_for_status()
+        except Exception as e:
+            raise e
+        except requests.exceptions.HTTPError as error:
+            r = error
+        except requests.exceptions.RequestException as error:
+            print(error)
+            sys.exit(1)
+
+        if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
+            raise NotAPage()
+
+        if r.history and urlparse(r.url).netloc != urlparse(url).netloc:
+            raise RedirectedToExternal()
+
+        return Page(r)
+
+

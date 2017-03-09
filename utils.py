@@ -1,4 +1,4 @@
-from urlparse import urlparse, urlunparse, parse_qsl
+from urlparse import urlparse, urlunparse, parse_qsl, ParseResult
 from urllib import urlencode
 
 NOT_A_PAGE_CONTENT_TYPES = frozenset([
@@ -33,6 +33,27 @@ INPUT_TYPE_DICT = {
     "submit": ""
 }
 
+SCRIPTABLE_ATTRS = (
+    'onblur',
+    'onchange',
+    'onclick',
+    'ondblclick',
+    'onfocus',
+    'onkeydown',
+    'onkeypress',
+    'onkeyup',
+    'onload',
+    'onmousedown',
+    'onmousemove',
+    'onmouseout',
+    'onmouseover',
+    'onmouseup',
+    'onreset',
+    'onselect',
+    'onsubmit',
+    'onunload'
+)
+
 def get_url_host(url):
     return urlparse(url).netloc
 
@@ -44,10 +65,10 @@ def create_form_selector(form):
     return selector
 
 def add_url_params(url, params):
-    if isinstance(url, str):
-        url_parts = list(urlparse(url))
-    elif isinstance(url, urlparse.ParseResult):
+    if isinstance(url, ParseResult):
         url_parts = list(url)
+    else:
+        url_parts = list(urlparse(url))
 
     query = dict(parse_qsl(url_parts[4]))
     query.update(params)

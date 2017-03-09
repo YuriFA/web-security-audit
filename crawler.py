@@ -41,7 +41,7 @@ class Crawler(object):
 
             self.visited_links.add(url_without_hashbang)
             try:
-                page = self.client.get_page(url)
+                page = self.client.get_req(url)
             except NotAPage:
                 continue
             except RedirectedToExternal:
