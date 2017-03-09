@@ -15,7 +15,7 @@ def main(options):
     all_pages = Crawler(target_url, client)
 
     for page in all_pages:
-        print page.status_code, page.url
+        print 'Scanning: ', page.status_code, page.url
         for attack in all_attacks():
             attack(page, client)
 

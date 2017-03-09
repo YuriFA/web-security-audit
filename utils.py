@@ -44,7 +44,11 @@ def create_form_selector(form):
     return selector
 
 def add_url_params(url, params):
-    url_parts = list(urlparse(url))
+    if isinstance(url, str):
+        url_parts = list(urlparse(url))
+    elif isinstance(url, urlparse.ParseResult):
+        url_parts = list(url)
+
     query = dict(parse_qsl(url_parts[4]))
     query.update(params)
 
