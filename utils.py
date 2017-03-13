@@ -1,6 +1,8 @@
 from urlparse import urlparse, urlunparse, parse_qsl, ParseResult
 from urllib import urlencode
 
+import collections
+
 POST, GET = 'POST', 'GET'
 
 NOT_A_PAGE_CONTENT_TYPES = frozenset([
@@ -123,3 +125,6 @@ def get_form_params(form):
 
 def isAscii(s):
      return not all(ord(char) < 128 for char in s)
+
+def compare(x, y):
+    return collections.Counter(x) == collections.Counter(y)

