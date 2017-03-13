@@ -1,17 +1,34 @@
 import optparse
 import sys
 import os
+import time
 
 from crawler import Crawler
 from attacks import all_attacks
 from utils import get_url_host
-from client import Client
+from client import Client, NotAPage, RedirectedToExternal
 
 VERSION = '0.0.1'
 
 def main(options):
     target_url = options.url
     client = Client()
+
+    if options.auth_data and len(options.auth_data) == 3:
+        url, name, passwd = options.auth_data
+        form_data = {}
+
+        for arg in (name, passwd):
+            name, _, value = arg.partition('=')
+            form_data.update({name: value})
+
+        try:
+            res_page = client.post_req(url, data=form_data)
+        except NotAPage:
+            pass
+        except RedirectedToExternal:
+            pass
+
     all_pages = Crawler(target_url, client)
 
     for page in all_pages:
@@ -22,13 +39,13 @@ def main(options):
 if __name__ == "__main__":
     parser = optparse.OptionParser(version=VERSION)
     parser.add_option("-u", "--url", dest="url", help="Target URL (e.g. \"http://www.target.com/page.php?id=1\")")
+    parser.add_option("-a", dest="auth_data", help="Enter 3 args URL, fieldname=username, fieldname=password for sending request to log in", nargs=3, metavar="http://www.target.com/?login=true user passwd")
     parser.add_option("--data", dest="data", help="POST data (e.g. \"query=test\")")
     parser.add_option("--cookie", dest="cookie", help="HTTP Cookie header value")
     parser.add_option("--user-agent", dest="ua", help="HTTP User-Agent header value")
     parser.add_option("--referer", dest="referer", help="HTTP Referer header value")
     parser.add_option("--proxy", dest="proxy", help="HTTP proxy address (e.g. \"http://127.0.0.1:8080\")")
     options, _ = parser.parse_args()
-
     if options.url:
         try:
             main(options)
@@ -38,8 +55,5 @@ if __name__ == "__main__":
                 sys.exit(0)
             except SystemExit:
                 os._exit(0)
-        # init_options(options.proxy, options.cookie, options.ua, options.referer)
-        # result = scan_page(options.url if options.url.startswith("http") else "http://%s" % options.url, options.data)
-        # print "\nscan results: %s vulnerabilities found" % ("possible" if result else "no")
     else:
         parser.print_help()

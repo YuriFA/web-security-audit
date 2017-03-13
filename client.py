@@ -26,16 +26,18 @@ class Client(object):
         }
         self.session = requests.Session()
 
+    @property
+    def cookies(self):
+        return self.session.cookies.get_dict()
+
     def get_req(self, url, headers=None):
         # print 'GET requests', url
         if not headers:
             headers = self.default_headers
 
         try:
-            r = requests.get(url, headers=headers, cookies=self.cookie_jar)
+            r = self.session.get(url, headers=headers)
             r.raise_for_status()
-        except Exception as e:
-            raise e
         except requests.exceptions.HTTPError as error:
             r = error
         except requests.exceptions.RequestException as error:
@@ -58,8 +60,6 @@ class Client(object):
         try:
             r = self.session.post(url, data=data, headers=headers)
             r.raise_for_status()
-        except Exception as e:
-            raise e
         except requests.exceptions.HTTPError as error:
             r = error
         except requests.exceptions.RequestException as error:

@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 from urlparse import urljoin, parse_qsl
 
+import re
+
 class Page(object):
     def __init__(self, response):
         assert hasattr(response, 'request')
@@ -9,7 +11,8 @@ class Page(object):
         self.headers = response.headers
         self.cookies = response.cookies
         self.status_code = response.status_code
-        self.document = BeautifulSoup(self.html, 'html.parser')
+        self.document = BeautifulSoup(self.html, 'lxml')#'html.parser')
+        self.response = response
 
     @property
     def url(self):
@@ -31,6 +34,12 @@ class Page(object):
 
     def get_links(self, blacklist=[]):
         """ Generator for all links on the page. """
+        for ref in [re.split("url=", m.get('content'), flags=re.IGNORECASE)[-1].strip("'") for m in self.document.find_all(attrs={'http-equiv': 'refresh'})]:
+            url = urljoin(self.url, ref)
+            if any(search(x, url) for x in blacklist):
+                continue
+            yield url
+
         for href in [h.get('href') for h in self.document.find_all('a')]:
             url = urljoin(self.url, href)
             if any(search(x, url) for x in blacklist):

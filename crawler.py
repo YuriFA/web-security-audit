@@ -49,8 +49,9 @@ class Crawler(object):
 
             self.count += 1
 
-            yield page
             self.to_visit_links.extend(page.get_links())
+            yield page
+
 
 if __name__ == "__main__":
     target_url = "http://testphp.vulnweb.com/"

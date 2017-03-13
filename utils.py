@@ -1,6 +1,8 @@
 from urlparse import urlparse, urlunparse, parse_qsl, ParseResult
 from urllib import urlencode
 
+POST, GET = 'POST', 'GET'
+
 NOT_A_PAGE_CONTENT_TYPES = frozenset([
     'text/plain',
     'text/x-python',
@@ -76,3 +78,48 @@ def add_url_params(url, params):
     url_parts[4] = urlencode(query)
 
     return urlunparse(url_parts)
+
+def change_url_params(url, replace):
+    if isinstance(url, ParseResult):
+        url_parts = list(url)
+    else:
+        url_parts = list(urlparse(url))
+
+    query = dict(parse_qsl(url_parts[4]))
+
+    query = {k: replace for k in query}
+
+    url_parts[4] = urlencode(query)
+
+    return urlunparse(url_parts)
+
+
+def get_form_params(form):
+    """get all params from bs4 form"""
+    injectable, immutable = {}, {}
+    immutable_types = ['submit', 'button', 'hidden']
+    inputs = form.find_all('input')
+    textareas = form.find_all('textarea')
+    for inpt in inputs:
+        name = str(inpt.get('name') or '')
+        if not name:
+            continue
+        itype = inpt.get('type') or 'text'
+        value = inpt.get('value')
+        if not value or not itype in immutable_types and isAscii(value):
+            value = INPUT_TYPE_DICT[itype]
+
+        if itype in immutable_types:
+            immutable[name] = value
+        else:
+            injectable[name] = value
+
+    for txt in textareas:
+        name = str(txt.get('name'))
+        value = str(txt.text or INPUT_TYPE_DICT['text'])
+        injectable[name] = value
+
+    return injectable, immutable
+
+def isAscii(s):
+     return not all(ord(char) < 128 for char in s)

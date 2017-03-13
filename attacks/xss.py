@@ -1,4 +1,4 @@
-from utils import create_form_selector, add_url_params, get_url_host, INPUT_TYPE_DICT, SCRIPTABLE_ATTRS
+from utils import create_form_selector, add_url_params, get_url_host, get_form_params, SCRIPTABLE_ATTRS, POST, GET
 from urlparse import urlparse, urlunparse, parse_qsl, urljoin
 from urllib import urlencode
 from client import NotAPage, RedirectedToExternal
@@ -7,8 +7,6 @@ import requests
 import copy
 import sys
 import time
-
-POST, GET = 'POST', 'GET'
 
 XSS_STRING = 'xssed'
 INJECTIONS = (
@@ -47,6 +45,7 @@ INJECTIONS = (
 )
 
 def xss(page, client):
+    print "Scanning XSS in page {}".format(page.url)
     parsed_url = urlparse(page.url)
 
     if parsed_url.query:
@@ -102,31 +101,6 @@ def inject_param(parameters, param, injection):
     injected[param] += injection
     return injected
 
-def get_form_params(form):
-    injectable, immutable = {}, {}
-    immutable_types = ['submit', 'button', 'hidden']
-    inputs = form.find_all('input')
-    textareas = form.find_all('textarea')
-
-    for inpt in inputs:
-        name = str(inpt.get('name') or '')
-        if not name:
-            continue
-        itype = inpt.get('type')
-        value = str(inpt.get('value') or INPUT_TYPE_DICT[itype])
-        if itype in immutable_types:
-            immutable[name] = value
-        else:
-            injectable[name] = value
-
-
-    for txt in textareas:
-        name = str(txt.get('name'))
-        value = str(txt.text or INPUT_TYPE_DICT['text'])
-        injectable[name] = value
-
-    return [injectable, immutable]
-
 def hpp(url, client):
     """HTTP Parameter Pollution (HPP)"""
     url_parts = list(url)
@@ -142,7 +116,12 @@ def hpp(url, client):
             url_parts[4] = urlencode(inj_query)
             injected_url = urlunparse(url_parts)
 
-            res_page = client.get_req(injected_url)
+            try:
+                res_page = client.get_req(injected_url)
+            except NotAPage:
+                continue
+            except RedirectedToExternal:
+                continue
             result = res_page.document.find_all(contains_injection)
 
             if result:
