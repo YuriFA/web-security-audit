@@ -8,7 +8,7 @@ import copy
 import sys
 import time
 
-XSS_STRING = 'xssed'
+XSS_STRING = "alert('xssed')"
 INJECTIONS = (
     "\"><script>alert('xssed')</script>",
     "\"><sCriPt>alert('xssed')</sCriPt>",
@@ -45,13 +45,14 @@ INJECTIONS = (
 )
 
 def xss(page, client):
-    print "Scanning XSS in page {}".format(page.url)
+    print "Testing for XSS in page {}".format(page.url)
     parsed_url = urlparse(page.url)
 
     if parsed_url.query:
         url_xss_report = hpp(parsed_url, client)
         if url_xss_report:
             print 'HTTP Parameter Pollution in url {}. params {}'.format(page.url, url_xss_report.keys())
+            print url_xss_report
 
     for form in page.get_forms():
         report = {}
@@ -125,6 +126,7 @@ def hpp(url, client):
             result = res_page.document.find_all(contains_injection)
 
             if result:
+                print result
                 successed.append(injection)
 
         if successed:

@@ -108,7 +108,11 @@ def get_form_params(form):
             continue
         itype = inpt.get('type') or 'text'
         value = inpt.get('value')
-        if not value or not itype in immutable_types and isAscii(value):
+
+        if value and isAscii(value):
+            value = value.encode('utf-8')
+
+        if not value or not itype in immutable_types:
             value = INPUT_TYPE_DICT[itype]
 
         if itype in immutable_types:

@@ -27,7 +27,7 @@ BOOLEAN_INJECTIONS = {
 BOOL_TEST_COUNT = len(BOOLEAN_INJECTIONS)
 
 def sql_blind(page, client):
-    print "Scanning SQL Blind in page {}".format(page.url)
+    print "Testing for SQL Blind in page {}".format(page.url)
 
     if urlparse(page.url).query:
         time_based_blind(client, page.url, method=GET)
@@ -104,7 +104,6 @@ def time_based_blind(client, action, method, params=None):
                         except RedirectedToExternal:
                             continue
 
-                    print successed
                     if successed and all(t <= rt for t, rt in successed):
                         print 'SQL blind db {} in form {} param {} injection {}'.format(db, action, urlparse(action).query, payload)
 
@@ -127,7 +126,6 @@ def time_based_blind(client, action, method, params=None):
                     except RedirectedToExternal:
                         continue
 
-                print successed
                 if successed and all(t <= rt for t, rt in successed):
                     print 'SQL blind db {} in form {} param {} injection {}'.format(db, action, param, payload)
 

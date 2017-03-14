@@ -4,6 +4,8 @@ from client import Client, NotAPage, RedirectedToExternal
 from collections import deque
 from re import search
 
+import time
+
 class Crawler(object):
     def __init__(self, target, client=None, whitelist=None, blacklist=set()):
         self.target = target
@@ -12,6 +14,7 @@ class Crawler(object):
             self.whitelist = { get_url_host(target) }
         else:
             self.whitelist = whitelist
+            self.whitelist.add(get_url_host(target))
 
         if client is None:
             self.client = Client()
@@ -24,6 +27,7 @@ class Crawler(object):
         self.count = 0 # Simple counter for debug
 
     def __iter__(self):
+        print self.whitelist
         self.to_visit_links.append(self.target)
 
         while self.to_visit_links:
