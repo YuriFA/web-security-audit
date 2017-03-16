@@ -30,7 +30,7 @@ class Client(object):
     def cookies(self):
         return self.session.cookies.get_dict()
 
-    def get_req(self, url, headers=None):
+    def get(self, url, headers=None):
         # print 'GET requests', url
         if not headers:
             headers = self.default_headers
@@ -52,7 +52,7 @@ class Client(object):
 
         return Page(r)
 
-    def post_req(self, url, data={}, headers=None):
+    def post(self, url, data={}, headers=None):
         # print 'POST requests', url, data
         if not headers:
             headers = self.default_headers

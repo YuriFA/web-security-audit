@@ -2,16 +2,20 @@ import optparse
 import sys
 import os
 import time
+import timeit
+
 
 from crawler import Crawler
 from attacks import all_attacks
-from utils import get_url_host
+from utils import get_url_host, validate_url
 from client import Client, NotAPage, RedirectedToExternal
 
 VERSION = '0.0.1'
 
 def main(options):
     target_url = options.url
+
+    target_url = validate_url(target_url)
 
     options.whitelist = set(options.whitelist)
 
@@ -26,7 +30,7 @@ def main(options):
             form_data.update({name: value})
 
         try:
-            res_page = client.post_req(url, data=form_data)
+            res_page = client.post(url, data=form_data)
         except NotAPage:
             pass
         except RedirectedToExternal:
@@ -35,9 +39,16 @@ def main(options):
     all_pages = Crawler(target_url, client, whitelist=options.whitelist)
 
     for page in all_pages:
+
+        # start = timeit.default_timer()
         print 'Scanning: ', page.status_code, page.url
         for attack in all_attacks():
             attack(page, client)
+
+        # stop = timeit.default_timer()
+
+        # print stop - start
+        # time.sleep(100)
 
 
 def optlist_callback(option, opt, value, parser):

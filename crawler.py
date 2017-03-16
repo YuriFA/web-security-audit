@@ -27,7 +27,6 @@ class Crawler(object):
         self.count = 0 # Simple counter for debug
 
     def __iter__(self):
-        print self.whitelist
         self.to_visit_links.append(self.target)
 
         while self.to_visit_links:
@@ -45,7 +44,7 @@ class Crawler(object):
 
             self.visited_links.add(url_without_hashbang)
             try:
-                page = self.client.get_req(url)
+                page = self.client.get(url)
             except NotAPage:
                 continue
             except RedirectedToExternal:

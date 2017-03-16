@@ -1,4 +1,4 @@
-from utils import add_url_params, change_url_params, get_url_host, isAscii, INPUT_TYPE_DICT, POST, GET
+from utils import update_url_params, replace_url_params, get_url_host, get_url_query, is_ascii, INPUT_TYPE_DICT, POST, GET
 from urlparse import urlparse, urljoin, parse_qsl
 from client import NotAPage, RedirectedToExternal
 
@@ -20,17 +20,14 @@ DBMS_ERRORS = {
 def sql_error(page, client):
     print "Testing for SQL Error in page {}".format(page.url)
 
-    parsed_url = urlparse(page.url)
+    url = page.url
+    query = get_url_query(url)
 
-    if parsed_url.query:
-        url_parts = list(parsed_url)
-        query = dict(parse_qsl(url_parts[4]))
+    for param, value in query.iteritems():
+        injected_url = update_url_params(page.url, {param: PAYLOAD})
+        res_page = client.get(injected_url)
 
-        for param, value in query.iteritems():
-            injected_url = add_url_params(page.url, {param: PAYLOAD})
-            res_page = client.get_req(injected_url)
-
-            check_sql_error(res_page)
+        check_sql_error(res_page)
 
     for form in page.get_forms():
         report = {}
@@ -40,7 +37,7 @@ def sql_error(page, client):
 
         injected_action = None
         if urlparse(action).query:
-            injected_action = change_url_params(action, PAYLOAD)
+            injected_action = replace_url_params(action, PAYLOAD)
 
         inject = inject_form(form)
 
@@ -50,10 +47,10 @@ def sql_error(page, client):
 
             try:
                 if method.lower() == POST.lower():
-                    res_page = client.post_req(actn, data=inject)
+                    res_page = client.post(actn, data=inject)
                 else:
-                    injected_url = add_url_params(actn, inject)
-                    res_page = client.get_req(injected_url)
+                    injected_url = update_url_params(actn, inject)
+                    res_page = client.get(injected_url)
             except NotAPage:
                 continue
             except RedirectedToExternal:
@@ -83,7 +80,7 @@ def inject_form(form):
         if itype in immutable_types:
             value = inpt.get('value')
 
-            if value and isAscii(value):
+            if value and is_ascii(value):
                 value = value.encode('utf-8')
 
             immutable[name] = value or INPUT_TYPE_DICT[itype]

