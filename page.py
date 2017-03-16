@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from urlparse import urljoin, parse_qsl
+from form import Form
 
 import re
 
@@ -26,11 +27,11 @@ class Page(object):
     def get_forms(self, blacklist=[]):
         """ Generator for all forms on the page. """
         for form in self.document.find_all('form'):
-
+            form_obj = Form(self.url, form)
             if any(search(x, form.get(action)) for x in blacklist):
                 continue
 
-            yield form
+            yield form_obj
 
     def get_links(self, blacklist=[]):
         """ Generator for all links on the page. """

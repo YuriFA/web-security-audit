@@ -1,5 +1,5 @@
-from utils import update_url_params, replace_url_params, get_url_host, get_url_query, is_ascii, INPUT_TYPE_DICT, POST, GET
-from urlparse import urlparse, urljoin, parse_qsl
+from utils import update_url_params, replace_url_params, get_url_query, modify_parameter
+from urlparse import urlparse
 from client import NotAPage, RedirectedToExternal
 
 import re
@@ -30,34 +30,28 @@ def sql_error(page, client):
         check_sql_error(res_page)
 
     for form in page.get_forms():
-        report = {}
-        action = urljoin(page.url, form.get('action'))
 
-        method = form.get('method') or GET
-
-        injected_action = None
-        if urlparse(action).query:
-            injected_action = replace_url_params(action, PAYLOAD)
-
-        inject = inject_form(form)
-
-        for actn in (action, injected_action):
-            if not actn or get_url_host(page.url) != get_url_host(actn):
-                continue
-
+        form_parameters = dict(form.get_parameters())
+        for param in form_parameters:
+            injected_params = modify_parameter(form_parameters, param, PAYLOAD)
             try:
-                if method.lower() == POST.lower():
-                    res_page = client.post(actn, data=inject)
-                else:
-                    injected_url = update_url_params(actn, inject)
-                    res_page = client.get(injected_url)
+                res_page = form.send(client, injected_params)
+                check_sql_error(res_page)
             except NotAPage:
                 continue
             except RedirectedToExternal:
                 continue
 
-            check_sql_error(res_page)
+        if urlparse(form.action).query:
+            injected_action = replace_url_params(form.action, PAYLOAD)
 
+            try:
+                res_page = form.send(client, form_parameters, changed_action=injected_action)
+                check_sql_error(res_page)
+            except NotAPage:
+                continue
+            except RedirectedToExternal:
+                continue
 
 def check_sql_error(res_page):
     for db, errors in DBMS_ERRORS.iteritems():
@@ -65,31 +59,3 @@ def check_sql_error(res_page):
             res = re.findall(e, res_page.html)
             if res:
                 print 'SQL error ({}) in {}. Error: {}'.format(db, res_page.url, res)
-
-def inject_form(form):
-    injected_form, immutable = {}, {}
-    immutable_types = ['submit', 'button', 'hidden']
-    inputs = form.find_all('input')
-    textareas = form.find_all('textarea')
-
-    for inpt in inputs:
-        name = str(inpt.get('name') or '')
-        if not name:
-            continue
-        itype = inpt.get('type')
-        if itype in immutable_types:
-            value = inpt.get('value')
-
-            if value and is_ascii(value):
-                value = value.encode('utf-8')
-
-            immutable[name] = value or INPUT_TYPE_DICT[itype]
-        else:
-            injected_form[name] = PAYLOAD
-
-    for txt in textareas:
-        name = str(txt.get('name'))
-        injected_form[name] = PAYLOAD
-
-    injected_form.update(immutable)
-    return injected_form

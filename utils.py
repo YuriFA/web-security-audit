@@ -61,13 +61,6 @@ SCRIPTABLE_ATTRS = (
 def get_url_host(url):
     return urlparse(url).netloc
 
-def create_form_selector(form):
-    selector = 'form'
-    for key, value in form.attrs.iteritems():
-        selector += '['+key+'="'+value+'"]'
-
-    return selector
-
 def update_url_params(url, params):
     if isinstance(url, ParseResult):
         url_parts = list(url)
@@ -89,58 +82,13 @@ def replace_url_params(url, replace):
     url_parts[4] = urlencode(query)
     return urlunparse(url_parts)
 
-def request_params(client, url, method, params):
-    if method.lower() == POST.lower():
-        res_page = client.post(url, data=params)
-    else:
-        injected_url = update_url_params(url, params)
-        res_page = client.get(injected_url)
-
-    return res_page
-
 def modify_parameter(parameters, key, value):
     res = parameters.copy()
     res[key] = value
     return res
 
-def get_form_params(form):
-    """get all params from bs4 form"""
-    injectable, immutable = {}, {}
-    immutable_types = ['submit', 'button', 'hidden']
-
-    for inpt in form.find_all('input'):
-        name = str(inpt.get('name') or '')
-        if not name:
-            continue
-
-        itype = inpt.get('type') or 'text'
-        value = inpt.get('value')
-
-        if value and is_ascii(value):
-            value = value.encode('utf-8')
-
-        if not value or not itype in immutable_types:
-            value = INPUT_TYPE_DICT[itype]
-
-        if itype in immutable_types:
-            immutable[name] = value
-        else:
-            injectable[name] = value
-
-    for txt in form.find_all('textarea'):
-        name = str(txt.get('name'))
-        value = str(txt.text or INPUT_TYPE_DICT['text'])
-        injectable[name] = value
-
-    return injectable, immutable
-
 def is_ascii(s):
      return not all(ord(char) < 128 for char in s)
-
-def is_search_form(form):
-    form_id = form.get('id') or ""
-    form_class = form.get('class') or ""
-    return "search" in form_id.lower() or "search" in form_class.lower()
 
 def compare(x, y):
     return collections.Counter(x) == collections.Counter(y)

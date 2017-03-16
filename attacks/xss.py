@@ -1,12 +1,6 @@
-from utils import create_form_selector, update_url_params, get_url_host, get_form_params, get_url_query, SCRIPTABLE_ATTRS, POST, GET
-from urlparse import urlparse, urlunparse, parse_qsl, urljoin
-from urllib import urlencode
+from utils import update_url_params, get_url_host, get_url_query, modify_parameter, SCRIPTABLE_ATTRS
+from urlparse import urlparse
 from client import NotAPage, RedirectedToExternal
-
-import requests
-import copy
-import sys
-import time
 
 XSS_STRING = "alert('xssed')"
 INJECTIONS = (
@@ -47,32 +41,22 @@ INJECTIONS = (
 def xss(page, client):
     print "Testing for XSS in page {}".format(page.url)
     parsed_url = urlparse(page.url)
-
     url_xss_report = hpp(page.url, client)
 
     for form in page.get_forms():
         report = {}
-        action = urljoin(page.url, form.get('action'))
 
-        if get_url_host(page.url) != get_url_host(action):
+        if get_url_host(page.url) != get_url_host(form.action):
             continue
 
-        method = form.get('method') or GET
-        injectable, immutable = get_form_params(form)
-
-        for param in injectable.keys():
+        form_parameters = dict(form.get_parameters())
+        for param, value in form_parameters.iteritems():
             successed = []
 
             for injection in INJECTIONS:
-                inject = inject_param(injectable, param, injection)
-                inject.update(immutable)
-
+                injected_params = modify_parameter(form_parameters, param, value + injection)
                 try:
-                    if method.lower() == POST.lower():
-                        res_page = client.post(action, data=inject)
-                    else:
-                        injected_url = update_url_params(action, inject)
-                        res_page = client.get(injected_url)
+                    res_page = form.send(client, injected_params)
                 except NotAPage:
                     continue
                 except RedirectedToExternal:
@@ -85,17 +69,12 @@ def xss(page, client):
             if successed:
                 report.update({param: successed})
         if report:
-            print 'Cross Site Scripting (XSS) in url {} on form {}. params {}'.format(page.url, form.get('action'), report.keys())
+            print 'Cross Site Scripting (XSS) in url {} on form {}. params {}'.format(page.url, form.action, report.keys())
 
 def contains_injection(tag):
     return any(k in SCRIPTABLE_ATTRS and XSS_STRING in v \
         or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in tag.attrs.iteritems()) \
         or tag.name == 'script' and list(tag.strings) and XSS_STRING in list(tag.strings)[0]
-
-def inject_param(parameters, param, injection):
-    injected = copy.deepcopy(parameters)
-    injected[param] += injection
-    return injected
 
 def hpp(url, client):
     """HTTP Parameter Pollution (HPP)"""

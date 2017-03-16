@@ -6,4 +6,4 @@ from clrf import clrf
 
 def all_attacks():
     return [xss, sql_error, sql_blind, csrf, clrf]
-    # return []
+    # return [clrf]
