@@ -24,17 +24,15 @@ class Crawler(object):
         self.blacklist = blacklist
         self.to_visit_links = deque()
         self.visited_links  = set()
-        self.count = 0 # Simple counter for debug
+        self.count = 0
 
     def __iter__(self):
         self.to_visit_links.append(self.target)
 
         while self.to_visit_links:
             url = self.to_visit_links.pop()
-
             if not get_url_host(url) in self.whitelist:
                 continue
-
             if any(search(x, url) for x in self.blacklist):
                 continue
 
@@ -42,7 +40,6 @@ class Crawler(object):
             if url_without_hashbang in self.visited_links:
                 continue
 
-            self.visited_links.add(url_without_hashbang)
             try:
                 page = self.client.get(url)
             except NotAPage:
@@ -50,6 +47,10 @@ class Crawler(object):
             except RedirectedToExternal:
                 continue
 
+            if page.url in self.visited_links:
+                continue
+
+            self.visited_links.add(page.url)
             self.count += 1
 
             self.to_visit_links.extend(page.get_links())

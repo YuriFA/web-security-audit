@@ -24,9 +24,9 @@ BOOLEAN_INJECTIONS = {
 BOOL_TEST_COUNT = len(BOOLEAN_INJECTIONS)
 
 def sql_blind(page, client):
-    print "Testing for SQL Blind in page {}".format(page.url)
+    # print "Testing for SQL Blind in page {}".format(page.url)
 
-    if urlparse(page.url).query:
+    if page.parsed_url.query:
         time_based_blind_url(client, page.url)
         boolean_blind(client, page)
 
@@ -39,13 +39,12 @@ def sql_blind(page, client):
 
 def boolean_blind(client, page):
     page_content = list(page.document.stripped_strings)
-    url = page.url
-    query = get_url_query(url)
+    query = get_url_query(page.url)
 
     for param, value in query.iteritems():
         successed = 0
         for payload, is_correct in BOOLEAN_INJECTIONS.iteritems():
-            injected_action = update_url_params(url, {param: value + payload})
+            injected_action = update_url_params(page.url, {param: value + payload})
             try:
                 res_page = client.get(injected_action)
                 if is_correct == compare(page_content, list(res_page.document.stripped_strings)):

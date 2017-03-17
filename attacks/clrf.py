@@ -8,7 +8,7 @@ CLRF_SEQUENCE = (
 ATTACK_SEQUENCE = CLRF_SEQUENCE + BODY
 
 def clrf(page, client):
-    print "Testing for CLRF in page {}".format(page.url)
+    # print "Testing for CLRF in page {}".format(page.url)
 
     attack_url(page.url, client)
 
@@ -45,4 +45,4 @@ def attack_url(url, client):
 
 def check_clrf(res_page):
     if res_page.headers.get('Content-Length') == str(len(BODY)):
-        print 'CLRF injection in form {}'.format(action)
+        print 'CLRF injection in form {}'.format(res_page.request.url)

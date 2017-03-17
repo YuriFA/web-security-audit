@@ -18,14 +18,19 @@ DBMS_ERRORS = {
 }
 
 def sql_error(page, client):
-    print "Testing for SQL Error in page {}".format(page.url)
+    # print "Testing for SQL Error in page {}".format(page.url)
 
     url = page.url
     query = get_url_query(url)
 
     for param, value in query.iteritems():
         injected_url = update_url_params(page.url, {param: PAYLOAD})
-        res_page = client.get(injected_url)
+        try:
+            res_page = client.get(injected_url)
+        except NotAPage:
+            continue
+        except RedirectedToExternal:
+            continue
 
         check_sql_error(res_page)
 

@@ -14,8 +14,8 @@ class Form(object):
     @property
     def is_search_form(self):
         form_id = self.document.get('id') or ""
-        form_class = self.document.get('class') or ""
-        return "search" in form_id.lower() or "search" in form_class.lower()
+        form_class = self.document.get('class') or []
+        return "search" in form_id.lower() or any("search" in c.lower() for c in form_class)
 
     def get_parameters(self, filter_type=None):
         for inpt in self.document.find_all('input'):

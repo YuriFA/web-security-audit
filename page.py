@@ -1,8 +1,13 @@
+from collections import deque
 from bs4 import BeautifulSoup
-from urlparse import urljoin, parse_qsl
+from urlparse import urlparse, urljoin, parse_qsl
 from form import Form
+from utils import remove_url_params, contains_url, get_all_path_links, get_url_path
 
 import re
+import time
+import os.path
+import itertools
 
 class Page(object):
     def __init__(self, response):
@@ -20,6 +25,10 @@ class Page(object):
         return self.request.url
 
     @property
+    def parsed_url(self):
+        return urlparse(self.request.url)
+
+    @property
     def url_parameters(self):
         _, _, url = self.url.partition("?")
         return parse_qsl(url)
@@ -35,14 +44,23 @@ class Page(object):
 
     def get_links(self, blacklist=[]):
         """ Generator for all links on the page. """
-        for ref in [re.split("url=", m.get('content'), flags=re.IGNORECASE)[-1].strip("'") for m in self.document.find_all(attrs={'http-equiv': 'refresh'})]:
-            url = urljoin(self.url, ref)
-            if any(search(x, url) for x in blacklist):
-                continue
-            yield url
+        refresh = [re.split("url=", m.get('content'), flags=re.IGNORECASE)[-1].strip("'") for m in self.document.find_all(attrs={'http-equiv': 'refresh'})]
+        ahref = [h.get('href') for h in self.document.find_all('a')]
+        src_all = [s.get('src') for s in self.document.find_all(contains_url)]
 
-        for href in [h.get('href') for h in self.document.find_all('a')]:
-            url = urljoin(self.url, href)
+        for ref in itertools.chain(refresh, ahref, src_all):
+            url = urljoin(self.url, ref)
+
             if any(search(x, url) for x in blacklist):
                 continue
+
+            if urlparse(url).query:
+                url_without_query = remove_url_params(url)
+
+                yield url_without_query
+
+            if '/' in get_url_path(url).partition('/')[2]:
+                for link in list(get_all_path_links(url)):
+                    yield link
+
             yield url

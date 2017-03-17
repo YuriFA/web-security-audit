@@ -42,6 +42,8 @@ def main(options):
         for attack in all_attacks():
             attack(page, client)
 
+    print all_pages.count
+
 def optlist_callback(option, opt, value, parser):
     setattr(parser.values, option.dest, value.split(','))
 

@@ -1,5 +1,4 @@
 from utils import update_url_params, get_url_host, get_url_query, modify_parameter, SCRIPTABLE_ATTRS
-from urlparse import urlparse
 from client import NotAPage, RedirectedToExternal
 
 XSS_STRING = "alert('xssed')"
@@ -39,8 +38,7 @@ INJECTIONS = (
 )
 
 def xss(page, client):
-    print "Testing for XSS in page {}".format(page.url)
-    parsed_url = urlparse(page.url)
+    # print "Testing for XSS in page {}".format(page.url)
     url_xss_report = hpp(page.url, client)
 
     for form in page.get_forms():
