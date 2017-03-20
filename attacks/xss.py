@@ -1,4 +1,4 @@
-from utils import update_url_params, get_url_host, get_url_query, modify_parameter, SCRIPTABLE_ATTRS
+from utils import dict_iterate, update_url_params, get_url_host, get_url_query, modify_parameter, SCRIPTABLE_ATTRS
 from client import NotAPage, RedirectedToExternal
 
 XSS_STRING = "alert('xssed')"
@@ -38,7 +38,7 @@ INJECTIONS = (
 )
 
 def xss(page, client):
-    # print "Testing for XSS in page {}".format(page.url)
+    # print("Testing for XSS in page {}".format(page.url))
     url_xss_report = hpp(page.url, client)
 
     for form in page.get_forms():
@@ -48,7 +48,7 @@ def xss(page, client):
             continue
 
         form_parameters = dict(form.get_parameters())
-        for param, value in form_parameters.iteritems():
+        for param, value in dict_iterate(form_parameters):
             successed = []
 
             for injection in INJECTIONS:
@@ -67,11 +67,11 @@ def xss(page, client):
             if successed:
                 report.update({param: successed})
         if report:
-            print 'Cross Site Scripting (XSS) in url {} on form {}. params {}'.format(page.url, form.action, report.keys())
+            print('Cross Site Scripting (XSS) in url {} on form {}. params {}'.format(page.url, form.action, report.keys()))
 
 def contains_injection(tag):
     return any(k in SCRIPTABLE_ATTRS and XSS_STRING in v \
-        or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in tag.attrs.iteritems()) \
+        or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in dict_iterate(tag.attrs)) \
         or tag.name == 'script' and list(tag.strings) and XSS_STRING in list(tag.strings)[0]
 
 def hpp(url, client):
@@ -79,7 +79,7 @@ def hpp(url, client):
     query = get_url_query(url)
     report = {}
 
-    for param, value in query.iteritems():
+    for param, value in dict_iterate(query):
         successed = []
         for injection in INJECTIONS:
             injected_url = update_url_params(url, {param: value + injection})
@@ -98,6 +98,6 @@ def hpp(url, client):
             report.update({param: successed})
 
     if report:
-        print 'HTTP Parameter Pollution in url {}. params {}'.format(url, report.keys())
+        print('HTTP Parameter Pollution in url {}. params {}'.format(url, report.keys()))
 
     return report

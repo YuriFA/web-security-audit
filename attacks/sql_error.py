@@ -1,5 +1,5 @@
-from utils import update_url_params, replace_url_params, get_url_query, modify_parameter
-from urlparse import urlparse
+from utils import dict_iterate, update_url_params, replace_url_params, get_url_query, modify_parameter
+from compat import urlparse
 from client import NotAPage, RedirectedToExternal
 
 import re
@@ -18,12 +18,12 @@ DBMS_ERRORS = {
 }
 
 def sql_error(page, client):
-    # print "Testing for SQL Error in page {}".format(page.url)
+    # print("Testing for SQL Error in page {}".format(page.url))
 
     url = page.url
     query = get_url_query(url)
 
-    for param, value in query.iteritems():
+    for param, value in dict_iterate(query):
         injected_url = update_url_params(page.url, {param: PAYLOAD})
         try:
             res_page = client.get(injected_url)
@@ -59,8 +59,8 @@ def sql_error(page, client):
                 continue
 
 def check_sql_error(res_page):
-    for db, errors in DBMS_ERRORS.iteritems():
+    for db, errors in dict_iterate(DBMS_ERRORS):
         for e in errors:
             res = re.findall(e, res_page.html)
             if res:
-                print 'SQL error ({}) in {}. Error: {}'.format(db, res_page.url, res)
+                print('SQL error ({}) in {}. Error: {}'.format(db, res_page.url, res))

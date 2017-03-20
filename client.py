@@ -1,10 +1,10 @@
 import requests
 import sys
 
-from cookielib import CookieJar
+from compat import CookieJar
+from compat import urlparse
 from page import Page
 from utils import NOT_A_PAGE_CONTENT_TYPES
-from urlparse import urlparse
 
 
 class NotAPage(Exception):

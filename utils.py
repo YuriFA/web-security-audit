@@ -1,5 +1,5 @@
-from urlparse import urlparse, urlunparse, parse_qsl, ParseResult
-from urllib import urlencode
+from compat import urlparse, urlunparse, parse_qsl, ParseResult
+from compat import urlencode
 
 import collections
 import os.path
@@ -36,7 +36,8 @@ INPUT_TYPE_DICT = {
     "tel": "012345678",
     "color": "#FFFFFF",
     "hidden": "Secret.",
-    "submit": ""
+    "submit": "",
+    "image": "",
 }
 
 SCRIPTABLE_ATTRS = (
@@ -59,6 +60,16 @@ SCRIPTABLE_ATTRS = (
     'onsubmit',
     'onunload'
 )
+
+def dict_iterate(d):
+    if hasattr(d, 'iteritems'):
+        iterate = d.iteritems()
+    elif hasattr(d, 'items'):
+        iterate = d.items()
+    else:
+        iterate = None
+
+    return iterate
 
 def get_url_host(url):
     return urlparse(url).netloc
@@ -125,4 +136,4 @@ def validate_url(url):
     return parsed_url.geturl().replace('///', '//')
 
 def contains_url(tag):
-    return any(k in ('src',) and not v is None for k, v in tag.attrs.iteritems())
+    return any(k in ('src',) and not v is None for k, v in dict_iterate(tag.attrs))

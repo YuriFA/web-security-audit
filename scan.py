@@ -38,11 +38,11 @@ def main(options):
     all_pages = Crawler(target_url, client, whitelist=options.whitelist)
 
     for page in all_pages:
-        print 'Scanning: ', page.status_code, page.url
-        for attack in all_attacks():
-            attack(page, client)
+        print('Scanning: [{}] {}'.format(page.status_code, page.url))
+        # for attack in all_attacks():
+        #     attack(page, client)
 
-    print all_pages.count
+    print(all_pages.count)
 
 def optlist_callback(option, opt, value, parser):
     setattr(parser.values, option.dest, value.split(','))
@@ -62,7 +62,7 @@ if __name__ == "__main__":
         try:
             main(options)
         except KeyboardInterrupt:
-            print 'Interrupted'
+            print('Interrupted')
             try:
                 sys.exit(0)
             except SystemExit:

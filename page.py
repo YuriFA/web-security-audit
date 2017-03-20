@@ -1,6 +1,6 @@
 from collections import deque
 from bs4 import BeautifulSoup
-from urlparse import urlparse, urljoin, parse_qsl
+from compat import urlparse, urljoin, parse_qsl
 from form import Form
 from utils import remove_url_params, contains_url, get_all_path_links, get_url_path
 
