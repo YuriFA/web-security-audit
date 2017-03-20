@@ -1,11 +1,11 @@
-import requests
-import sys
-
 from compat import CookieJar
 from compat import urlparse
 from page import Page
 from utils import NOT_A_PAGE_CONTENT_TYPES
 
+import requests
+import sys
+import tldextract
 
 class NotAPage(Exception):
     """ The content at the URL in question is not a webpage, but something
@@ -47,7 +47,7 @@ class Client(object):
         if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
             raise NotAPage()
 
-        if r.history and urlparse(r.url).netloc != urlparse(url).netloc:
+        if r.history and tldextract.extract(r.url).domain != tldextract.extract(url).domain:
             raise RedirectedToExternal()
 
         return Page(r)
