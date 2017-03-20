@@ -1,6 +1,6 @@
 #Web security audit application
 
-## Installation (development)
+## Installation
 
 1. ```git clone https://github.com/YuriFA/web_security_audit```
 2. ```cd web_security_audit```
