@@ -32,11 +32,8 @@ class Client(object):
 
     def get(self, url, headers=None):
         # print 'GET requests', url
-        if not headers:
-            headers = self.default_headers
-
         try:
-            r = self.session.get(url, headers=headers)
+            r = self.session.get(url, headers=headers or self.default_headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as error:
             r = error
@@ -54,11 +51,8 @@ class Client(object):
 
     def post(self, url, data={}, headers=None):
         # print 'POST requests', url, data
-        if not headers:
-            headers = self.default_headers
-
         try:
-            r = self.session.post(url, data=data, headers=headers)
+            r = self.session.post(url, data=data, headers=headers or self.default_headers)
             r.raise_for_status()
         except requests.exceptions.HTTPError as error:
             r = error

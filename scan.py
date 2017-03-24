@@ -2,6 +2,7 @@ from crawler import Crawler
 from attacks import all_attacks
 from utils import get_url_host, validate_url
 from client import Client, NotAPage, RedirectedToExternal
+from app_detect import app_detect
 
 import optparse
 import sys
@@ -30,17 +31,21 @@ def main(options):
 
         try:
             res_page = client.post(url, data=form_data)
-        except NotAPage:
-            pass
-        except RedirectedToExternal:
-            pass
+        except (NotAPage, RedirectedToExternal) as e:
+            print(e)
+
+    apps = app_detect(target_url, client)
+    if apps:
+        print('Detected technologies')
+        for app, app_types in apps.iteritems():
+            print(app, app_types)
 
     all_pages = Crawler(target_url, client, whitelist=options.whitelist)
 
     for page in all_pages:
         print('Scanning: [{}] {}'.format(page.status_code, page.url))
-        for attack in all_attacks():
-            attack(page, client)
+        # for attack in all_attacks():
+        #     attack(page, client)
 
     print(all_pages.count)
 

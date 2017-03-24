@@ -1,0 +1,2243 @@
+{
+    "apps": {
+        "1C-Bitrix": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "BITRIX_",
+                "X-Powered-CMS": "Bitrix Site Manager"
+            },
+            "html": "(?:<link[^>]+(?:src|href)=\"(?:.+)/bitrix/(?:js|templates|cache))",
+            "icon": "1C-Bitrix.png",
+            "implies": "PHP",
+            "script": "1c-bitrix",
+            "website": "http://www.1c-bitrix.ru"
+        },
+        "2z Project": {
+            "cats": [
+                "1"
+            ],
+            "icon": "2z Project.png",
+            "meta": {
+                "generator": "2z project ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://2zproject-cms.ru"
+        },
+        "3dCart": {
+            "cats": [
+                "1",
+                "6"
+            ],
+            "headers": {
+                "Set-Cookie": "3dvisit",
+                "X-Powered-By": "3DCART"
+            },
+            "icon": "3dCart.png",
+            "script": "(?:twlh(?:track)?\\.asp|3d_upsell\\.js)",
+            "website": "http://www.3dcart.com"
+        },
+        "AMPcms": {
+            "cats": [
+                "1"
+            ],
+            "env": "^amp_js_init$",
+            "headers": {
+                "Set-Cookie": "^AMP=",
+                "X-AMP-Version": "([\\d.]+)\\;version:\\1"
+            },
+            "icon": "AMPcms.png",
+            "implies": "PHP",
+            "website": "http://www.ampcms.org"
+        },
+        "Accessible Portal": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Accessible Portal.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Accessible Portal"
+            },
+            "website": "http://www.accessibleportal.com"
+        },
+        "Adobe Experience Manager": {
+            "cats": [
+                "1"
+            ],
+            "html": [
+                "<div class=\"[^\"]*parbase",
+                "<div[^>]+data-component-path=\"[^\"+]jcr:"
+            ],
+            "icon": "Adobe Experience Manager.svg",
+            "implies": "Java",
+            "script": "/etc/designs/",
+            "website": "http://www.adobe.com/au/marketing-cloud/enterprise-content-management.html"
+        },
+        "Ametys": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Ametys.png",
+            "implies": "Java",
+            "meta": {
+                "generator": "(?:Ametys|Anyware Technologies)"
+            },
+            "script": "ametys\\.js",
+            "website": "http://ametys.org"
+        },
+        "Amiro.CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Amiro.CMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Amiro"
+            },
+            "website": "http://amirocms.com"
+        },
+        "AsciiDoc": {
+            "cats": [
+                "1",
+                "20",
+                "27"
+            ],
+            "env": "^asciidoc$",
+            "icon": "AsciiDoc.png",
+            "meta": {
+                "generator": "^AsciiDoc ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://www.methods.co.nz/asciidoc"
+        },
+        "BIGACE": {
+            "cats": [
+                "1"
+            ],
+            "html": "(?:Powered by <a href=\"[^>]+BIGACE|<!--\\s+Site is running BIGACE)",
+            "icon": "BIGACE.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "BIGACE ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://bigace.de"
+        },
+        "Backdrop": {
+            "cats": [
+                "1"
+            ],
+            "env": "^Backdrop$",
+            "excludes": "Drupal",
+            "icon": "Backdrop.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Backdrop CMS(?: (\\d))?\\;version:\\1"
+            },
+            "website": "http://backdropcms.org"
+        },
+        "Banshee": {
+            "cats": [
+                "1",
+                "18"
+            ],
+            "html": "Built upon the <a href=\"[^>]+banshee-php\\.org/\">[a-z]+</a>(?:v([\\d.]+))?\\;version:\\1",
+            "icon": "Banshee.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Banshee PHP"
+            },
+            "website": "http://www.banshee-php.org"
+        },
+        "Bolt": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Bolt.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Bolt"
+            },
+            "website": "http://bolt.cm"
+        },
+        "BrowserCMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "BrowserCMS.png",
+            "implies": "Ruby",
+            "meta": {
+                "generator": "BrowserCMS ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://browsercms.org"
+        },
+        "Bubble": {
+            "cats": [
+                "1",
+                "3",
+                "18",
+                "22"
+            ],
+            "env": "^appquery$",
+            "icon": "bubble.png",
+            "implies": "Node.js",
+            "website": "http://bubble.is"
+        },
+        "Business Catalyst": {
+            "cats": [
+                "1"
+            ],
+            "html": "<!-- BC_OBNW -->",
+            "icon": "Business Catalyst.png",
+            "script": "CatalystScripts",
+            "website": "http://businesscatalyst.com"
+        },
+        "CMS Made Simple": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "^CMSSESSID"
+            },
+            "icon": "CMS Made Simple.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "CMS Made Simple"
+            },
+            "website": "http://cmsmadesimple.org"
+        },
+        "CMSimple": {
+            "cats": [
+                "1"
+            ],
+            "icon": "default.svg",
+            "implies": "PHP",
+            "meta": {
+                "generator": "CMSimple( [\\d.]+)?\\;version:\\1"
+            },
+            "website": "http://www.cmsimple.org/en"
+        },
+        "CPG Dragonfly": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "Dragonfly CMS"
+            },
+            "icon": "CPG Dragonfly.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "CPG Dragonfly"
+            },
+            "website": "http://dragonflycms.org"
+        },
+        "Cargo": {
+            "cats": [
+                "1"
+            ],
+            "html": "<link [^>]+Cargo feed",
+            "icon": "Cargo.png",
+            "implies": "PHP",
+            "meta": {
+                "cargo_title": ""
+            },
+            "script": "/cargo\\.",
+            "website": "http://cargocollective.com"
+        },
+        "Chameleon": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Chameleon.png",
+            "implies": [
+                "Apache",
+                "PHP"
+            ],
+            "meta": {
+                "generator": "chameleon-cms"
+            },
+            "website": "http://chameleon-system.de"
+        },
+        "Ckan": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Access-Control-Allow-Headers": "X-CKAN-API-KEY",
+                "Link": "<http://ckan.org/>; rel=shortlink"
+            },
+            "icon": "Ckan.png",
+            "implies": [
+                "Python",
+                "Solr",
+                "Java",
+                "PostgreSQL\\;confidence:80"
+            ],
+            "website": "http://ckan.org/"
+        },
+        "Concrete5": {
+            "cats": [
+                "1"
+            ],
+            "env": "^CCM_IMAGE_PATH$",
+            "icon": "Concrete5.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "concrete5 - ([\\d.ab]+)\\;version:\\1"
+            },
+            "script": "concrete/js/",
+            "website": "http://concrete5.org"
+        },
+        "Contao": {
+            "cats": [
+                "1"
+            ],
+            "html": [
+                "<!--[^>]+powered by (?:TYPOlight|Contao)[^>]*-->",
+                "<link[^>]+(?:typolight|contao)\\.css"
+            ],
+            "icon": "Contao.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "^Contao Open Source CMS$"
+            },
+            "website": "http://contao.org"
+        },
+        "Contenido": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Contenido.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Contenido ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://contenido.org/en"
+        },
+        "Contens": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Contens.png",
+            "implies": [
+                "Java",
+                "CFML"
+            ],
+            "meta": {
+                "generator": "Contensis CMS Version ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://www.contens.com/en/pub/index.cfm"
+        },
+        "ContentBox": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "icon": "ContentBox.png",
+            "implies": "Adobe ColdFusion",
+            "meta": {
+                "generator": "ContentBox powered by ColdBox"
+            },
+            "website": "http://www.gocontentbox.org"
+        },
+        "Cotonti": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Cotonti.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Cotonti"
+            },
+            "website": "http://www.cotonti.com"
+        },
+        "CppCMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "CppCMS/([\\d.]+)\\;version:\\1"
+            },
+            "icon": "CppCMS.png",
+            "implies": "C++",
+            "website": "http://cppcms.com"
+        },
+        "Craft CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "CraftSessionId=",
+                "X-Powered-By": "Craft CMS"
+            },
+            "icon": "Craft CMS.png",
+            "implies": "Yii",
+            "website": "http://buildwithcraft.com"
+        },
+        "DM Polopoly": {
+            "cats": [
+                "1"
+            ],
+            "html": "<(?:link [^>]*href|img [^>]*src)=\"/polopoly_fs/",
+            "icon": "DM Polopoly.png",
+            "implies": "Java",
+            "website": "http://www.atex.com/products/dm-polopoly"
+        },
+        "DNN": {
+            "cats": [
+                "1"
+            ],
+            "env": "^DotNetNuke$",
+            "headers": {
+                "Cookie": "dnn_IsMobile=",
+                "DNNOutputCache": "",
+                "Set-Cookie": "DotNetNukeAnonymous=",
+                "X-Compressed-By": "DotNetNuke"
+            },
+            "html": [
+                "<!-- by DotNetNuke Corporation",
+                "<!-- DNN Platform"
+            ],
+            "icon": "DNN.png",
+            "implies": "Microsoft ASP.NET",
+            "meta": {
+                "generator": "DotNetNuke"
+            },
+            "script": [
+                "/js/dnncore\\.js",
+                "/js/dnn\\.js"
+            ],
+            "website": "http://dnnsoftware.com"
+        },
+        "DTG": {
+            "cats": [
+                "1"
+            ],
+            "html": [
+                "<a[^>]+Site Powered by DTG"
+            ],
+            "icon": "DTG.png",
+            "implies": "Mono.net",
+            "website": "http://www.dtg.nl"
+        },
+        "Danneo CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "CMS Danneo ([\\d.]+)\\;version:\\1"
+            },
+            "icon": "Danneo CMS.png",
+            "implies": [
+                "Apache",
+                "PHP"
+            ],
+            "meta": {
+                "generator": "Danneo CMS ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://danneo.com"
+        },
+        "DataLife Engine": {
+            "cats": [
+                "1"
+            ],
+            "env": "^dle_root$",
+            "icon": "DataLife Engine.png",
+            "implies": [
+                "PHP",
+                "Apache"
+            ],
+            "meta": {
+                "generator": "DataLife Engine"
+            },
+            "website": "http://dle-news.ru"
+        },
+        "DedeCMS": {
+            "cats": [
+                "1"
+            ],
+            "env": "^DedeContainer",
+            "icon": "DedeCMS.png",
+            "implies": "PHP",
+            "script": "dedeajax",
+            "website": "http://dedecms.com"
+        },
+        "Django CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Django CMS.png",
+            "implies": "Django",
+            "website": "http://django-cms.org"
+        },
+        "Dotclear": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Dotclear.png",
+            "implies": "PHP",
+            "website": "http://dotclear.org"
+        },
+        "DovetailWRP": {
+            "cats": [
+                "1"
+            ],
+            "html": "<link[^>]* href=\"\\/DovetailWRP\\/",
+            "icon": "DovetailWRP.png",
+            "implies": "Microsoft ASP.NET",
+            "script": "\\/DovetailWRP\\/",
+            "website": "http://www.dovetailinternet.com"
+        },
+        "Drupal": {
+            "cats": [
+                "1"
+            ],
+            "env": "^Drupal$",
+            "headers": {
+                "Expires": "19 Nov 1978",
+                "X-Drupal-Cache": "",
+                "X-Generator": "Drupal(?:\\s([\\d.]+))?\\;version:\\1"
+            },
+            "html": "<(?:link|style)[^>]+sites/(?:default|all)/(?:themes|modules)/",
+            "icon": "Drupal.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Drupal(?:\\s([\\d.]+))?\\;version:\\1"
+            },
+            "script": "drupal\\.js",
+            "website": "http://drupal.org"
+        },
+        "Dynamicweb": {
+            "cats": [
+                "1",
+                "6",
+                "10"
+            ],
+            "headers": {
+                "Set-Cookie": "Dynamicweb="
+            },
+            "icon": "Dynamicweb.png",
+            "implies": "Microsoft ASP.NET",
+            "meta": {
+                "generator": "Dynamicweb ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://www.dynamicweb.dk"
+        },
+        "EPiServer": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "EPi(?:Trace|Server)[^;]*="
+            },
+            "icon": "EPiServer.png",
+            "implies": "Microsoft ASP.NET",
+            "meta": {
+                "generator": "EPiServer"
+            },
+            "website": "http://episerver.com"
+        },
+        "Eleanor CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Eleanor CMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Eleanor"
+            },
+            "website": "http://eleanor-cms.ru"
+        },
+        "Exagon Concept": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Server": "Exagon Server"
+            },
+            "icon": "ExagonConcept.svg",
+            "website": "http://www.exagon-concept.com"
+        },
+        "ExpressionEngine": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "(?:exp_last_activity|exp_tracker)"
+            },
+            "icon": "ExpressionEngine.png",
+            "implies": "PHP",
+            "website": "http://expressionengine.com"
+        },
+        "FlexCMP": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Flex-Lang": "",
+                "X-Powered-By": "FlexCMP.+\\[v\\. ([\\d.]+)\\;version:\\1"
+            },
+            "html": "<!--[^>]+FlexCMP[^>v]+v\\. ([\\d.]+)\\;version:\\1",
+            "icon": "FlexCMP.png",
+            "meta": {
+                "generator": "FlexCMP"
+            },
+            "website": "http://www.flexcmp.com/cms/home"
+        },
+        "GX WebManager": {
+            "cats": [
+                "1"
+            ],
+            "html": "<!--\\s+Powered by GX",
+            "icon": "GX WebManager.png",
+            "meta": {
+                "generator": "GX WebManager(?: ([\\d.]+))?\\;version:\\1"
+            },
+            "website": "http://www.gxsoftware.com/en/products/web-content-management.htm"
+        },
+        "GetSimple CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "GetSimple CMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "GetSimple"
+            },
+            "website": "http://get-simple.info"
+        },
+        "Google Sites": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Google Sites.png",
+            "url": "sites\\.google\\.com",
+            "website": "http://sites.google.com"
+        },
+        "Graffiti CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "graffitibot[^;]="
+            },
+            "icon": "Graffiti CMS.png",
+            "implies": "Microsoft ASP.NET",
+            "meta": {
+                "generator": "Graffiti CMS ([^\"]+)\\;version:\\1"
+            },
+            "script": "/graffiti\\.js",
+            "website": "http://graffiticms.codeplex.com"
+        },
+        "Grav": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Grav.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "GravCMS(?:\\s([\\d.]+))?\\;version:\\1"
+            },
+            "website": "http://getgrav.org"
+        },
+        "Green Valley CMS": {
+            "cats": [
+                "1"
+            ],
+            "html": "<img[^>]+/dsresource\\?objectid=",
+            "icon": "Green Valley CMS.png",
+            "implies": "Apache Tomcat",
+            "meta": {
+                "DC.identifier": "/content\\.jsp\\?objectid="
+            },
+            "website": "http://www.greenvalley.nl/Public/Producten/Content_Management/CMS"
+        },
+        "Hippo": {
+            "cats": [
+                "1"
+            ],
+            "html": "<[^>]+/binaries/(?:[^/]+/)*content/gallery/",
+            "icon": "Hippo.png",
+            "website": "http://onehippo.org"
+        },
+        "Hotaru CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "hotaru_mobile="
+            },
+            "icon": "Hotaru CMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Hotaru CMS"
+            },
+            "website": "http://hotarucms.org"
+        },
+        "Hugo": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "icon": "Hugo.png",
+            "meta": {
+                "generator": "Hugo ([\\d.]+)?\\;version:\\1"
+            },
+            "website": "http://gohugo.io"
+        },
+        "IBM WebSphere Portal": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "IBM-Web2-Location": "",
+                "Itx-Generated-Timestamp": ""
+            },
+            "icon": "IBM.svg",
+            "implies": "Java",
+            "url": "/wps/",
+            "website": "http://ibm.com/software/websphere/portal"
+        },
+        "ImpressCMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "ICMSession[^;]+=",
+                "X-Powered-By": "ImpressCMS"
+            },
+            "icon": "ImpressCMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "ImpressCMS"
+            },
+            "script": "include/linkexternal\\.js",
+            "website": "http://www.impresscms.org"
+        },
+        "ImpressPages": {
+            "cats": [
+                "1"
+            ],
+            "icon": "ImpressPages.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "ImpressPages(?: CMS)?( [\\d.]*)\\;version:\\1"
+            },
+            "website": "http://impresspages.org"
+        },
+        "InProces": {
+            "cats": [
+                "1"
+            ],
+            "html": "<!-- CSS InProces Portaal default -->",
+            "icon": "InProces.png",
+            "script": "brein/inproces/website/websitefuncties\\.js",
+            "website": "http://www.brein.nl/oplossing/product/website"
+        },
+        "Indexhibit": {
+            "cats": [
+                "1"
+            ],
+            "html": "<(?:link|a href) [^>]+ndxz-studio",
+            "icon": "default.svg",
+            "implies": [
+                "PHP",
+                "Apache",
+                "Exhibit"
+            ],
+            "meta": {
+                "generator": "Indexhibit"
+            },
+            "website": "http://www.indexhibit.org"
+        },
+        "Indico": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-cookie": "MAKACSESSION"
+            },
+            "html": "Powered by\\s+(?:CERN )?<a href=\"http://(?:cdsware\\.cern\\.ch/indico/|indico-software\\.org|cern\\.ch/indico)\">(?:CDS )?Indico( [\\d\\.]+)?\\;version:\\1",
+            "icon": "Indico.png",
+            "website": "http://indico-software.org"
+        },
+        "InstantCMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "InstantCMS\\[logdate\\]="
+            },
+            "icon": "InstantCMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "InstantCMS"
+            },
+            "website": "http://www.instantcms.ru"
+        },
+        "Jalios": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Jalios.png",
+            "meta": {
+                "generator": "Jalios"
+            },
+            "website": "http://www.jalios.com"
+        },
+        "Jekyll": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "icon": "Jekyll.png",
+            "meta": {
+                "generator": "Jekyll (v[\\d.]+)?\\;version:\\1"
+            },
+            "website": "http://jekyllrb.com"
+        },
+        "Jimdo": {
+            "cats": [
+                "1"
+            ],
+            "env": "^jimdo_(?:Data|Gen\\d+)$",
+            "headers": {
+                "X-Jimdo-Instance": "",
+                "X-Jimdo-Wid": ""
+            },
+            "icon": "jimdo.png",
+            "website": "http://www.jimdo.com/"
+        },
+        "Joomla": {
+            "cats": [
+                "1"
+            ],
+            "env": "^(?:jcomments|Joomla)$",
+            "headers": {
+                "X-Content-Encoded-By": "Joomla! ([\\d.]+)\\;version:\\1"
+            },
+            "html": "(?:<div[^>]+id=\"wrapper_r\"|<[^>]+(?:feed|components)/com_|<table[^>]+class=\"pill)\\;confidence:50",
+            "icon": "Joomla.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Joomla!(?: ([\\d.]+))?\\;version:\\1"
+            },
+            "url": "option=com_",
+            "website": "http://joomla.org"
+        },
+        "Kentico CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "CMSPreferredCulture="
+            },
+            "icon": "Kentico CMS.png",
+            "meta": {
+                "generator": "Kentico CMS ([\\d.R]+ \\(build [\\d.]+\\))\\;version:\\1"
+            },
+            "website": "http://www.kentico.com"
+        },
+        "Koala Framework": {
+            "cats": [
+                "1",
+                "18"
+            ],
+            "html": "<!--[^>]+This website is powered by Koala Web Framework CMS",
+            "icon": "Koala Framework.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "^Koala Web Framework CMS"
+            },
+            "website": "http://koala-framework.org"
+        },
+        "Koken": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "koken_referrer="
+            },
+            "html": [
+                "<html lang=\"en\" class=\"k-source-essays k-lens-essays\">",
+                "<!--\\s+KOKEN DEBUGGING"
+            ],
+            "icon": "Koken.png",
+            "implies": [
+                "PHP",
+                "MySQL"
+            ],
+            "meta": {
+                "generator": "Koken ([\\d.]+)\\;version:\\1"
+            },
+            "script": "koken(?:\\.js\\?([\\d.]+)|/storage)\\;version:\\1",
+            "website": "http://koken.me"
+        },
+        "Kolibri CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "Kolibri"
+            },
+            "icon": "default.svg",
+            "meta": {
+                "generator": "Kolibri"
+            },
+            "website": "http://alias.io"
+        },
+        "Komodo CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Komodo CMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "^Komodo CMS"
+            },
+            "website": "http://www.komodocms.com"
+        },
+        "Koobi": {
+            "cats": [
+                "1"
+            ],
+            "html": "<!--[^K>-]+Koobi ([a-z\\d.]+)\\;version:\\1",
+            "icon": "Koobi.png",
+            "meta": {
+                "generator": "Koobi"
+            },
+            "website": "http://dream4.de/cms"
+        },
+        "Kooboo CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-KoobooCMS-Version": "(.*)\\;version:\\1"
+            },
+            "icon": "Kooboo CMS.png",
+            "implies": "Microsoft ASP.NET",
+            "script": "/Kooboo",
+            "website": "http://kooboo.com"
+        },
+        "Kotisivukone": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Kotisivukone.png",
+            "script": "kotisivukone(?:\\.min)?\\.js",
+            "website": "http://www.kotisivukone.fi"
+        },
+        "LEPTON": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "lep\\d+sessionid="
+            },
+            "icon": "LEPTON.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "LEPTON"
+            },
+            "website": "http://www.lepton-cms.org"
+        },
+        "Liferay": {
+            "cats": [
+                "1"
+            ],
+            "env": "^Liferay$",
+            "headers": {
+                "Liferay-Portal": "[a-z\\s]+([\\d.]+)\\;version:\\1"
+            },
+            "icon": "Liferay.png",
+            "website": "http://www.liferay.com"
+        },
+        "LightMon Engine": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "lm_online"
+            },
+            "html": "<!-- Lightmon Engine Copyright Lightmon",
+            "icon": "LightMon Engine.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "LightMon Engine"
+            },
+            "website": "http://lightmon.ru"
+        },
+        "Lithium": {
+            "cats": [
+                "1"
+            ],
+            "env": [
+                "^LITHIUM$"
+            ],
+            "headers": {
+                "Set-Cookie": "LithiumVisitor="
+            },
+            "html": " <a [^>]+Powered by Lithium",
+            "icon": "Lithium.png",
+            "implies": "PHP",
+            "website": "http://www.lithium.com"
+        },
+        "LiveStreet CMS": {
+            "cats": [
+                "1"
+            ],
+            "env": "^LIVESTREET",
+            "headers": {
+                "X-Powered-By": "LiveStreet CMS"
+            },
+            "icon": "LiveStreet CMS.png",
+            "implies": "PHP",
+            "website": "http://livestreetcms.com"
+        },
+        "Locomotive": {
+            "cats": [
+                "1"
+            ],
+            "html": "<link[^>]*/sites/[a-z\\d]{24}/theme/stylesheets",
+            "icon": "Locomotive.png",
+            "implies": [
+                "Ruby on Rails",
+                "MongoDB"
+            ],
+            "website": "http://www.locomotivecms.com"
+        },
+        "MODX": {
+            "cats": [
+                "1"
+            ],
+            "env": "^MODX_MEDIA_PATH$",
+            "headers": {
+                "Set-Cookie": "SN5[a-f\\d]{12}",
+                "X-Powered-By": "^MODX"
+            },
+            "html": [
+                "<a[^>]+>Powered by MODX</a>",
+                "<(?:link|script)[^>]+assets/snippets/\\;confidence:20",
+                "<form[^>]+id=\"ajaxSearch_form\\;confidence:20",
+                "<input[^>]+id=\"ajaxSearch_input\\;confidence:20"
+            ],
+            "icon": "MODX.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "MODX[^\\d.]*([\\d.]+)?\\;version:\\1"
+            },
+            "website": "http://modx.com"
+        },
+        "Mambo": {
+            "cats": [
+                "1"
+            ],
+            "excludes": "Joomla",
+            "icon": "Mambo.png",
+            "meta": {
+                "generator": "Mambo"
+            },
+            "website": "http://mambo-foundation.org"
+        },
+        "MaxSite CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "MaxSite CMS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "MaxSite CMS"
+            },
+            "website": "http://max-3000.com"
+        },
+        "Melis CMS V2": {
+            "cats": [
+                "1",
+                "6"
+            ],
+            "html": "<!-- Rendered with Melics CMS V2",
+            "icon": "meliscmsv2.png",
+            "meta": {
+                "powered-by": "^Melis CMS"
+            },
+            "website": "http://www.melistechnology.com/"
+        },
+        "Methode": {
+            "cats": [
+                "1"
+            ],
+            "env": "^eidosBase$",
+            "html": "<!-- Methode uuid: \"[a-f\\d]+\" ?-->",
+            "icon": "Methode.png",
+            "meta": {
+                "eomportal-id": "\\d+",
+                "eomportal-instanceid": "\\d+",
+                "eomportal-lastUpdate": "",
+                "eomportal-loid": "[\\d.]+",
+                "eomportal-uuid": "[a-f\\d]+"
+            },
+            "website": "http://www.eidosmedia.com/solutions"
+        },
+        "Microsoft SharePoint": {
+            "cats": [
+                "1"
+            ],
+            "env": "^_spBodyOnLoadCalled$",
+            "headers": {
+                "MicrosoftSharePointTeamServices": "(.*)\\;version:\\1",
+                "SPRequestGuid": "",
+                "SharePointHealthScore": "",
+                "X-SharePointHealthScore": ""
+            },
+            "icon": "Microsoft SharePoint.png",
+            "meta": {
+                "generator": "Microsoft SharePoint"
+            },
+            "website": "http://sharepoint.microsoft.com"
+        },
+        "Moguta.CMS": {
+            "cats": [
+                "1",
+                "6"
+            ],
+            "html": "(?:<script|link)[^>]*mg-(?:core|plugins|templates)",
+            "icon": "Moguta.CMS.png",
+            "implies": "PHP",
+            "website": "http://moguta.ru"
+        },
+        "Mono.net": {
+            "cats": [
+                "1"
+            ],
+            "env": "^_monoTracker$",
+            "icon": "Mono.net.png",
+            "implies": "Piwik",
+            "script": "monotracker(?:\\.min)?\\.js",
+            "website": "http://www.mono.net"
+        },
+        "MotoCMS": {
+            "cats": [
+                "1"
+            ],
+            "html": "<link [^>]*href=\"[^>]*\\/mt-content\\/[^>]*\\.css",
+            "icon": "MotoCMS.svg",
+            "implies": [
+                "PHP",
+                "AngularJS",
+                "jQuery"
+            ],
+            "script": ".*\\/mt-includes\\/[asetj]{2,6}\\/.*\\.js.*",
+            "website": "http://motocms.com"
+        },
+        "Movable Type": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Movable Type.png",
+            "meta": {
+                "generator": "Movable Type"
+            },
+            "website": "http://movabletype.org"
+        },
+        "Mozard Suite": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Mozard Suite.png",
+            "meta": {
+                "author": "Mozard"
+            },
+            "url": "/mozard/!suite",
+            "website": "http://mozard.nl"
+        },
+        "Mura CMS": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "icon": "Mura CMS.png",
+            "implies": "Adobe ColdFusion",
+            "meta": {
+                "generator": "Mura CMS ([\\d]+)\\;version:\\1"
+            },
+            "website": "http://www.getmura.com"
+        },
+        "Mynetcap": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Mynetcap.png",
+            "meta": {
+                "generator": "Mynetcap"
+            },
+            "website": "http://www.netcap-creation.fr"
+        },
+        "Neos CMS": {
+            "cats": [
+                "1"
+            ],
+            "excludes": "TYPO3 CMS",
+            "headers": {
+                "X-Flow-Powered": "Neos/?(.+)?$\\;version:\\1"
+            },
+            "icon": "Neos.svg",
+            "implies": "Neos Flow",
+            "url": "/neos/",
+            "website": "http://neos.io"
+        },
+        "Nepso": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-CMS": "Nepso"
+            },
+            "icon": "Nepso.png",
+            "website": "http://nepso.com"
+        },
+        "October CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "october_session="
+            },
+            "icon": "October CMS.png",
+            "implies": "Laravel",
+            "website": "http://octobercms.com"
+        },
+        "Octopress": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "html": "Powered by <a href=\"http://octopress.org\">",
+            "icon": "octopress.png",
+            "implies": "Jekyll",
+            "meta": {
+                "generator": "Octopress"
+            },
+            "website": "http://octopress.org"
+        },
+        "Odoo": {
+            "cats": [
+                "1",
+                "6"
+            ],
+            "html": "<link[^>]* href=[^>]+/web/css/(?:web\\.assets_common/|website\\.assets_frontend/)\\;confidence:25",
+            "icon": "Odoo.png",
+            "implies": [
+                "Python",
+                "PostgreSQL",
+                "Node.js",
+                "Less"
+            ],
+            "meta": {
+                "generator": "Odoo"
+            },
+            "script": "/web/js/(?:web\\.assets_common/|website\\.assets_frontend/)\\;confidence:25",
+            "website": "http://odoo.com"
+        },
+        "OpenCms": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Server": "OpenCms"
+            },
+            "html": "<link href=\"/opencms/",
+            "icon": "OpenCms.png",
+            "implies": "Java",
+            "script": "opencms",
+            "website": "http://www.opencms.org"
+        },
+        "OpenNemas": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "OpenNemas"
+            },
+            "icon": "OpenNemas.png",
+            "meta": {
+                "generator": "OpenNemas"
+            },
+            "website": "http://www.opennemas.com"
+        },
+        "OpenText Web Solutions": {
+            "cats": [
+                "1"
+            ],
+            "html": "<!--[^>]+published by Open Text Web Solutions",
+            "icon": "OpenText Web Solutions.png",
+            "implies": "Microsoft ASP.NET",
+            "website": "http://websolutions.opentext.com"
+        },
+        "Ophal": {
+            "cats": [
+                "1",
+                "11",
+                "18"
+            ],
+            "headers": {
+                "X-Powered-By": "Ophal(?: (.*))? \\(ophal\\.org\\)\\;version:\\1"
+            },
+            "icon": "Ophal.png",
+            "implies": "Lua",
+            "meta": {
+                "generator": "Ophal(?: (.*))? \\(ophal\\.org\\)\\;version:\\1"
+            },
+            "script": "ophal\\.js",
+            "website": "http://ophal.org"
+        },
+        "Orchard CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Orchard CMS.png",
+            "implies": "Microsoft ASP.NET",
+            "meta": {
+                "generator": "Orchard"
+            },
+            "website": "http://orchardproject.net"
+        },
+        "PANSITE": {
+            "cats": [
+                "1"
+            ],
+            "icon": "PANSITE.png",
+            "meta": {
+                "generator": "PANSITE"
+            },
+            "website": "http://panvision.de/Produkte/Content_Management/index.asp"
+        },
+        "PHP-Fusion": {
+            "cats": [
+                "1"
+            ],
+            "html": "Powered by <a href=\"[^>]+php-fusion",
+            "icon": "PHP-Fusion.png",
+            "implies": "PHP",
+            "website": "http://www.php-fusion.co.uk"
+        },
+        "PHP-Nuke": {
+            "cats": [
+                "1"
+            ],
+            "html": "<[^>]+Powered by PHP-Nuke",
+            "icon": "PHP-Nuke.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "PHP-Nuke"
+            },
+            "website": "http://phpnuke.org"
+        },
+        "Pagekit": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Pagekit.png",
+            "meta": {
+                "generator": "Pagekit"
+            },
+            "website": "http://pagekit.com"
+        },
+        "PencilBlue": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "headers": {
+                "X-Powered-By": "PencilBlue"
+            },
+            "icon": "PencilBlue.png",
+            "implies": "Node.js",
+            "website": "http://pencilblue.org"
+        },
+        "Percussion": {
+            "cats": [
+                "1"
+            ],
+            "html": "<[^>]+class=\"perc-region\"",
+            "icon": "Percussion.png",
+            "meta": {
+                "generator": "(?:Percussion|Rhythmyx)"
+            },
+            "website": "http://percussion.com"
+        },
+        "Pimcore": {
+            "cats": [
+                "1",
+                "6",
+                "18"
+            ],
+            "headers": {
+                "X-Powered-By": "pimcore"
+            },
+            "icon": "pimcore.svg",
+            "implies": "PHP",
+            "website": "http://pimcore.org"
+        },
+        "Pligg": {
+            "cats": [
+                "1"
+            ],
+            "env": "^pligg_",
+            "html": "<span[^>]+id=\"xvotes-0",
+            "icon": "Pligg.png",
+            "meta": {
+                "generator": "Pligg"
+            },
+            "website": "http://pligg.com"
+        },
+        "Plone": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Plone.png",
+            "implies": "Python",
+            "meta": {
+                "generator": "Plone"
+            },
+            "website": "http://plone.org"
+        },
+        "Posterous": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "env": "^Posterous",
+            "html": "<div class=\"posterous",
+            "icon": "Posterous.png",
+            "website": "http://posterous.com"
+        },
+        "Public CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "PUBLICCMS_USER",
+                "X-Powered-PublicCMS": ""
+            },
+            "icon": "Public CMS.png",
+            "implies": "Java",
+            "website": "http://www.publiccms.com"
+        },
+        "PyroCMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "pyrocms",
+                "X-Streams-Distribution": "PyroCMS"
+            },
+            "icon": "PyroCMS.png",
+            "implies": "Laravel",
+            "website": "http://pyrocms.com"
+        },
+        "Quick.CMS": {
+            "cats": [
+                "1"
+            ],
+            "html": "<a href=\"[^>]+opensolution\\.org/\">CMS by",
+            "icon": "Quick.CMS.png",
+            "meta": {
+                "generator": "Quick\\.CMS(?: v([\\d.]+))?\\;version:\\1"
+            },
+            "website": "http://opensolution.org"
+        },
+        "RBS Change": {
+            "cats": [
+                "1",
+                "6"
+            ],
+            "html": "<html[^>]+xmlns:change=",
+            "icon": "RBS Change.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "RBS Change"
+            },
+            "website": "http://www.rbschange.fr"
+        },
+        "RCMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "RCMS.png",
+            "meta": {
+                "generator": "^(?:RCMS|ReallyCMS)"
+            },
+            "website": "http://www.rcms.fi"
+        },
+        "RiteCMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "RiteCMS.png",
+            "implies": [
+                "PHP",
+                "SQLite\\;confidence:50"
+            ],
+            "meta": {
+                "generator": "^RiteCMS(?: (.+))?\\;version:\\1"
+            },
+            "website": "http://ritecms.com"
+        },
+        "Roadiz CMS": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "headers": {
+                "X-Powered-By": "Roadiz CMS"
+            },
+            "icon": "Roadiz CMS.png",
+            "implies": [
+                "PHP",
+                "Symfony"
+            ],
+            "meta": {
+                "generator": "^Roadiz ([a-z0-9\\s\\.]+) - \\;version:\\1"
+            },
+            "website": "http://www.roadiz.io"
+        },
+        "RockRMS": {
+            "cats": [
+                "1",
+                "11",
+                "32"
+            ],
+            "icon": "RockRMS.svg",
+            "implies": [
+                "Windows Server",
+                "IIS",
+                "Microsoft ASP.NET"
+            ],
+            "meta": {
+                "generator": "^Rock v.*"
+            },
+            "website": "http://www.rockrms.com"
+        },
+        "S.Builder": {
+            "cats": [
+                "1"
+            ],
+            "icon": "S.Builder.png",
+            "meta": {
+                "generator": "S\\.Builder"
+            },
+            "website": "http://www.sbuilder.ru"
+        },
+        "SDL Tridion": {
+            "cats": [
+                "1"
+            ],
+            "html": "<img[^>]+_tcm\\d{2,3}-\\d{6}\\.",
+            "icon": "SDL Tridion.png",
+            "website": "http://www.sdl.com/products/tridion"
+        },
+        "SIMsite": {
+            "cats": [
+                "1"
+            ],
+            "icon": "SIMsite.png",
+            "meta": {
+                "SIM.medium": ""
+            },
+            "script": "/sim(?:site|core)/js",
+            "website": "http://simgroep.nl/internet/portfolio-contentbeheer_41623/"
+        },
+        "SPIP": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Spip-Cache": ""
+            },
+            "icon": "SPIP.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "(?:^|\\s)SPIP(?:\\s([\\d.]+(?:\\s\\[\\d+\\])?))?\\;version:\\1"
+            },
+            "website": "http://www.spip.net"
+        },
+        "Sarka-SPIP": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Sarka-SPIP.png",
+            "implies": "SPIP",
+            "meta": {
+                "generator": "Sarka-SPIP(?:\\s([\\d.]+))?\\;version:\\1"
+            },
+            "website": "http://sarka-spip.net"
+        },
+        "Serendipity": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "icon": "Serendipity.png",
+            "implies": "PHP",
+            "meta": {
+                "Powered-By": "Serendipity v\\.(.+)\\;version:\\1",
+                "generator": "Serendipity"
+            },
+            "website": "http://s9y.org"
+        },
+        "Silva": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "SilvaCMS"
+            },
+            "icon": "Silva.png",
+            "website": "http://silvacms.org"
+        },
+        "SilverStripe": {
+            "cats": [
+                "1"
+            ],
+            "html": "Powered by <a href=\"[^>]+SilverStripe",
+            "icon": "SilverStripe.svg",
+            "meta": {
+                "generator": "SilverStripe"
+            },
+            "website": "http://www.silverstripe.org"
+        },
+        "SiteEdit": {
+            "cats": [
+                "1"
+            ],
+            "icon": "SiteEdit.png",
+            "meta": {
+                "generator": "SiteEdit"
+            },
+            "website": "http://www.siteedit.ru"
+        },
+        "Sitecore": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-cookie": "SC_ANALYTICS_GLOBAL_COOKIE"
+            },
+            "html": "<img[^>]+src=\"[^>]*/~/media/[^>]+\\.ashx",
+            "icon": "Sitecore.png",
+            "website": "http://sitecore.net"
+        },
+        "Sitefinity": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Sitefinity.svg",
+            "implies": "Microsoft ASP.NET",
+            "meta": {
+                "generator": "^Sitefinity (.+)$\\;version:\\1"
+            },
+            "website": "http://www.sitefinity.com"
+        },
+        "Sivuviidakko": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Sivuviidakko.png",
+            "meta": {
+                "generator": "Sivuviidakko"
+            },
+            "website": "http://sivuviidakko.fi"
+        },
+        "SmartSite": {
+            "cats": [
+                "1"
+            ],
+            "html": "<[^>]+/smartsite\\.(?:dws|shtml)\\?id=",
+            "icon": "SmartSite.png",
+            "meta": {
+                "author": "Redacteur SmartInstant"
+            },
+            "website": "http://www.seneca.nl/pub/Smartsite/Smartsite-Smartsite-iXperion"
+        },
+        "Solodev": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "solodev_session": ""
+            },
+            "html": "<div class=[\"']dynamicDiv[\"'] id=[\"']dd\\.\\d\\.\\d(?:\\.\\d)?[\"']>",
+            "icon": "Solodev.png",
+            "implies": "PHP",
+            "website": "http://www.solodev.com"
+        },
+        "Squarespace": {
+            "cats": [
+                "1"
+            ],
+            "env": "^Squarespace",
+            "headers": {
+                "X-ServedBy": "squarespace"
+            },
+            "icon": "Squarespace.png",
+            "website": "http://www.squarespace.com"
+        },
+        "Squiz Matrix": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "Squiz Matrix"
+            },
+            "html": "<!--\\s+Running (?:MySource|Squiz) Matrix",
+            "icon": "Squiz Matrix.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "Squiz Matrix"
+            },
+            "website": "http://squiz.net"
+        },
+        "Stackla Social Hub": {
+            "cats": [
+                "1"
+            ],
+            "env": "^stacklaSocialHub$",
+            "icon": "Stackla.png",
+            "website": "http://stackla.com/"
+        },
+        "Subrion": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-CMS": "Subrion CMS"
+            },
+            "icon": "Subrion.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "^Subrion "
+            },
+            "website": "http://subrion.com"
+        },
+        "Sulu": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Generator": "Sulu/?(.+)?$\\;version:\\1"
+            },
+            "icon": "Sulu.svg",
+            "implies": "Symfony",
+            "website": "http://sulu.io"
+        },
+        "TYPO3 CMS": {
+            "cats": [
+                "1"
+            ],
+            "html": "<(?:script[^>]+ src|link[^>]+ href)=[^>]+typo3temp/",
+            "icon": "TYPO3.svg",
+            "implies": "PHP",
+            "meta": {
+                "generator": "TYPO3\\s+(?:CMS\\s+)?([\\d.]+)?(?:\\s+CMS)?\\;version:\\1"
+            },
+            "url": "/typo3/",
+            "website": "http://www.typo3.org"
+        },
+        "Telescope": {
+            "cats": [
+                "1"
+            ],
+            "env": "Telescope",
+            "icon": "Telescope.png",
+            "implies": "Meteor",
+            "website": "http://telescopeapp.org"
+        },
+        "Textpattern CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Textpattern CMS.png",
+            "implies": [
+                "PHP",
+                "MySQL"
+            ],
+            "meta": {
+                "generator": "Textpattern"
+            },
+            "website": "http://textpattern.com"
+        },
+        "Thelia": {
+            "cats": [
+                "1",
+                "6"
+            ],
+            "html": "<(?:link|style|script)[^>]+/assets/frontOffice/",
+            "icon": "Thelia.png",
+            "implies": [
+                "PHP",
+                "Symfony"
+            ],
+            "website": "http://thelia.net"
+        },
+        "TiddlyWiki": {
+            "cats": [
+                "1",
+                "2",
+                "4",
+                "8"
+            ],
+            "env": "tiddler",
+            "html": "<[^>]*type=[^>]text\\/vnd\\.tiddlywiki",
+            "icon": "TiddlyWiki.png",
+            "meta": {
+                "application-name": "^TiddlyWiki$",
+                "copyright": "^TiddlyWiki created by Jeremy Ruston",
+                "generator": "^TiddlyWiki$",
+                "tiddlywiki-version": "(.*)\\;version:\\1"
+            },
+            "website": "http://tiddlywiki.com"
+        },
+        "Tiki Wiki CMS Groupware": {
+            "cats": [
+                "1",
+                "2",
+                "8",
+                "11",
+                "13"
+            ],
+            "icon": "Tiki Wiki CMS Groupware.png",
+            "meta": {
+                "generator": "^Tiki"
+            },
+            "script": "(?:/|_)tiki",
+            "website": "http://tiki.org"
+        },
+        "Translucide": {
+            "cats": [
+                "1"
+            ],
+            "icon": "translucide.svg",
+            "implies": [
+                "PHP",
+                "jQuery"
+            ],
+            "script": "lucide\\.init\\.js",
+            "website": "http://www.translucide.net"
+        },
+        "Twilight CMS": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-CMS": "Twilight CMS"
+            },
+            "icon": "Twilight CMS.png",
+            "website": "http://www.twilightcms.com"
+        },
+        "Umbraco": {
+            "cats": [
+                "1"
+            ],
+            "env": "^(?:UC_(?:IMAGE_SERVICE|ITEM_INFO_SERVICE|SETTINGS)|Umbraco)$",
+            "headers": {
+                "X-Umbraco-Version": "(.*)\\;version:\\1"
+            },
+            "html": "powered by <a href=[^>]+umbraco",
+            "icon": "Umbraco.png",
+            "implies": "Microsoft ASP.NET",
+            "meta": {
+                "generator": "umbraco"
+            },
+            "url": "/umbraco/login\\.aspx(?:$|\\?)",
+            "website": "http://umbraco.com"
+        },
+        "Ushahidi": {
+            "cats": [
+                "1",
+                "35"
+            ],
+            "env": "^Ushahidi$",
+            "headers": {
+                "Set-Cookie": "^ushahidi="
+            },
+            "icon": "Ushahidi.png",
+            "implies": [
+                "PHP",
+                "MySQL",
+                "OpenLayers"
+            ],
+            "script": "/js/ushahidi\\.js$",
+            "website": "http://www.ushahidi.com"
+        },
+        "VIVVO": {
+            "cats": [
+                "1"
+            ],
+            "env": "^vivvo",
+            "headers": {
+                "Set-Cookie": "VivvoSessionId"
+            },
+            "icon": "VIVVO.png",
+            "website": "http://vivvo.net"
+        },
+        "Vignette": {
+            "cats": [
+                "1"
+            ],
+            "html": "<[^>]+=\"vgn-?ext",
+            "icon": "Vignette.png",
+            "website": "http://www.vignette.com"
+        },
+        "WebGUI": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "^wgSession="
+            },
+            "icon": "WebGUI.png",
+            "implies": "Perl",
+            "meta": {
+                "generator": "^WebGUI ([\\d.]+)\\;version:\\1"
+            },
+            "website": "http://www.webgui.org"
+        },
+        "WebPublisher": {
+            "cats": [
+                "1"
+            ],
+            "icon": "WebPublisher.png",
+            "meta": {
+                "generator": "WEB\\|Publisher"
+            },
+            "website": "http://scannet.dk"
+        },
+        "Webs": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Server": "Webs\\.com/?([\\d\\.]+)?\\;version:\\1"
+            },
+            "icon": "Webs.png",
+            "website": "http://webs.com"
+        },
+        "WebsPlanet": {
+            "cats": [
+                "1"
+            ],
+            "icon": "WebsPlanet.png",
+            "meta": {
+                "generator": "WebsPlanet"
+            },
+            "website": "http://websplanet.com"
+        },
+        "WebsiteBaker": {
+            "cats": [
+                "1"
+            ],
+            "icon": "WebsiteBaker.png",
+            "implies": [
+                "PHP",
+                "MySQL"
+            ],
+            "meta": {
+                "generator": "WebsiteBaker"
+            },
+            "website": "http://websitebaker2.org/en/home.php"
+        },
+        "Weebly": {
+            "cats": [
+                "1"
+            ],
+            "icon": "Weebly.png",
+            "script": "cdn\\d+\\.editmysite\\.com",
+            "website": "http://www.weebly.com"
+        },
+        "Wix": {
+            "cats": [
+                "1"
+            ],
+            "env": "^wix(?:Events|Data|Errors)",
+            "headers": {
+                "Set-Cookie": "Domain=\\.wix\\.com",
+                "X-Wix-Dispatcher-Cache-Hit": ""
+            },
+            "icon": "Wix.png",
+            "meta": {
+                "X-Wix-Renderer-Server": ""
+            },
+            "script": "static\\.wixstatic\\.com",
+            "website": "http://wix.com"
+        },
+        "Wolf CMS": {
+            "cats": [
+                "1"
+            ],
+            "html": "(?:<a href=\"[^>]+wolfcms\\.org[^>]+>Wolf CMS(?:</a>)? inside|Thank you for using <a[^>]+>Wolf CMS)",
+            "icon": "Wolf CMS.png",
+            "implies": "PHP",
+            "website": "http://www.wolfcms.org"
+        },
+        "WordPress": {
+            "cats": [
+                "1",
+                "11"
+            ],
+            "env": "^wp_username$",
+            "html": [
+                "<link rel=[\"']stylesheet[\"'] [^>]+wp-(?:content|includes)",
+                "<link[^>]+s\\d+\\.wp\\.com"
+            ],
+            "icon": "WordPress.svg",
+            "implies": "PHP",
+            "meta": {
+                "generator": "WordPress( [\\d.]+)?\\;version:\\1"
+            },
+            "script": "/wp-includes/",
+            "website": "http://wordpress.org"
+        },
+        "XOOPS": {
+            "cats": [
+                "1"
+            ],
+            "env": "^xoops",
+            "icon": "XOOPS.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "XOOPS"
+            },
+            "website": "http://xoops.org"
+        },
+        "XpressEngine": {
+            "cats": [
+                "1"
+            ],
+            "icon": "XpressEngine.png",
+            "meta": {
+                "generator": "XpressEngine"
+            },
+            "website": "http://www.xpressengine.com/"
+        },
+        "a-blog cms": {
+            "cats": [
+                "1"
+            ],
+            "icon": "a-blog cms.svg",
+            "implies": "PHP",
+            "meta": {
+                "generator": "a-blog cms"
+            },
+            "website": "http://www.a-blogcms.jp"
+        },
+        "actionhero.js": {
+            "cats": [
+                "1",
+                "18",
+                "22"
+            ],
+            "env": "^actionheroClient$",
+            "headers": {
+                "X-Powered-By": "actionhero API"
+            },
+            "icon": "actionhero.js.png",
+            "implies": "Node.js",
+            "script": "actionheroClient\\.js",
+            "website": "http://www.actionherojs.com"
+        },
+        "e107": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "Set-Cookie": "e107_tz[^;]+=",
+                "X-Powered-By": "e107"
+            },
+            "icon": "e107.png",
+            "implies": "PHP",
+            "script": "[^a-z\\d]e107\\.js",
+            "website": "http://e107.org"
+        },
+        "eSyndiCat": {
+            "cats": [
+                "1"
+            ],
+            "env": "^esyndicat$",
+            "headers": {
+                "X-Drectory-Script": "^eSyndiCat"
+            },
+            "icon": "eSyndiCat.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "^eSyndiCat "
+            },
+            "website": "http://esyndicat.com"
+        },
+        "eZ Publish": {
+            "cats": [
+                "1",
+                "6"
+            ],
+            "headers": {
+                "X-Powered-By": "^eZ Publish"
+            },
+            "icon": "eZ Publish.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "eZ Publish"
+            },
+            "website": "http://ez.no"
+        },
+        "enduro.js": {
+            "cats": [
+                "1",
+                "18",
+                "47"
+            ],
+            "headers": {
+                "X-Powered-By": "^enduro.js$"
+            },
+            "icon": "enduro.js.svg",
+            "implies": "Node.js",
+            "website": "http://endurojs.com"
+        },
+        "io4 CMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "io4 CMS.png",
+            "meta": {
+                "generator": "GO[ |]+CMS Enterprise"
+            },
+            "website": "http://notenbomer.nl/Producten/Content_management/io4_|_cms"
+        },
+        "openEngine": {
+            "cats": [
+                "1"
+            ],
+            "icon": "openEngine.png",
+            "meta": {
+                "openEngine": ""
+            },
+            "website": "http://openengine.de/html/pages/de/"
+        },
+        "papaya CMS": {
+            "cats": [
+                "1"
+            ],
+            "html": "<link[^>]*/papaya-themes/",
+            "icon": "papaya CMS.png",
+            "implies": "PHP",
+            "website": "http://papaya-cms.com"
+        },
+        "phpCMS": {
+            "cats": [
+                "1"
+            ],
+            "env": "^phpcms",
+            "icon": "phpCMS.png",
+            "implies": "PHP",
+            "website": "http://phpcms.de"
+        },
+        "phpSQLiteCMS": {
+            "cats": [
+                "1"
+            ],
+            "icon": "phpSQLiteCMS.png",
+            "implies": [
+                "PHP",
+                "SQLite"
+            ],
+            "meta": {
+                "generator": "^phpSQLiteCMS(?: (.+))?$\\;version:\\1"
+            },
+            "website": "http://phpsqlitecms.net"
+        },
+        "phpwind": {
+            "cats": [
+                "1",
+                "2"
+            ],
+            "html": "Powered by <a href=\"[^\"]+phpwind\\.net",
+            "icon": "phpwind.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "^phpwind"
+            },
+            "website": "http://www.phpwind.net"
+        },
+        "sNews": {
+            "cats": [
+                "1"
+            ],
+            "icon": "sNews.png",
+            "meta": {
+                "generator": "sNews"
+            },
+            "website": "http://snewscms.com"
+        },
+        "swift.engine": {
+            "cats": [
+                "1"
+            ],
+            "headers": {
+                "X-Powered-By": "swift\\.engine"
+            },
+            "icon": "swift.engine.png",
+            "website": "http://mittec.ru/default"
+        },
+        "uCore": {
+            "cats": [
+                "1",
+                "18"
+            ],
+            "headers": {
+                "Set-Cookie": "ucore"
+            },
+            "icon": "uCore.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "uCore PHP Framework"
+            },
+            "website": "http://ucore.io"
+        },
+        "uKnowva": {
+            "cats": [
+                "1",
+                "2",
+                "18",
+                "50"
+            ],
+            "headers": {
+                "X-Content-Encoded-By": "uKnowva ([\\d.]+)\\;version:\\1"
+            },
+            "html": "<a[^>]+>Powered by uKnowva</a>",
+            "icon": "uKnowva.png",
+            "implies": "PHP",
+            "meta": {
+                "generator": "uKnowva (?: ([\\d.]+))?\\;version:\\1"
+            },
+            "script": "/media/conv/js/jquery.js",
+            "website": "http://uknowva.com"
+        },
+        "viennaCMS": {
+            "cats": [
+                "1"
+            ],
+            "html": "powered by <a href=\"[^>]+viennacms",
+            "icon": "default.svg",
+            "website": "http://www.viennacms.nl"
+        },
+        "webEdition": {
+            "cats": [
+                "1"
+            ],
+            "icon": "webEdition.png",
+            "meta": {
+                "DC.title": "webEdition",
+                "generator": "webEdition"
+            },
+            "website": "http://webedition.de/en"
+        }
+    }
+}

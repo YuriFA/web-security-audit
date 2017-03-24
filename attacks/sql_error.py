@@ -25,11 +25,10 @@ def sql_error(page, client):
 
     for param, value in dict_iterate(query):
         injected_url = update_url_params(page.url, {param: PAYLOAD})
+
         try:
             res_page = client.get(injected_url)
-        except NotAPage:
-            continue
-        except RedirectedToExternal:
+        except NotAPage, RedirectedToExternal:
             continue
 
         check_sql_error(res_page)
@@ -42,9 +41,7 @@ def sql_error(page, client):
             try:
                 res_page = form.send(client, injected_params)
                 check_sql_error(res_page)
-            except NotAPage:
-                continue
-            except RedirectedToExternal:
+            except NotAPage, RedirectedToExternal:
                 continue
 
         if urlparse(form.action).query:
@@ -53,9 +50,7 @@ def sql_error(page, client):
             try:
                 res_page = form.send(client, form_parameters, changed_action=injected_action)
                 check_sql_error(res_page)
-            except NotAPage:
-                continue
-            except RedirectedToExternal:
+            except NotAPage, RedirectedToExternal:
                 continue
 
 def check_sql_error(res_page):

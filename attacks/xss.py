@@ -53,11 +53,10 @@ def xss(page, client):
 
             for injection in INJECTIONS:
                 injected_params = modify_parameter(form_parameters, param, value + injection)
+
                 try:
                     res_page = form.send(client, injected_params)
-                except NotAPage:
-                    continue
-                except RedirectedToExternal:
+                except NotAPage, RedirectedToExternal:
                     continue
 
                 result = res_page.document.find_all(contains_injection)
@@ -83,12 +82,12 @@ def hpp(url, client):
         successed = []
         for injection in INJECTIONS:
             injected_url = update_url_params(url, {param: value + injection})
+
             try:
                 res_page = client.get(injected_url)
-            except NotAPage:
+            except NotAPage, RedirectedToExternal:
                 continue
-            except RedirectedToExternal:
-                continue
+
             result = res_page.document.find_all(contains_injection)
 
             if result:

@@ -20,7 +20,5 @@ def csrf(page, client):
 
                 print('HTML form without CSRF protection {}'.format(form.action))
 
-        except NotAPage:
-            continue
-        except RedirectedToExternal:
+        except NotAPage, RedirectedToExternal:
             continue

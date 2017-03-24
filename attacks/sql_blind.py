@@ -42,13 +42,12 @@ def boolean_blind(client, page):
         successed = 0
         for payload, is_correct in dict_iterate(BOOLEAN_INJECTIONS):
             injected_action = update_url_params(page.url, {param: value + payload})
+
             try:
                 res_page = client.get(injected_action)
                 if is_correct == compare(page_content, list(res_page.document.stripped_strings)):
                     successed += 1
-            except NotAPage:
-                continue
-            except RedirectedToExternal:
+            except NotAPage, RedirectedToExternal:
                 continue
 
         if successed == BOOL_TEST_COUNT:
@@ -68,9 +67,7 @@ def time_based_blind_url(client, url):
                     try:
                         req_time = client.get(injected_url).response.elapsed.total_seconds()
                         successed.append([t, req_time])
-                    except NotAPage:
-                        continue
-                    except RedirectedToExternal:
+                    except NotAPage, RedirectedToExternal:
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):
@@ -92,9 +89,7 @@ def time_based_blind_form(client, form):
                     try:
                         req_time = form.send(client, form_parameters, changed_action=injected_action).response.elapsed.total_seconds()
                         successed.append([t, req_time])
-                    except NotAPage:
-                        continue
-                    except RedirectedToExternal:
+                    except NotAPage, RedirectedToExternal:
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):
@@ -112,9 +107,7 @@ def time_based_blind_form(client, form):
                     try:
                         req_time = form.send(client, injected_params).response.elapsed.total_seconds()
                         successed.append([t, req_time])
-                    except NotAPage:
-                        continue
-                    except RedirectedToExternal:
+                    except NotAPage, RedirectedToExternal:
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):

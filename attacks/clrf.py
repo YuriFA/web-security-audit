@@ -21,9 +21,7 @@ def clrf(page, client):
                 res_page = form.send(client, injected_parameters)
                 check_clrf(res_page)
 
-            except NotAPage:
-                continue
-            except RedirectedToExternal:
+            except NotAPage, RedirectedToExternal:
                 continue
 
 
@@ -38,9 +36,7 @@ def attack_url(url, client):
         try:
             res_page = client.get(injected_url)
             check_clrf(res_page)
-        except NotAPage:
-            continue
-        except RedirectedToExternal:
+        except NotAPage, RedirectedToExternal:
             continue
 
 def check_clrf(res_page):
