@@ -38,14 +38,14 @@ def main(options):
     if apps:
         print('Detected technologies')
         for app, app_types in apps.iteritems():
-            print(app, app_types)
+            print('{} - {}'.format(app_types, app))
 
     all_pages = Crawler(target_url, client, whitelist=options.whitelist)
 
     for page in all_pages:
         print('Scanning: [{}] {}'.format(page.status_code, page.url))
-        # for attack in all_attacks():
-        #     attack(page, client)
+        for attack in all_attacks():
+            attack(page, client)
 
     print(all_pages.count)
 

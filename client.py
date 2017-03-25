@@ -38,8 +38,9 @@ class Client(object):
         except requests.exceptions.HTTPError as error:
             r = error
         except requests.exceptions.RequestException as error:
-            print(error)
-            sys.exit(1)
+            # print(url, error)
+            # sys.exit(1)
+            r = error
 
         if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
             raise NotAPage()
@@ -57,8 +58,9 @@ class Client(object):
         except requests.exceptions.HTTPError as error:
             r = error
         except requests.exceptions.RequestException as error:
-            print(error)
-            sys.exit(1)
+            # print(url, error)
+            # sys.exit(1)
+            r = error
 
         if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
             raise NotAPage()

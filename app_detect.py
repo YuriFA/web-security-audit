@@ -1,9 +1,7 @@
-from pprint import pprint
 from collections import deque
 
 import re
 import json
-import time
 import six
 
 APPS_FILE = 'apps.json'
