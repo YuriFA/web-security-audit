@@ -40,14 +40,18 @@ def main(options):
         for app, app_types in apps.iteritems():
             print('{} - {}'.format(app_types, app))
 
-    all_pages = Crawler(target_url, client, whitelist=options.whitelist)
+    if options.page_only:
+        page = client.get(target_url)
+        all_pages = [page]
+    else:
+        all_pages = Crawler(target_url, client, whitelist=options.whitelist)
 
     for page in all_pages:
         print('Scanning: [{}] {}'.format(page.status_code, page.url))
         for attack in all_attacks():
             attack(page, client)
 
-    print(all_pages.count)
+    print('1' if options.page_only else all_pages.count)
 
 def optlist_callback(option, opt, value, parser):
     setattr(parser.values, option.dest, value.split(','))
@@ -57,6 +61,7 @@ if __name__ == "__main__":
     parser.add_option("-u", "--url", dest="url", help="Target URL (e.g. \"http://www.target.com/page.php?id=1\")")
     parser.add_option("-a", dest="auth_data", help="Enter 3 args URL, fieldname=username, fieldname=password for sending request to log in", nargs=3, metavar="http://www.target.com/?login=true user passwd")
     parser.add_option("-w", "--whitelist", type="string", action='callback', callback=optlist_callback, dest="whitelist", help="Hosts that will not be blocked", metavar="same.target.com, same2.target.com...", default={})
+    parser.add_option("--pageonly", action="store_true", dest="page_only", help="Scan this page url only", default=False)
     options, _ = parser.parse_args()
 
     if options.url:

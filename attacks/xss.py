@@ -56,7 +56,7 @@ def xss(page, client):
 
                 try:
                     res_page = form.send(client, injected_params)
-                except NotAPage, RedirectedToExternal:
+                except (NotAPage, RedirectedToExternal) as e:
                     continue
 
                 result = res_page.document.find_all(contains_injection)

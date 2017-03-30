@@ -14,11 +14,11 @@ def csrf(page, client):
         try:
             valid_res = form.send(client, valid_params)
             broken_res = form.send(client, broken_params)
-
-            if broken_res.status_code == 200 \
-                and compare(list(valid_res.document.stripped_strings), list(broken_res.document.stripped_strings)):
-
-                print('HTML form without CSRF protection {}'.format(form.action))
-
-        except NotAPage, RedirectedToExternal:
+        except (NotAPage, RedirectedToExternal) as e:
             continue
+
+        if broken_res.status_code == 200 \
+            and compare(list(valid_res.document.stripped_strings), list(broken_res.document.stripped_strings)):
+
+            print('HTML form without CSRF protection {}'.format(form.action))
+

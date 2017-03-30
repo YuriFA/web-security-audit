@@ -42,9 +42,7 @@ class Crawler(object):
 
             try:
                 page = self.client.get(url)
-            except NotAPage:
-                continue
-            except RedirectedToExternal:
+            except (NotAPage, RedirectedToExternal) as e:
                 continue
 
             if page.url in self.visited_links:

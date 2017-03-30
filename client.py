@@ -35,11 +35,7 @@ class Client(object):
         try:
             r = self.session.get(url, headers=headers or self.default_headers)
             r.raise_for_status()
-        except requests.exceptions.HTTPError as error:
-            r = error
-        except requests.exceptions.RequestException as error:
-            # print(url, error)
-            # sys.exit(1)
+        except (requests.exceptions.HTTPError, requests.exceptions.RequestException) as error:
             r = error
 
         if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
@@ -55,11 +51,7 @@ class Client(object):
         try:
             r = self.session.post(url, data=data, headers=headers or self.default_headers)
             r.raise_for_status()
-        except requests.exceptions.HTTPError as error:
-            r = error
-        except requests.exceptions.RequestException as error:
-            # print(url, error)
-            # sys.exit(1)
+        except (requests.exceptions.HTTPError, requests.exceptions.RequestException) as error:
             r = error
 
         if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:

@@ -49,10 +49,7 @@ class Form(object):
             yield txt
 
     def send(self, client, params, changed_action=None):
-        if changed_action:
-            action = changed_action
-        else:
-            action = self.action
+        action = changed_action or self.action
 
         if self.method.lower() == POST.lower():
             res_page = client.post(self.action, data=params)
