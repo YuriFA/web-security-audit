@@ -37,13 +37,10 @@ INJECTIONS = (
     "<iframe/src=\"data:text&sol;html;&Tab;base64&NewLine;,PGJvZHkgb25sb2FkPWFsZXJ0KCd4c3NlZCcpPg==\">"
 )
 
-def xss(page, client):
-    # print("Testing for XSS in page {}".format(page.url))
-    url_xss_report = hpp(page.url, client)
+def xss(page, client, log):
+    url_xss(page.url, client, log) #test url for XSS
 
     for form in page.get_forms():
-        report = {}
-
         if get_url_host(page.url) != get_url_host(form.action):
             continue
 
@@ -59,22 +56,18 @@ def xss(page, client):
                 except (NotAPage, RedirectedToExternal) as e:
                     continue
 
-                result = res_page.document.find_all(contains_injection)
-                if result:
+                if res_page.document.find_all(contains_injection):
                     successed.append(injection)
 
             if successed:
-                report.update({param: successed})
-        if report:
-            print('Cross Site Scripting (XSS) in url {} on form {}. params {}'.format(page.url, form.action, report.keys()))
+                log('vuln', 'xss', form.action, param, injections=successed)
 
 def contains_injection(tag):
     return any(k in SCRIPTABLE_ATTRS and XSS_STRING in v \
         or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in dict_iterate(tag.attrs)) \
         or tag.name == 'script' and list(tag.strings) and XSS_STRING in list(tag.strings)[0]
 
-def hpp(url, client):
-    """HTTP Parameter Pollution (HPP)"""
+def url_xss(url, client, log):
     query = get_url_query(url)
     report = {}
 
@@ -88,15 +81,8 @@ def hpp(url, client):
             except NotAPage, RedirectedToExternal:
                 continue
 
-            result = res_page.document.find_all(contains_injection)
-
-            if result:
+            if res_page.document.find_all(contains_injection):
                 successed.append(injection)
 
         if successed:
-            report.update({param: successed})
-
-    if report:
-        print('HTTP Parameter Pollution in url {}. params {}'.format(url, report.keys()))
-
-    return report
+            log('vuln', 'xss', url, param, injections=successed)

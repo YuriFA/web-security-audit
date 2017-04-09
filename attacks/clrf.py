@@ -7,10 +7,8 @@ CLRF_SEQUENCE = (
     u"Content-Length: %d\r\n\r\n" % len(BODY))
 ATTACK_SEQUENCE = CLRF_SEQUENCE + BODY
 
-def clrf(page, client):
-    # print("Testing for CLRF in page {}".format(page.url))
-
-    attack_url(page.url, client)
+def clrf(page, client, log):
+    attack_url(page.url, client, log)
 
     for form in page.get_forms():
         parameters = dict(form.get_parameters())
@@ -19,13 +17,14 @@ def clrf(page, client):
 
             try:
                 res_page = form.send(client, injected_parameters)
-                check_clrf(res_page)
-
             except NotAPage, RedirectedToExternal:
                 continue
 
+            if check_clrf(res_page):
+                log('vuln', 'clrf', form.action, param)
 
-def attack_url(url, client):
+
+def attack_url(url, client, log):
     query = get_url_query(url)
     report = {}
 
@@ -35,10 +34,11 @@ def attack_url(url, client):
 
         try:
             res_page = client.get(injected_url)
-            check_clrf(res_page)
         except NotAPage, RedirectedToExternal:
             continue
 
+        if check_clrf(res_page):
+            log('vuln', 'clrf', url, param)
+
 def check_clrf(res_page):
-    if res_page.headers.get('Content-Length') == str(len(BODY)):
-        print('CLRF injection in form {}'.format(res_page.request.url))
+    return res_page.headers.get('Content-Length') == str(len(BODY))

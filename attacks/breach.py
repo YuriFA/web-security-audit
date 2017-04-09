@@ -5,7 +5,7 @@ import copy
 import re
 import time
 
-def breach(page, client):
+def breach(page, client, log):
     # attacked_page = copy.deepcopy(page) -- Runtime Error wtf
     attacked_page = Page(page.response)
     if not check_for_compression(attacked_page.request.headers, 'Accept-Encoding'):
@@ -32,7 +32,7 @@ def breach(page, client):
         previous_secrets = secrets[form.action]
         constant_secrets = previous_secrets.intersection(redownload_secrets)
         if constant_secrets:
-            print('BREACH vulnerability. Secrets {} do not change during redownload page {}'.format(dict(constant_secrets), attacked_page.url))
+            log('vuln', 'breach', attacked_page.url)
 
 def check_for_compression(headers, field='Content-Encoding'):
     v = headers.get(field, 'identity').split(',')

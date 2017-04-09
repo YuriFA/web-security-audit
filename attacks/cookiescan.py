@@ -1,9 +1,9 @@
-def cookiescan(page, client):
+def cookiescan(page, client, log):
     if not check_for_cookies(page.headers):
         return
 
     if not secure_cache_control(page):
-        print('Implicit Cacheable Cookies in page {}'.format(page.url))
+        log('vuln', 'cookiescan', page.url)
 
 def check_for_cookies(headers):
     return "Set-Cookie" in headers or "Set-Cookies" in headers

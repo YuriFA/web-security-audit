@@ -20,40 +20,38 @@ BOOLEAN_INJECTIONS = {
 
 BOOL_TEST_COUNT = len(BOOLEAN_INJECTIONS)
 
-def sql_blind(page, client):
-    # print("Testing for SQL Blind in page {}".format(page.url))
+def sql_blind(page, client, log):
 
     if page.parsed_url.query:
-        time_based_blind_url(client, page.url)
-        boolean_blind(client, page)
+        time_based_blind_url(client, page.url, log)
+        boolean_blind(client, page, log)
 
     for form in page.get_forms():
         if get_url_host(page.url) != get_url_host(form.action):
             continue
 
-        time_based_blind_form(client, form)
+        time_based_blind_form(client, form, log)
 
 
-def boolean_blind(client, page):
+def boolean_blind(client, page, log):
     page_content = list(page.document.stripped_strings)
     query = get_url_query(page.url)
 
     for param, value in dict_iterate(query):
-        successed = 0
+        successed = []
         for payload, is_correct in dict_iterate(BOOLEAN_INJECTIONS):
             injected_action = update_url_params(page.url, {param: value + payload})
-
             try:
                 res_page = client.get(injected_action)
                 if is_correct == compare(page_content, list(res_page.document.stripped_strings)):
-                    successed += 1
+                    successed.append("{}: {}".format(payload, is_correct))
             except NotAPage, RedirectedToExternal:
                 continue
 
-        if successed == BOOL_TEST_COUNT:
-            print('SQL blind (boolean) in param {}'.format(param))
+        if len(successed) == BOOL_TEST_COUNT:
+            log('vuln', 'sql_blind', page.url, param, injections=successed)
 
-def time_based_blind_url(client, url):
+def time_based_blind_url(client, url, log):
     query = get_url_query(url)
 
     for param, value in dict_iterate(query):
@@ -71,9 +69,9 @@ def time_based_blind_url(client, url):
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):
-                    print('SQL blind db {} in form {} param {} injection {}'.format(db, url, param, payload))
+                    log('vuln', 'sql_blind', url, param, injections=successed)
 
-def time_based_blind_form(client, form):
+def time_based_blind_form(client, form, log):
     form_parameters = dict(form.get_parameters())
 
     query = get_url_query(form.action)
@@ -93,7 +91,7 @@ def time_based_blind_form(client, form):
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):
-                    print('SQL blind db {} in form {} param {} injection {}'.format(db, form.action, param, payload))
+                    log('vuln', 'sql_blind', form.action, param, injections=successed)
 
 
     for param in form_parameters:
@@ -111,4 +109,4 @@ def time_based_blind_form(client, form):
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):
-                    print('SQL blind db {} in form {} param {} injection {}'.format(db, form.action, param, payload))
+                    log('vuln', 'sql_blind', form.action, param, injections=successed)

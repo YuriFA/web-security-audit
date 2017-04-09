@@ -17,11 +17,8 @@ DBMS_ERRORS = {
     "Sybase": (r"(?i)Warning.*sybase.*", r"Sybase message", r"Sybase.*Server message.*"),
 }
 
-def sql_error(page, client):
-    # print("Testing for SQL Error in page {}".format(page.url))
-
-    url = page.url
-    query = get_url_query(url)
+def sql_error(page, client, log):
+    query = get_url_query(page.url)
 
     for param, value in dict_iterate(query):
         injected_url = update_url_params(page.url, {param: PAYLOAD})
@@ -31,31 +28,38 @@ def sql_error(page, client):
         except NotAPage, RedirectedToExternal:
             continue
 
-        check_sql_error(res_page)
+        if check_sql_error(res_page):
+            log('vuln', 'sql_error', page.url, param)
 
     for form in page.get_forms():
-
         form_parameters = dict(form.get_parameters())
         for param in form_parameters:
             injected_params = modify_parameter(form_parameters, param, PAYLOAD)
+
             try:
                 res_page = form.send(client, injected_params)
-                check_sql_error(res_page)
             except NotAPage, RedirectedToExternal:
                 continue
 
-        if urlparse(form.action).query:
-            injected_action = replace_url_params(form.action, PAYLOAD)
+            if check_sql_error(res_page):
+                log('vuln', 'sql_error', form.action, param)
 
+        query = get_url_query(form.action)
+        for param, value in dict_iterate(query):
+            injected_action = update_url_params(form.action, {param: PAYLOAD})
             try:
                 res_page = form.send(client, form_parameters, changed_action=injected_action)
-                check_sql_error(res_page)
             except NotAPage, RedirectedToExternal:
                 continue
+
+            if check_sql_error(res_page):
+                log('vuln', 'sql_error', form.action, param)
 
 def check_sql_error(res_page):
     for db, errors in dict_iterate(DBMS_ERRORS):
         for e in errors:
             res = re.findall(e, res_page.html)
             if res:
-                print('SQL error ({}) in {}. Error: {}'.format(db, res_page.url, res))
+                return True
+
+    return False

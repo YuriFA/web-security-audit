@@ -3,6 +3,7 @@ from attacks import all_attacks
 from utils import get_url_host, validate_url
 from client import Client, NotAPage, RedirectedToExternal
 from app_detect import app_detect
+from logger import Log
 
 import optparse
 import sys
@@ -13,13 +14,12 @@ import timeit
 VERSION = '0.0.1'
 
 def main(options):
-    target_url = options.url
-
-    target_url = validate_url(target_url)
+    target_url = validate_url(options.url)
 
     options.whitelist = set(options.whitelist)
 
     client = Client()
+    log = Log()
 
     if options.auth_data and len(options.auth_data) == 3:
         url, name, passwd = options.auth_data
@@ -46,12 +46,14 @@ def main(options):
     else:
         all_pages = Crawler(target_url, client, whitelist=options.whitelist)
 
-    for page in all_pages:
-        print('Scanning: [{}] {}'.format(page.status_code, page.url))
-        for attack in all_attacks():
-            attack(page, client)
-
-    print('1' if options.page_only else all_pages.count)
+    try:
+        for page in all_pages:
+            print('Scanning: [{}] {}'.format(page.status_code, page.url))
+            for attack in all_attacks():
+                attack(page, client, log)
+    finally:
+        log.write_report(options.csv_file or 'reports/test_{}.csv'.format(get_url_host(target_url)))
+        print('1' if options.page_only else all_pages.count)
 
 def optlist_callback(option, opt, value, parser):
     setattr(parser.values, option.dest, value.split(','))
@@ -62,6 +64,7 @@ if __name__ == "__main__":
     parser.add_option("-a", dest="auth_data", help="Enter 3 args URL, fieldname=username, fieldname=password for sending request to log in", nargs=3, metavar="http://www.target.com/?login=true user passwd")
     parser.add_option("-w", "--whitelist", type="string", action='callback', callback=optlist_callback, dest="whitelist", help="Hosts that will not be blocked", metavar="same.target.com, same2.target.com...", default={})
     parser.add_option("--pageonly", action="store_true", dest="page_only", help="Scan this page url only", default=False)
+    parser.add_option("--csv", type="string", dest="csv_file", help="Filename (*.csv) for writing report", metavar="test.csv")
     options, _ = parser.parse_args()
 
     if options.url:

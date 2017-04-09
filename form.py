@@ -52,9 +52,9 @@ class Form(object):
         action = changed_action or self.action
 
         if self.method.lower() == POST.lower():
-            res_page = client.post(self.action, data=params)
+            res_page = client.post(action, data=params)
         else:
-            url = update_url_params(self.action, params)
+            url = update_url_params(action, params)
             res_page = client.get(url)
 
         return res_page

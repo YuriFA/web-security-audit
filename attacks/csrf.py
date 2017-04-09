@@ -1,9 +1,7 @@
 from utils import compare
 from client import NotAPage, RedirectedToExternal
 
-def csrf(page, client):
-    # print("Testing for CSRF in page {}".format(page.url))
-
+def csrf(page, client, log):
     for form in page.get_forms():
         if form.is_search_form:
             continue
@@ -20,5 +18,5 @@ def csrf(page, client):
         if broken_res.status_code == 200 \
             and compare(list(valid_res.document.stripped_strings), list(broken_res.document.stripped_strings)):
 
-            print('HTML form without CSRF protection {}'.format(form.action))
+            log('warn', 'csrf', form.action)
 

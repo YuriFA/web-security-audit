@@ -1,6 +1,6 @@
 from utils import POST
 
-def clickjack(page, client):
+def clickjack(page, client, log):
     content_type = page.headers.get('Content-Type', '')
 
     if not check_for_post_forms(page):
@@ -8,11 +8,11 @@ def clickjack(page, client):
 
     frame_options = page.headers.get('X-Frame-Options')
     if not frame_options:
-        print('Clickjacking in page {} - no X-Frame-Options header'.format(page.url))
+        log('vuln', 'clickjack', page.url)
         return
 
     if not is_valid_header(frame_options):
-        print('Clickjacking in page {} - invalid X-Frame-Options!'.format(page.url))
+        log('vuln', 'clickjack', page.url)
 
 def check_for_post_forms(page):
     return any(form

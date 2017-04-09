@@ -93,6 +93,13 @@ def update_url_params(url, params):
     url_parts[4] = urlencode(query)
     return urlunparse(url_parts)
 
+def append_url_params(url, key, value):
+    url_parts = get_url_parts(url)
+    query = parse_qsl(url_parts[4])
+    query.append((key, value))
+    url_parts[4] = urlencode(query)
+    return urlunparse(url_parts)
+
 def replace_url_params(url, replace):
     url_parts = get_url_parts(url)
     query = {k: replace for k in dict(parse_qsl(url_parts[4]))}
