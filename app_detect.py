@@ -1,5 +1,6 @@
 from collections import deque
 from client import NotAPage, RedirectedToExternal
+from utils import dict_iterate
 
 import re
 import json
@@ -26,7 +27,7 @@ def app_detect(url, client):
             if hasattr(scan_func, '__call__'):
                 res = scan_func(page, apps[app][t])
                 if res:
-                    detected.update({app: get_categories(apps.get(app, None), all_cats)})
+                    detected.update({app: get_categories(apps.get(app), all_cats)})
 
                     implies = apps[app].get('implies', None)
                     if implies:
@@ -91,7 +92,7 @@ def scan_meta(page, patterns):
 
 def scan_headers(page, patterns):
     # print('headers', patterns)
-    headers = dict((k.lower(), v) for k, v in page.headers.iteritems())
+    headers = dict((k.lower(), v) for k, v in dict_iterate(page.headers))
     for header in patterns:
         for pattern in parse(patterns[header]):
             cur_header = headers.get(header.lower(), None)

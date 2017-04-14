@@ -12,4 +12,4 @@ from .cookiescan import cookiescan
 
 def all_attacks():
     return [xss, hpp, sql_error, sql_blind, csrf, clrf, lfi, directory_listing, breach, clickjack, cookiescan]
-    # return [hpp]
+    # return [xss]

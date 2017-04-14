@@ -13,10 +13,15 @@ class Page(object):
     def __init__(self, response):
         assert hasattr(response, 'request')
         self.request = response.request
-        self.html = response.text
         self.headers = response.headers
         self.cookies = response.cookies
         self.status_code = response.status_code
+
+        if 'text/html' in self.headers.get('content-type', ''):
+            self.html = response.text
+        else:
+            self.html = ''
+
         self.document = BeautifulSoup(self.html, 'lxml')#'html.parser')
         self.response = response
 
@@ -49,7 +54,10 @@ class Page(object):
         src_all = [s.get('src') for s in self.document.find_all(contains_url)]
 
         for ref in itertools.chain(refresh, ahref, src_all):
-            url = urljoin(self.url, ref)
+            if not ref:
+                continue
+
+            url = urljoin(self.url, ref.strip())
 
             if any(search(x, url) for x in blacklist):
                 continue

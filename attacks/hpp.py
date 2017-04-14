@@ -13,7 +13,7 @@ def hpp(page, client, log):
         try:
             injected_content = client.get(injected_url).document.contents
             combining_content = client.get(combining_url).document.contents
-        except NotAPage, RedirectedToExternal:
+        except (NotAPage, RedirectedToExternal) as e:
             continue
 
         if not compare(page_content, combining_content) \

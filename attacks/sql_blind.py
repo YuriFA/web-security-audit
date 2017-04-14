@@ -45,7 +45,7 @@ def boolean_blind(client, page, log):
                 res_page = client.get(injected_action)
                 if is_correct == compare(page_content, list(res_page.document.stripped_strings)):
                     successed.append("{}: {}".format(payload, is_correct))
-            except NotAPage, RedirectedToExternal:
+            except (NotAPage, RedirectedToExternal) as e:
                 continue
 
         if len(successed) == BOOL_TEST_COUNT:
@@ -65,7 +65,7 @@ def time_based_blind_url(client, url, log):
                     try:
                         req_time = client.get(injected_url).response.elapsed.total_seconds()
                         successed.append([t, req_time])
-                    except NotAPage, RedirectedToExternal:
+                    except (NotAPage, RedirectedToExternal) as e:
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):
@@ -87,7 +87,7 @@ def time_based_blind_form(client, form, log):
                     try:
                         req_time = form.send(client, form_parameters, changed_action=injected_action).response.elapsed.total_seconds()
                         successed.append([t, req_time])
-                    except NotAPage, RedirectedToExternal:
+                    except (NotAPage, RedirectedToExternal) as e:
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):
@@ -105,7 +105,7 @@ def time_based_blind_form(client, form, log):
                     try:
                         req_time = form.send(client, injected_params).response.elapsed.total_seconds()
                         successed.append([t, req_time])
-                    except NotAPage, RedirectedToExternal:
+                    except (NotAPage, RedirectedToExternal) as e:
                         continue
 
                 if successed and all(t <= rt for t, rt in successed):

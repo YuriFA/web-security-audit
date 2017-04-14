@@ -1,7 +1,7 @@
 from compat import CookieJar
 from compat import urlparse
 from page import Page
-from utils import NOT_A_PAGE_CONTENT_TYPES
+from utils import NOT_A_PAGE_CONTENT_TYPES, get_url_query
 
 import requests
 import sys
@@ -30,7 +30,7 @@ class Client(object):
     def cookies(self):
         return self.session.cookies.get_dict()
 
-    def get(self, url, headers=None):
+    def get(self, url, headers=None, ignore_type=True):
         # print 'GET requests', url
         try:
             r = self.session.get(url, headers=headers or self.default_headers)
@@ -38,7 +38,11 @@ class Client(object):
         except (requests.exceptions.HTTPError, requests.exceptions.RequestException) as error:
             r = error
 
-        if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
+        if not isinstance(r, requests.Response):
+            raise NotAPage()
+
+        if not ignore_type and r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES \
+            and not get_url_query(r.url):
             raise NotAPage()
 
         if r.history and tldextract.extract(r.url).domain != tldextract.extract(url).domain:
@@ -46,7 +50,7 @@ class Client(object):
 
         return Page(r)
 
-    def post(self, url, data={}, headers=None):
+    def post(self, url, data={}, headers=None, ignore_type=False):
         # print 'POST requests', url, data
         try:
             r = self.session.post(url, data=data, headers=headers or self.default_headers)
@@ -54,7 +58,10 @@ class Client(object):
         except (requests.exceptions.HTTPError, requests.exceptions.RequestException) as error:
             r = error
 
-        if not isinstance(r, requests.Response) or r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
+        if not isinstance(r, requests.Response):
+            raise NotAPage()
+
+        if not ignore_type and r.headers.get('content-type') in NOT_A_PAGE_CONTENT_TYPES:
             raise NotAPage()
 
         if r.history and urlparse(r.url).netloc != urlparse(url).netloc:

@@ -3,6 +3,7 @@ from compat import urlencode
 
 import collections
 import os.path
+import sys
 import time
 
 POST, GET = 'POST', 'GET'
@@ -14,6 +15,8 @@ NOT_A_PAGE_CONTENT_TYPES = frozenset([
     'image/jpeg',
     'image/png',
     'image/svg+xml',
+    'video/webm',
+    'video/mp4'
 ])
 
 INPUT_TYPE_DICT = {
@@ -73,6 +76,10 @@ def dict_iterate(d):
 
 def get_url_host(url):
     return urlparse(url).netloc
+
+def get_url_root(url):
+    p_url = urlparse(url)
+    return "{}://{}".format(p_url.scheme, p_url.netloc)
 
 def get_url_path(url):
     return urlparse(url).path
@@ -144,3 +151,26 @@ def validate_url(url):
 
 def contains_url(tag):
     return any(k in ('src',) and not v is None for k, v in dict_iterate(tag.attrs))
+
+# Print iterations progress
+def print_progress(iteration, total, prefix='', suffix='', decimals=1, length=100):
+    """
+    Call in a loop to create terminal progress bar
+    @params:
+        iteration   - Required  : current iteration (Int)
+        total       - Required  : total iterations (Int)
+        prefix      - Optional  : prefix string (Str)
+        suffix      - Optional  : suffix string (Str)
+        decimals    - Optional  : positive number of decimals in percent complete (Int)
+        length  - Optional  : character length of bar (Int)
+    """
+    str_format = "{0:." + str(decimals) + "f}"
+    percents = str_format.format(100 * (iteration / float(total)))
+    filled_length = int(round(length * iteration / float(total)))
+    bar = '#' * filled_length + '-' * (length - filled_length)
+
+    sys.stdout.write("\r{} |{}| {}{} {}".format(prefix, bar, percents, '%', suffix))
+
+    if iteration == total:
+        sys.stdout.write('\n')
+    sys.stdout.flush()

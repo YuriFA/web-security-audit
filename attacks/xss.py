@@ -37,6 +37,8 @@ INJECTIONS = (
     "<iframe/src=\"data:text&sol;html;&Tab;base64&NewLine;,PGJvZHkgb25sb2FkPWFsZXJ0KCd4c3NlZCcpPg==\">"
 )
 
+FILE_INJECTION = 'https://i.ytimg.com/vi/0vxCFIGCqnI/maxresdefault.jpg'
+
 def xss(page, client, log):
     url_xss(page.url, client, log) #test url for XSS
 
@@ -62,11 +64,6 @@ def xss(page, client, log):
             if successed:
                 log('vuln', 'xss', form.action, param, injections=successed)
 
-def contains_injection(tag):
-    return any(k in SCRIPTABLE_ATTRS and XSS_STRING in v \
-        or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in dict_iterate(tag.attrs)) \
-        or tag.name == 'script' and list(tag.strings) and XSS_STRING in list(tag.strings)[0]
-
 def url_xss(url, client, log):
     query = get_url_query(url)
     report = {}
@@ -78,7 +75,7 @@ def url_xss(url, client, log):
 
             try:
                 res_page = client.get(injected_url)
-            except NotAPage, RedirectedToExternal:
+            except (NotAPage, RedirectedToExternal) as e:
                 continue
 
             if res_page.document.find_all(contains_injection):
@@ -86,3 +83,18 @@ def url_xss(url, client, log):
 
         if successed:
             log('vuln', 'xss', url, param, injections=successed)
+
+        if 'file' in param:
+            injected_url = update_url_params(url, {param: FILE_INJECTION})
+            try:
+                res_page = client.get(injected_url, ignore_type=True)
+            except RedirectedToExternal:
+                continue
+
+            if res_page.response.status_code == 200 and res_page.response.headers.get('content-type') == 'image/jpeg':
+                log('vuln', 'xss_file', url, param, injections=[FILE_INJECTION])
+
+def contains_injection(tag):
+    return any(k in SCRIPTABLE_ATTRS and XSS_STRING in v \
+        or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in dict_iterate(tag.attrs)) \
+        or tag.name == 'script' and list(tag.strings) and XSS_STRING in list(tag.strings)[0]

@@ -13,7 +13,7 @@ def breach(page, client, log):
         new_request.headers['Accept-Encoding'] = "deflate, gzip"
         try:
             attacked_page = client.get(new_request.url, new_request.headers)
-        except NotAPage, RedirectedToExternal:
+        except (NotAPage, RedirectedToExternal) as e:
             return
 
     if not check_for_compression(attacked_page.headers):
@@ -24,7 +24,7 @@ def breach(page, client, log):
 
     try:
         redownload_page = client.get(new_request.url, new_request.headers)
-    except NotAPage, RedirectedToExternal:
+    except (NotAPage, RedirectedToExternal) as e:
         return
 
     for form in redownload_page.get_forms():

@@ -17,7 +17,7 @@ def clrf(page, client, log):
 
             try:
                 res_page = form.send(client, injected_parameters)
-            except NotAPage, RedirectedToExternal:
+            except (NotAPage, RedirectedToExternal) as e:
                 continue
 
             if check_clrf(res_page):
@@ -34,7 +34,7 @@ def attack_url(url, client, log):
 
         try:
             res_page = client.get(injected_url)
-        except NotAPage, RedirectedToExternal:
+        except (NotAPage, RedirectedToExternal) as e:
             continue
 
         if check_clrf(res_page):

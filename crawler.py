@@ -41,7 +41,7 @@ class Crawler(object):
                 continue
 
             try:
-                page = self.client.get(url)
+                page = self.client.get(url, ignore_type=False)
             except (NotAPage, RedirectedToExternal) as e:
                 continue
 
@@ -53,13 +53,3 @@ class Crawler(object):
 
             self.to_visit_links.extend(page.get_links())
             yield page
-
-
-if __name__ == "__main__":
-    target_url = "http://testphp.vulnweb.com/"
-    all_pages = Crawler(target_url)
-
-    for page in all_pages:
-        print(page.url)
-
-    print(all_pages.count)

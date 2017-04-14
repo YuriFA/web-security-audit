@@ -1,3 +1,5 @@
+from utils import remove_url_params
+
 import csv
 
 LEVEL_NAMES = {
@@ -6,7 +8,8 @@ LEVEL_NAMES = {
 }
 
 ATTACK_TYPES = {
-    'xss': 'Cross-Site Scripting',
+    'xss': 'Cross-Site Scripting (XSS)',
+    'xss_file': 'Remote file inclusion XSS',
     'hpp': 'HTTP Parameter Pollution',
     'breach': 'Breach',
     'clickjack': 'Clickjack',
@@ -17,9 +20,10 @@ ATTACK_TYPES = {
     'lfi': 'Local File Inclusion',
     'sql_blind': 'SQL Blind',
     'sql_error': 'SQL Error',
+    'cms_vuln': 'CMS Vulnerability'
 }
 
-def entry_str(level, type, url, param, injections=None, request=None):
+def entry_str(level, type, url, param, injections=None, request=None, message=None):
     if param is None:
         return "{} {} in {}".format(level, type, url)
     else:
@@ -30,23 +34,34 @@ class Log(object):
         self.entries = []
         self.direct_print = direct_print
 
-    def __call__(self, level, a_type, url, param=None, injections=None, request=None):
+    def __call__(self, level, a_type, url, param=None, injections=None, request=None, message=None):
         assert level in LEVEL_NAMES
         assert a_type in ATTACK_TYPES
 
         level_name = LEVEL_NAMES[level]
         attack_type = ATTACK_TYPES[a_type]
+        url_ = remove_url_params(url)
 
-        entry = {'level': level_name, 'type': attack_type, 'url': url, 'param': param, 'injections': injections, 'request': request}
-        self.entries.append(entry)
+        entry = {
+            'level': level_name,
+            'type': attack_type,
+            'url': url_,
+            'param': param,
+            'injections': injections,
+            'request': request,
+            'message': message
+        }
 
-        if self.direct_print:
-            print(entry_str(**entry))
+        if not entry in self.entries:
+            self.entries.append(entry)
+            if self.direct_print:
+                print(entry_str(**entry))
 
     def write_report(self, filename='reports/test.csv'):
-        with open(filename, 'wb') as csvfile:
+        with open(filename, 'w') as csvfile:
             fieldnames = ['level', 'type', 'url', 'param']
-            writer = csv.DictWriter(csvfile, extrasaction='ignore', fieldnames=fieldnames, delimiter=';')
+            writer = csv.DictWriter(csvfile, extrasaction='ignore', fieldnames=fieldnames,
+                                    delimiter=';', lineterminator='\n')
 
             writer.writeheader()
             writer.writerows(self.entries)
