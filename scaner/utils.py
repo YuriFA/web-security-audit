@@ -1,10 +1,9 @@
-from compat import urlparse, urlunparse, parse_qsl, ParseResult
-from compat import urlencode
+from .compat import urlparse, urlunparse, parse_qsl, ParseResult
+from .compat import urlencode
 
 import collections
 import os.path
 import sys
-import time
 
 POST, GET = 'POST', 'GET'
 

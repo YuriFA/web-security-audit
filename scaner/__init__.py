@@ -1,20 +1,18 @@
-from crawler import Crawler
-from attacks import all_attacks
-from cms_attacks import attack_cms
-from utils import get_url_host, validate_url, print_progress, dict_iterate
-from client import Client, NotAPage, RedirectedToExternal
-from app_detect import app_detect
-from logger import Log
+from .crawler import Crawler
+from .attacks import all_attacks
+from .cms_attacks import attack_cms
+from .utils import get_url_host, validate_url, print_progress, dict_iterate
+from .client import Client, NotAPage, RedirectedToExternal
+from .app_detect import app_detect
+from .logger import Log
 
 import optparse
 import sys
 import os
-import time
-import timeit
 
 VERSION = '0.0.1'
 
-def main(options):
+def run(options):
     cms = None
     target_url = validate_url(options.url)
 
@@ -41,6 +39,7 @@ def main(options):
     if apps:
         print('Detected technologies')
         for app, app_types in dict_iterate(apps):
+            print(app_types)
             if 'CMS' in app_types:
                 cms = app
             print('{} - {}'.format(app_types, app))
@@ -69,13 +68,13 @@ def main(options):
     except KeyboardInterrupt:
         print('Interrupted')
     finally:
-        log.write_report(options.csv_file or 'reports/test_{}.csv'.format(get_url_host(target_url)))
+        log.write_report(options.csv_file or 'test_{}.csv'.format(get_url_host(target_url)))
         print('1' if options.page_only else all_pages.count)
 
 def optlist_callback(option, opt, value, parser):
     setattr(parser.values, option.dest, value.split(','))
 
-if __name__ == "__main__":
+def main():
     parser = optparse.OptionParser(version=VERSION)
     parser.add_option("-u", "--url", dest="url", help="Target URL (e.g. \"http://www.target.com/page.php?id=1\")")
     parser.add_option("-a", dest="auth_data", help="Enter 3 args URL, fieldname=username, fieldname=password for sending request to log in", nargs=3, metavar="http://www.target.com/?login=true user passwd")
@@ -87,7 +86,7 @@ if __name__ == "__main__":
 
     if options.url:
         try:
-            main(options)
+            run(options)
         except KeyboardInterrupt:
             print('Interrupted')
             try:

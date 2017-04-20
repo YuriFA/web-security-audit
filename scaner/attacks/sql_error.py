@@ -1,6 +1,6 @@
-from utils import dict_iterate, update_url_params, replace_url_params, get_url_query, modify_parameter
-from compat import urlparse
-from client import NotAPage, RedirectedToExternal
+from ..utils import dict_iterate, update_url_params, replace_url_params, get_url_query, modify_parameter
+from ..compat import urlparse
+from ..client import NotAPage, RedirectedToExternal
 
 import re
 import time

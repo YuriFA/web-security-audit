@@ -1,6 +1,6 @@
-from client import NotAPage, RedirectedToExternal
-from compat import urljoin
-from utils import get_url_root
+from .client import NotAPage, RedirectedToExternal
+from .compat import urljoin
+from .utils import get_url_root
 
 def attack_cms(cms, url, client, log):
     attack_func = cms_switch(cms)

@@ -1,6 +1,7 @@
-from utils import remove_url_params
+from .utils import remove_url_params
 
 import csv
+import os
 
 LEVEL_NAMES = {
     'warn': 'Warning',
@@ -22,6 +23,8 @@ ATTACK_TYPES = {
     'sql_error': 'SQL Error',
     'cms_vuln': 'CMS Vulnerability'
 }
+
+REPORTS_DIR = os.path.join(os.path.dirname(__file__), '..', 'reports')
 
 def entry_str(level, type, url, param, injections=None, request=None, message=None):
     if param is None:
@@ -57,8 +60,9 @@ class Log(object):
             if self.direct_print:
                 print(entry_str(**entry))
 
-    def write_report(self, filename='reports/test.csv'):
-        with open(filename, 'w') as csvfile:
+    def write_report(self, filename='test.csv'):
+        file_path = os.path.join(REPORTS_DIR, filename)
+        with open(file_path, 'w') as csvfile:
             fieldnames = ['level', 'type', 'url', 'param']
             writer = csv.DictWriter(csvfile, extrasaction='ignore', fieldnames=fieldnames,
                                     delimiter=';', lineterminator='\n')

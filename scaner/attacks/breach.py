@@ -1,5 +1,5 @@
-from client import NotAPage, RedirectedToExternal
-from page import Page
+from ..client import NotAPage, RedirectedToExternal
+from ..page import Page
 
 import copy
 import re

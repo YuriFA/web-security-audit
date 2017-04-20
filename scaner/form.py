@@ -1,5 +1,5 @@
-from utils import is_ascii, update_url_params, INPUT_TYPE_DICT, GET, POST
-from compat import urljoin
+from .utils import is_ascii, update_url_params, INPUT_TYPE_DICT, GET, POST
+from .compat import urljoin
 
 class Form(object):
     """beautifulsoup form"""

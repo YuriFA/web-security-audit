@@ -1,5 +1,5 @@
-from utils import dict_iterate, update_url_params, modify_parameter, get_url_host, get_url_query, compare
-from client import NotAPage, RedirectedToExternal
+from ..utils import dict_iterate, update_url_params, modify_parameter, get_url_host, get_url_query, compare
+from ..client import NotAPage, RedirectedToExternal
 
 #(select(0)from(select(sleep({0})))v)/*'+(select(0)from(select(sleep({0})))v)+'\"+(select(0)from(select(sleep({0})))v)+\"*/
 TIME_INJECTIONS = {

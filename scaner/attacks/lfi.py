@@ -1,6 +1,6 @@
-from utils import dict_iterate, update_url_params, get_url_query
-from client import NotAPage, RedirectedToExternal
-from compat import urljoin
+from ..utils import dict_iterate, update_url_params, get_url_query
+from ..client import NotAPage, RedirectedToExternal
+from ..compat import urljoin
 
 INJECTIONS = (
     "../etc/passwd"

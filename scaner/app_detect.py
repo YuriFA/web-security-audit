@@ -1,12 +1,14 @@
+from .client import NotAPage, RedirectedToExternal
+from .utils import dict_iterate
+
 from collections import deque
-from client import NotAPage, RedirectedToExternal
-from utils import dict_iterate
 
 import re
 import json
 import six
+import os
 
-APPS_FILE = 'apps.json'
+APPS_FILE = os.path.join(os.path.dirname(__file__), 'apps.json')
 
 def app_detect(url, client):
     detected = {}

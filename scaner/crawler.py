@@ -1,10 +1,9 @@
 #!/usr/bin/python
-from utils import get_url_host
-from client import Client, NotAPage, RedirectedToExternal
+from .utils import get_url_host
+from .client import Client, NotAPage, RedirectedToExternal
+
 from collections import deque
 from re import search
-
-import time
 
 class Crawler(object):
     def __init__(self, target, client=None, whitelist=None, blacklist=set()):

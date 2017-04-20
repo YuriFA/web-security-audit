@@ -1,5 +1,5 @@
-from utils import dict_iterate, modify_parameter, update_url_params, get_url_query
-from client import NotAPage, RedirectedToExternal
+from ..utils import dict_iterate, modify_parameter, update_url_params, get_url_query
+from ..client import NotAPage, RedirectedToExternal
 
 BODY = u'o'
 CLRF_SEQUENCE = (

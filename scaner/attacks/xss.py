@@ -1,5 +1,5 @@
-from utils import dict_iterate, update_url_params, get_url_host, get_url_query, modify_parameter, SCRIPTABLE_ATTRS
-from client import NotAPage, RedirectedToExternal
+from ..utils import dict_iterate, update_url_params, get_url_host, get_url_query, modify_parameter, SCRIPTABLE_ATTRS
+from ..client import NotAPage, RedirectedToExternal
 
 XSS_STRING = "alert('xssed')"
 INJECTIONS = (

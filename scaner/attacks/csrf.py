@@ -1,5 +1,5 @@
-from utils import compare
-from client import NotAPage, RedirectedToExternal
+from ..utils import compare
+from ..client import NotAPage, RedirectedToExternal
 
 def csrf(page, client, log):
     for form in page.get_forms():

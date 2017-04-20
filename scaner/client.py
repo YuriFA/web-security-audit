@@ -1,7 +1,7 @@
-from compat import CookieJar
-from compat import urlparse
-from page import Page
-from utils import NOT_A_PAGE_CONTENT_TYPES, get_url_query
+from .compat import CookieJar
+from .compat import urlparse
+from .page import Page
+from .utils import NOT_A_PAGE_CONTENT_TYPES, get_url_query
 
 import requests
 import sys

@@ -1,4 +1,4 @@
-from utils import POST
+from ..utils import POST
 
 def clickjack(page, client, log):
     content_type = page.headers.get('Content-Type', '')

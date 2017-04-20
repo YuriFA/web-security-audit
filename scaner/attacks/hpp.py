@@ -1,5 +1,5 @@
-from utils import compare, append_url_params, dict_iterate, update_url_params, get_url_query
-from client import NotAPage, RedirectedToExternal
+from ..utils import compare, append_url_params, dict_iterate, update_url_params, get_url_query
+from ..client import NotAPage, RedirectedToExternal
 
 PAYLOAD = "HPP_TEST"
 
