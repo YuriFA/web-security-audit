@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from .crawler import Crawler
 from .attacks import all_attacks
 from .cms_attacks import attack_cms
@@ -24,7 +26,6 @@ def run(options):
     options.whitelist = set(options.whitelist)
 
     client = Client()
-    # log = Log(direct_print=options.direct_print)
     log = Log()
 
     if options.auth_data and len(options.auth_data) == 3:
@@ -49,7 +50,8 @@ def run(options):
                 detected_apps.setdefault(app_type, []).append(app)
             if 'CMS' in app_types:
                 cms = app
-            print('{} - {}'.format(app_types, app))
+            app_types_string = ", ".join(app_types)
+            print('{} - {}'.format(app_types_string, app))
 
     if options.page_only:
         page = client.get(target_url)

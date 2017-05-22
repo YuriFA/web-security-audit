@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from .xss import xss
 from .hpp import hpp
 from .sql_error import sql_error

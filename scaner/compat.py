@@ -35,6 +35,8 @@ if is_py2:
     from urllib import urlencode
     from urlparse import urlparse, urlunparse, urljoin, parse_qsl, ParseResult
     from cookielib import CookieJar
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
 elif is_py3:
     from urllib.parse import urlparse, urlunparse, urljoin, urlencode, parse_qsl, ParseResult

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from .client import NotAPage, RedirectedToExternal
 from .compat import urljoin
 from .utils import get_url_root
