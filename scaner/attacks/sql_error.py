@@ -20,6 +20,7 @@ DBMS_ERRORS = {
 def sql_error(page, client, log):
     query = get_url_query(page.url)
 
+    report = {'params': []}
     for param, value in dict_iterate(query):
         injected_url = update_url_params(page.url, {param: PAYLOAD})
 
@@ -29,10 +30,15 @@ def sql_error(page, client, log):
             continue
 
         if check_sql_error(res_page):
-            log('vuln', 'sql_error', page.url, param)
+            report['request'] = res_page.request
+            report['params'].append(param)
+
+    if report['params']:
+        log('vuln', 'sql_error', page.url, report['params'], request=report['request'], page_url=page.url)
 
     for form in page.get_forms():
         form_parameters = dict(form.get_parameters())
+        report = {'params': []}
         for param in form_parameters:
             injected_params = modify_parameter(form_parameters, param, PAYLOAD)
 
@@ -42,9 +48,14 @@ def sql_error(page, client, log):
                 continue
 
             if check_sql_error(res_page):
-                log('vuln', 'sql_error', form.action, param)
+                report['request'] = res_page.request
+                report['params'].append(param)
+
+        if report['params']:
+            log('vuln', 'sql_error', form.action, report['params'], request=report['request'], page_url=page.url)
 
         query = get_url_query(form.action)
+        report = {'params': []}
         for param, value in dict_iterate(query):
             injected_action = update_url_params(form.action, {param: PAYLOAD})
             try:
@@ -53,7 +64,11 @@ def sql_error(page, client, log):
                 continue
 
             if check_sql_error(res_page):
-                log('vuln', 'sql_error', form.action, param)
+                report['request'] = res_page.request
+                report['params'].append(param)
+
+        if report['params']:
+            log('vuln', 'sql_error', form.action, report['params'], request=report['request'], page_url=page.url)
 
 def check_sql_error(res_page):
     for db, errors in dict_iterate(DBMS_ERRORS):

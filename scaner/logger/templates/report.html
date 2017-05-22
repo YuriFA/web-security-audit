@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="en">
+        <meta name="viewport" content="initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="referrer" content="never">
+        <meta name="robots" content="noindex">
+        <title>Отчет аудита безопасности</title>
+        <link rel="stylesheet" href="report.css">
+        <style>
+html {
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+audio,
+canvas,
+progress,
+video {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+[hidden],
+template {
+    display: none;
+}
+
+a {
+    background-color: transparent;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+dfn {
+    font-style: italic;
+}
+
+h1 {
+    margin: .67em 0;
+    font-size: 2em;
+}
+
+mark {
+    color: #000;
+    background: #ff0;
+}
+
+small {
+    font-size: 80%;
+}
+
+sub,
+sup {
+    position: relative;
+    font-size: 75%;
+    line-height: 0;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -.5em;
+}
+
+sub {
+    bottom: -.25em;
+}
+
+img {
+    border: 0;
+}
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+figure {
+    margin: 1em 40px;
+}
+
+hr {
+    height: 0;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+
+pre {
+    overflow: auto;
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    margin: 0;
+    font: inherit;
+    color: inherit;
+}
+
+button {
+    overflow: visible;
+}
+
+button,
+select {
+    text-transform: none;
+}
+
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button;
+    cursor: pointer;
+}
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+input {
+    line-height: normal;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type="search"] {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+fieldset {
+    padding: .35em .625em .75em;
+    margin: 0 2px;
+    border: 1px solid #c0c0c0;
+}
+
+legend {
+    padding: 0;
+    border: 0;
+}
+
+textarea {
+    overflow: auto;
+}
+
+optgroup {
+    font-weight: bold;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    padding: 0;
+}
+
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
+@media print {
+
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    *:before,
+    *:after {
+        color: #000 !important;
+        text-shadow: none !important;
+        background: transparent !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        mwsa-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .btn > .caret,
+    .dropup > .btn > .caret {
+        border-top-color: #000 !important;
+    }
+
+    .label {
+        border: 1px solid #000;
+    }
+
+    .table {
+        border-collapse: collapse !important;
+    }
+
+    .table td,
+    .table th {
+        background-color: #fff !important;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+        border: 1px solid #ddd !important;
+    }
+}
+
+/* endregion Normalize */
+
+/* region Report styles */
+
+/* region For testing purposes only */
+@media screen {
+    html {
+        background-color: #808080;
+    }
+
+    body {
+        background-color: #ffffff;
+        width: 210mm;
+        margin-left: auto;
+        margin-right: auto;
+        height: 100%;
+        min-height: 100%;
+        padding: .98in .98in .79in .98in;
+        box-shadow: 2px 2px 2px #222;
+        position: relative;
+    }
+}
+
+/* endregion For testing purposes only */
+
+/* region Global Styles */
+body {
+    font-family: sans-serif;
+    font-size: 13pt;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table > tbody > tr > td {
+    padding: 4px 8px;
+    border: 1px solid #dadada;
+    word-wrap: break-word;
+}
+
+table > tbody > tr > td:first-child {
+    width: 200px;
+}
+
+p {
+    word-wrap: break-word;
+}
+
+.page-break {
+    page-break-before: always;
+}
+
+.wsa-section-title {
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 2px;
+    margin-bottom: 10px;
+}
+
+.wsa-section-title--big {
+    border-bottom-width: 3px;
+    padding-bottom: 3px;
+    padding-top: 30px;
+}
+
+/* endregion Global Styles */
+
+/* end region Report styles */
+
+/* region Cover page */
+
+
+.cover {
+    width: 210mm;
+    height: 297mm;
+    }
+.cover > img {
+    width: 210mm;
+    left: 20mm;
+    z-index: -1;
+    top: 60mm;
+    position: absolute;
+    }
+
+.logo {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+.wsa-report__title {
+    font-size: 62pt;
+    font-weight: bold;
+    text-align: left;
+    top: 100mm;
+    left: 40mm;
+    width: 170mm;
+    position: absolute;
+    height: 70mm;
+}
+
+
+.wsa-report__title_compliance {
+    font-size: 38pt;
+    font-weight: bold;
+    text-align: center;
+    top: 100mm;
+    left: 20mm;
+    width: 210mm;
+    position: absolute;
+    height: 70mm;
+}
+
+.wsa-report__subtitle {
+    text-align: left;
+    font-size: 21pt;
+    top: 180mm;
+    left: 40mm;
+    width: 210mm;
+    position: absolute;
+}
+
+.wsa-report__footer {
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 10px;
+    left: 40mm;
+    top: 320mm;
+    position: absolute;
+    width: 70%;
+}
+
+.wsa-report__subfooter {
+    left: 40mm;
+    font-size: 8pt;
+    top: 330mm;
+    position: absolute;
+}
+
+.wsa-report__title_date {
+    text-align: left;
+    left: 40mm;
+    font-size: 13pt;
+    top: 220mm;
+    position: absolute;
+}
+
+/* endregion Cover page */
+
+
+/* region Alert title */
+
+.wsa-alert-title {
+    box-sizing: border-box;
+    border-bottom: 2px solid #cccccc;
+    padding-bottom: 3px;
+    background-color: gray;
+    color: white;
+}
+
+/* endregion Alert title */
+
+
+/* region Severity Indicator*/
+
+.wsa-severity-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: baseline;
+    border: none;
+    background: url('images/severity.png');
+    box-sizing: border-box;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+}
+.wsa-severity-icon--high   {background-position: 0 0;}
+.wsa-severity-icon--medium {background-position: 0 -16px;}
+.wsa-severity-icon--low    {background-position: 0 -32px;}
+.wsa-severity-icon--info   {background-position: 0 -48px;}
+
+
+.wsa-alerts-distribution__label > img {margin-right: 5px;}
+/* endregion Severity Indicator*/
+
+
+table.wsa-alert-info > tbody > tr > td:first-child {
+    background-color: #E3E3E3;
+}
+table.wsa-alert-info > tbody > tr > td.wsa-alert-info__severity_value {
+    font-weight: bold;
+}
+
+
+.wsa-affected-item__highlight--dark { background-color: #cccccc; }
+.wsa-affected-item__highlight--light { background-color: #eeeeee; }
+
+</style>
+    </head>
+    <body>
+        <div class="cover">
+            <div class="page-break wsa-report__title">
+                Аудит безопасности веб-сайта
+            </div>
+
+            <div class="wsa-report__subtitle">
+                <a href="http://testphp.vulnweb.com/">{{ info.url }}</a>
+            </div>
+
+            <div class="wsa-report__title_date">
+                {{ info.date.strftime("%d.%m.%Y") }}
+            </div>
+        </div>
+        <h2 class="page-break wsa-section-title wsa-section-title--big">
+            Аудит веб-сайта {{ info.url }}
+        </h2>
+
+        <h3 class="wsa-section-title">
+            Общая информация
+        </h3>
+
+        <table border="1" class="wsa-scan-summary">
+            <tbody>
+                <tr class="wsa-scan-summary__section-title"><td colspan="2">Информация о сканировании</td></tr>
+
+                <tr>
+                    <td class="wsa-column-highlight">Начало</td>
+                    <td>{{ info.date.strftime("%d.%m.%Y, %H:%M:%S") }}</td>
+                </tr>
+
+                <tr>
+                    <td class="wsa-column-highlight">URL</td>
+                    <td>{{ info.url }}</td>
+                </tr>
+
+                <tr>
+                    <td class="wsa-column-highlight">Хост</td>
+                    <td>{{ info.host }}</td>
+                </tr>
+
+                <tr>
+                    <td class="wsa-column-highlight">Время сканирования</td>
+                    <td>{{ info.scan_time }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="wsa-section-title">
+            Используемые технологии
+        </h3>
+
+        <table border="1" class="wsa-scan-summary">
+            <tbody>
+                {% for app_type in info.detected_apps -%}
+                <tr>
+                    <td class="wsa-column-highlight">{{ app_type }}</td>
+                    <td>
+                        {% set apps = ', '.join(info.detected_apps[app_type]) %}
+                        {{ apps }}
+                    </td>
+                </tr>
+                {% endfor -%}
+            </tbody>
+        </table>
+
+        <h4 class="wsa-section-title">
+            Итоги сканирования
+        </h4>
+        <table border="1" class="wsa-alerts-distribution">
+            <tr>
+                <td class="wsa-alerts-distribution__label">Всего обнаружено</td>
+                <td>{{ counter.all }}</td>
+            </tr>
+            <tr>
+                <td class="wsa-alerts-distribution__label wsa-alerts-distribution__label--high"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkQ2MERERDA1NEYyNDExRTZCNEE3OEMzMUQ5RTA3MThBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkQ2MERERDA2NEYyNDExRTZCNEE3OEMzMUQ5RTA3MThBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDYwREREMDM0RjI0MTFFNkI0QTc4QzMxRDlFMDcxOEEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDYwREREMDQ0RjI0MTFFNkI0QTc4QzMxRDlFMDcxOEEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4+q9zCAAAA5ElEQVR42mL8L+7CgAZ0gTgdiJ2AWB4q9gCI9wHxDCC+iqyYEckADiDuA+IMkDgDdvAPiKcCcSkQ/wQJMCFp3gbEmXg0w9TnAvFWIGZHNmACEDsyEA+cgbgH5gV9IH0eh80wsf9Y5EBiekzQAGNkIB2A9KQzQUObXOAMMkCRAgOUmBgoA4wgAx7iUfAfRwDCwH2QAfsJBBS+AN4LMmAmmc4HuWw2yIBzQDyXDC/MAuILsEDMA+KjJNh+CIgLkZPyNyB2w+MSZBeBbHYH4u/ouREGjJCyMyyN3AMFGFTzeWTFAAEGADz4LZUR/YrbAAAAAElFTkSuQmCC">Уязвимости</td>
+                <td>{{ counter.vuln }}</td>
+            </tr>
+            <tr>
+                <td class="wsa-alerts-distribution__label wsa-alerts-distribution__label--medium"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDIxIDc5LjE1NTc3MiwgMjAxNC8wMS8xMy0xOTo0NDowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM5c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTQgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkRCM0NCMEUzNEYyNDExRTY4ODY5QTVDMjAwQTcyNTM0IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkRCM0NCMEU0NEYyNDExRTY4ODY5QTVDMjAwQTcyNTM0Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REIzQ0IwRTE0RjI0MTFFNjg4NjlBNUMyMDBBNzI1MzQiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REIzQ0IwRTI0RjI0MTFFNjg4NjlBNUMyMDBBNzI1MzQiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4aO+IXAAAA8ElEQVR42mL8sCCUAQ3oAnE6EDsBsTxU7AEQ7wPiGUB8FVkxExKbA4inAfFFIM4GYk0g5oJiLSDOAeJLQDwJiNnRDQBp3gbEmUDMyIAbgNTnAvFWmCEwAyYAsSMD8cAZiHtgBugDcRoOhYx4XATypg4TNMAYGUgHID3pTNDQJhc4gwxQpMAAJSYGygAjyICHeBT8h2Jc4D7IgP0EAgpfAO8FGTCTTOeDXDYbZMA5IJ5LhhdmAfEFWCDmAfFREmw/BMSFyEn5GxC74XEJsotANrsD8Xf03AgyJAWIjaGK7gDxXyi+Dc3KxtCU+wOmCSDAADf7LDGehtQmAAAAAElFTkSuQmCC">Предупреждения</td>
+                <td>{{ counter.warn }}</td>
+            </tr>
+        </table>
+        <h3 class="page-break wsa-section-title">
+            Обнаруженные уязвимости
+        </h3>
+
+        {% for vuln in vulns -%}
+        {% set vuln_info = vulns_info[vuln._type] %}
+        <table border = "1">
+            <tr>
+                <td><b>Адрес</b></td>
+                <td><b>{{ vuln.url }}</b></td>
+            </tr>
+
+            <tr>
+                <td><b>Тип уязвимости</b></td>
+                <td><b>{{ vuln.type }}</b></td>
+            </tr>
+            <tr>
+                <td>Уровень угрозы</td>
+                <td>{{ vuln_info.severity }}</td>
+            </tr>
+            <tr>
+                <td>Описание</td>
+                <td>{{ vuln_info.description }}</td>
+            </tr>
+            <tr>
+                <td>Рекомендации</td>
+                <td>
+                    {% if vuln_info.recomendations %}
+                    {{ vuln_info.recomendations }}
+                    {% endif %}
+                    {% if vuln.message %}
+                    {{ vuln.message }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Способы реализации</td>
+            </tr>
+            <tr>
+                <td>Детали</td>
+                <td>
+                    {% if vuln.params %}
+                    Параметры:
+                    <ul>
+                        {% for param in vuln.params -%}
+                        <li>{{ param|e }}</li>
+                        {% endfor -%}
+                    </ul>
+                    {% endif %}
+                    {% if vuln.injections %}
+                    Инъекции:
+                    <ul>
+                        {% for injection in vuln.injections -%}
+                        <li>{{ injection|e }}</li>
+                        {% endfor -%}
+                    </ul>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                <code style="white-space: pre-line">
+                    {{ vuln.request.method }} {{ vuln.request.url }}
+                    {% for param in vuln.request.headers -%}
+                    {{ param }}: {{ vuln.request.headers[param] }}
+                    {% endfor -%}
+                    {{ vuln.request.body }}
+                </code>
+                </td>
+            </tr>
+        </table>
+        <br>
+        {% endfor -%}
+
+        <h3 class="page-break wsa-section-title">
+            Отсканированные страницы
+        </h3>
+        {% for url in urls -%}
+        <font color="{{ urls[url] }}">{{ url }}</font><br>
+        {% endfor -%}
+    </body>
+</html>

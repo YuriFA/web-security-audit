@@ -8,11 +8,11 @@ def clickjack(page, client, log):
 
     frame_options = page.headers.get('X-Frame-Options')
     if not frame_options:
-        log('vuln', 'clickjack', page.url)
+        log('vuln', 'clickjack', page.url, request=page.request, page_url=page.url)
         return
 
     if not is_valid_header(frame_options):
-        log('vuln', 'clickjack', page.url)
+        log('vuln', 'clickjack', page.url, request=page.request, page_url=page.url)
 
 def check_for_post_forms(page):
     return any(form

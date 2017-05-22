@@ -17,7 +17,7 @@ class Form(object):
         form_class = self.document.get('class', [])
         return "search" in form_id.lower() or any("search" in c.lower() for c in form_class)
 
-    def get_parameters(self, filter_type=None):
+    def get_parameters(self, filter_type=None, filter_by_name=()):
         for inpt in self.document.find_all('input'):
             name = str(inpt.get('name', ''))
             if not name:
@@ -33,7 +33,8 @@ class Form(object):
                 value = INPUT_TYPE_DICT.get(itype, "")
 
             if not filter_type or filter_type and itype != filter_type:
-                yield name, value
+                if not filter_by_name or filter_by_name and not name in filter_by_name:
+                    yield name, value
 
         for txt in self.document.find_all('textarea'):
             name = str(txt.get('name', ''))

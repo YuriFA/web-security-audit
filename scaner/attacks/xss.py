@@ -40,18 +40,17 @@ INJECTIONS = (
 FILE_INJECTION = 'https://i.ytimg.com/vi/0vxCFIGCqnI/maxresdefault.jpg'
 
 def xss(page, client, log):
-    url_xss(page.url, client, log) #test url for XSS
+    url_xss(page.url, client, log)
 
     for form in page.get_forms():
         if get_url_host(page.url) != get_url_host(form.action):
             continue
 
         form_parameters = dict(form.get_parameters())
+        report = {'params': [], 'injections': []}
         for param, value in dict_iterate(form_parameters):
-            successed = []
-
             for injection in INJECTIONS:
-                injected_params = modify_parameter(form_parameters, param, value + injection)
+                injected_params = modify_parameter(form_parameters, param, str(value) + injection)
 
                 try:
                     res_page = form.send(client, injected_params)
@@ -59,19 +58,21 @@ def xss(page, client, log):
                     continue
 
                 if res_page.document.find_all(contains_injection):
-                    successed.append(injection)
+                    report['request'] = res_page.request
+                    report['params'].append(param)
+                    if not injection in report['injections']:
+                        report['injections'].append(injection)
 
-            if successed:
-                log('vuln', 'xss', form.action, param, injections=successed)
+        if report['params']:
+            log('vuln', 'xss', form.action, report['params'], injections=report['injections'], request=report['request'], page_url=page.url)
 
 def url_xss(url, client, log):
     query = get_url_query(url)
-    report = {}
 
+    report = {'params': [], 'injections': []}
     for param, value in dict_iterate(query):
-        successed = []
         for injection in INJECTIONS:
-            injected_url = update_url_params(url, {param: value + injection})
+            injected_url = update_url_params(url, {param: str(value) + injection})
 
             try:
                 res_page = client.get(injected_url)
@@ -79,10 +80,10 @@ def url_xss(url, client, log):
                 continue
 
             if res_page.document.find_all(contains_injection):
-                successed.append(injection)
-
-        if successed:
-            log('vuln', 'xss', url, param, injections=successed)
+                report['request'] = res_page.request
+                report['params'].append(param)
+                if not injection in report['injections']:
+                    report['injections'].append(injection)
 
         if 'file' in param:
             injected_url = update_url_params(url, {param: FILE_INJECTION})
@@ -92,7 +93,10 @@ def url_xss(url, client, log):
                 continue
 
             if res_page.response.status_code == 200 and res_page.response.headers.get('content-type') == 'image/jpeg':
-                log('vuln', 'xss_file', url, param, injections=[FILE_INJECTION])
+                log('vuln', 'xss_file', url, param, injections=[FILE_INJECTION], request=res_page.request, page_url=url)
+
+    if report['params']:
+        log('vuln', 'xss', url, report['params'], injections=report['injections'], request=report['request'], page_url=url)
 
 def contains_injection(tag):
     return any(k in SCRIPTABLE_ATTRS and XSS_STRING in v \

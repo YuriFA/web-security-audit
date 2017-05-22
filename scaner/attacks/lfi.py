@@ -12,34 +12,45 @@ INJECTIONS = (
 
 def lfi(page, client, log):
     query = get_url_query(page.url)
-    report = []
     if query:
+        report = {'params': [], 'injections': []}
         for param, value in dict_iterate(query):
-            successed = []
             for injection in INJECTIONS:
                 injected_url = update_url_params(page.url, {param: injection})
 
-                if check_injection(injected_url, client):
-                    successed.append(injection)
+                try:
+                    res_page = client.get(injected_url)
+                except (NotAPage, RedirectedToExternal) as e:
+                    return False
 
-            if successed:
-                log('vuln', 'lfi', page.url, param, injections=successed)
+                if check_injection(res_page):
+                    report['request'] = res_page.request
+                    report['params'].append(param)
+                    if not injection in report['injections']:
+                        report['injections'].append(injection)
+
+        if report['params']:
+            log('vuln', 'lfi', page.url, report['params'], injections=report['injections'], request=report['request'], page_url=page.url)
     else:
-        successed = []
+        report = {'params': [], 'injections': []}
         for injection in INJECTIONS:
-            if check_injection(urljoin(page.url, injection), client):
-                successed.append(injection)
+            injected_url = urljoin(page.url, injection)
+            try:
+                res_page = client.get(injected_url)
+            except (NotAPage, RedirectedToExternal) as e:
+                return False
 
-        if successed:
-            log('vuln', 'lfi', page.url, '/', injections=successed)
+            if check_injection(res_page):
+                report['request'] = res_page.request
+                report['params'].append('/')
+                if not injection in report['injections']:
+                    report['injections'].append(injection)
+
+        if report['params']:
+            log('vuln', 'lfi', page.url, report['params'], injections=report['injections'], request=report['request'], page_url=page.url)
 
 
-def check_injection(injected_url, client):
-    try:
-        res_page = client.get(injected_url)
-    except (NotAPage, RedirectedToExternal) as e:
-        return False
-
+def check_injection(res_page):
     if ":root:" in res_page.html:
         return True
 

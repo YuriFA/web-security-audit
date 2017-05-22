@@ -1,10 +1,12 @@
 from .crawler import Crawler
 from .attacks import all_attacks
 from .cms_attacks import attack_cms
-from .utils import get_url_host, validate_url, print_progress, dict_iterate
+from .utils import get_url_host, validate_url, dict_iterate
 from .client import Client, NotAPage, RedirectedToExternal
 from .app_detect import app_detect
 from .logger import Log
+from datetime import datetime, timedelta
+from timeit import default_timer as timer
 
 import optparse
 import sys
@@ -13,6 +15,9 @@ import os
 VERSION = '0.0.1'
 
 def run(options):
+    date_now = datetime.today()
+    start_scan = timer()
+
     cms = None
     target_url = validate_url(options.url)
 
@@ -36,10 +41,12 @@ def run(options):
             print(e)
 
     apps = app_detect(target_url, client)
+    detected_apps = {}
     if apps:
         print('Detected technologies')
         for app, app_types in dict_iterate(apps):
-            print(app_types)
+            for app_type in app_types:
+                detected_apps.setdefault(app_type, []).append(app)
             if 'CMS' in app_types:
                 cms = app
             print('{} - {}'.format(app_types, app))
@@ -50,25 +57,31 @@ def run(options):
     else:
         all_pages = Crawler(target_url, client, whitelist=options.whitelist)
 
-    # i = 0
-    # l = len(all_pages)
-
     try:
         if cms:
             attack_cms(cms, target_url, client, log)
-        # print_progress(i, l, prefix='Progress:', suffix='Complete', length=50)
         for page in all_pages:
             print('Scanning: [{}] {}'.format(page.status_code, page.url))
+            log.add_url(page.url, color='green')
             for attack in all_attacks():
                 attack(page, client, log)
-            # i+=1
-            # print_progress(i, l, prefix='Progress:', suffix='Complete', length=50)
 
 
     except KeyboardInterrupt:
         print('Interrupted')
     finally:
-        log.write_report(options.csv_file or 'test_{}.csv'.format(get_url_host(target_url)))
+        end_scan = timer()
+        scan_seconds = round(end_scan - start_scan)
+        scan_time = str(timedelta(seconds=scan_seconds))
+        audit_info = {
+            'date': date_now,
+            'url': target_url,
+            'host': get_url_host(target_url),
+            'scan_time': scan_time,
+            'detected_apps': detected_apps,
+        }
+        log.write_report(options.csv_file or 'audit_{}.csv'.format(get_url_host(target_url)))
+        log.write_html_report(options.html_file or 'audit_{}.html'.format(get_url_host(target_url)), audit_info)
         print('1' if options.page_only else all_pages.count)
 
 def optlist_callback(option, opt, value, parser):
@@ -82,6 +95,7 @@ def main():
     parser.add_option("--pageonly", action="store_true", dest="page_only", help="Scan this page url only", default=False)
     parser.add_option("--print", action="store_true", dest="direct_print", help="Output in console", default=False)
     parser.add_option("--csv", type="string", dest="csv_file", help="Filename (*.csv) for writing report", metavar="test.csv")
+    parser.add_option("--html", type="string", dest="html_file", help="Filename (*.html) for writing report", metavar="test.html")
     options, _ = parser.parse_args()
 
     if options.url:

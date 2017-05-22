@@ -14,4 +14,4 @@ def directory_listing(page, client, log):
     if title:
         path = page.parsed_url.path.rstrip('/')
         if title.text == PATTERN.format(path) or path_in_headings(path):
-            log('warn', 'directory_listing', page.url)
+            log('warn', 'directory_listing', page.url, request=page.request, page_url=page.url)

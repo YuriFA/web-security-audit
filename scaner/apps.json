@@ -9955,210 +9955,262 @@
     "categories": {
         "1": {
             "name": "CMS",
+            "name_ru": "CMS",
             "priority": "1"
         },
         "2": {
             "name": "Message Boards",
+            "name_ru": "Форум",
             "priority": "1"
         },
         "3": {
             "name": "Database Managers",
+            "name_ru": "Менеджер БД",
             "priority": "9"
         },
         "4": {
             "name": "Documentation Tools",
+            "name_ru": "Документация",
             "priority": "9"
         },
         "5": {
             "name": "Widgets",
+            "name_ru": "Виджет",
             "priority": "9"
         },
         "6": {
             "name": "Ecommerce",
+            "name_ru": "Электронная коммерция",
             "priority": "1"
         },
         "7": {
             "name": "Photo Galleries",
+            "name_ru": "Фотогалерея",
             "priority": "1"
         },
         "8": {
             "name": "Wikis",
+            "name_ru": "Вики",
             "priority": "1"
         },
         "9": {
             "name": "Hosting Panels",
+            "name_ru": "Панель управления хостингом",
             "priority": "1"
         },
         "10": {
             "name": "Analytics",
+            "name_ru": "Аналитика",
             "priority": "9"
         },
         "11": {
             "name": "Blogs",
+            "name_ru": "Блог",
             "priority": "1"
         },
         "12": {
             "name": "JavaScript Frameworks",
+            "name_ru": "JS фреймворк",
             "priority": "3"
         },
         "13": {
             "name": "Issue Trackers",
+            "name_ru": "Баг трекер",
             "priority": "9"
         },
         "14": {
             "name": "Video Players",
+            "name_ru": "Видео плеер",
             "priority": "9"
         },
         "15": {
             "name": "Comment Systems",
+            "name_ru": "Система комментариев",
             "priority": "9"
         },
         "16": {
             "name": "Captchas",
+            "name_ru": "Капча",
             "priority": "9"
         },
         "17": {
             "name": "Font Scripts",
+            "name_ru": "Шрифт",
             "priority": "9"
         },
         "18": {
             "name": "Web Frameworks",
+            "name_ru": "Веб фреймворк",
             "priority": "2"
         },
         "19": {
             "name": "Miscellaneous",
+            "name_ru": "Прочее",
             "priority": "9"
         },
         "20": {
             "name": "Editors",
+            "name_ru": "HTML редактор",
             "priority": "9"
         },
         "21": {
             "name": "LMS",
+            "name_ru": "LMS",
             "priority": "1"
         },
         "22": {
             "name": "Web Servers",
+            "name_ru": "Веб сервер",
             "priority": "9"
         },
         "23": {
             "name": "Cache Tools",
+            "name_ru": "Кеширование",
             "priority": "9"
         },
         "24": {
             "name": "Rich Text Editors",
+            "name_ru": "WYSIWYG редактор",
             "priority": "9"
         },
         "25": {
             "name": "JavaScript Graphics",
+            "name_ru": "JS графика",
             "priority": "3"
         },
         "26": {
             "name": "Mobile Frameworks",
+            "name_ru": "Мобильный фреймворк",
             "priority": "3"
         },
         "27": {
             "name": "Programming Languages",
+            "name_ru": "Язык программирования",
             "priority": "4"
         },
         "28": {
             "name": "Operating Systems",
+            "name_ru": "Операционная система",
             "priority": "5"
         },
         "29": {
             "name": "Search Engines",
+            "name_ru": "Поисковый движок",
             "priority": "9"
         },
         "30": {
             "name": "Web Mail",
+            "name_ru": "Веб почта",
             "priority": "9"
         },
         "31": {
             "name": "CDN",
+            "name_ru": "CDN",
             "priority": "9"
         },
         "32": {
             "name": "Marketing Automation",
+            "name_ru": "Управление маркетингом",
             "priority": "9"
         },
         "33": {
             "name": "Web Server Extensions",
+            "name_ru": "Расширение Веб сервера",
             "priority": "9"
         },
         "34": {
             "name": "Databases",
+            "name_ru": "База данных",
             "priority": "9"
         },
         "35": {
             "name": "Maps",
+            "name_ru": "Карта",
             "priority": "9"
         },
         "36": {
             "name": "Advertising Networks",
+            "name_ru": "Рекламная сеть",
             "priority": "9"
         },
         "37": {
             "name": "Network Devices",
+            "name_ru": "Сетевая служба",
             "priority": "9"
         },
         "38": {
             "name": "Media Servers",
+            "name_ru": "Медиа сервер",
             "priority": "1"
         },
         "39": {
             "name": "Webcams",
+            "name_ru": "Вебкамера",
             "priority": "9"
         },
         "40": {
             "name": "Printers",
+            "name_ru": "Принтер",
             "priority": "9"
         },
         "41": {
             "name": "Payment Processors",
+            "name_ru": "Платёжная система",
             "priority": "9"
         },
         "42": {
             "name": "Tag Managers",
+            "name_ru": "Менеджер тэгов",
             "priority": "9"
         },
         "43": {
             "name": "Paywalls",
+            "name_ru": "Paywall",
             "priority": "9"
         },
         "44": {
             "name": "Build CI Systems",
+            "name_ru": "Система непрерывной интеграции",
             "priority": "9"
         },
         "45": {
             "name": "Control Systems",
+            "name_ru": "Система SCADA",
             "priority": "9"
         },
         "46": {
             "name": "Remote Access",
+            "name_ru": "Удаленное управление",
             "priority": "9"
         },
         "47": {
             "name": "Dev Tools",
+            "name_ru": "Утилита для разработчиков",
             "priority": "9"
         },
         "48": {
             "name": "Network Storage",
+            "name_ru": "Сетевое хранилище",
             "priority": "9"
         },
         "49": {
             "name": "Feed Readers",
+            "name_ru": "Граббер контента",
             "priority": "1"
         },
         "50": {
             "name": "Document Management Systems",
+            "name_ru": "Управление документами",
             "priority": "1"
         },
         "51": {
             "name": "Landing Page Builders",
+            "name_ru": "Генератор лендингов",
             "priority": "2"
         },
         "52": {
             "name": "Live Chat",
+            "name_ru": "Live Chat",
             "priority": "9"
         }
     }

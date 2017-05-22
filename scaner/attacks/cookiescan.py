@@ -3,7 +3,7 @@ def cookiescan(page, client, log):
         return
 
     if not secure_cache_control(page):
-        log('vuln', 'cookiescan', page.url)
+        log('warn', 'cookiescan', page.url, request=page.request, page_url=page.url)
 
 def check_for_cookies(headers):
     return "Set-Cookie" in headers or "Set-Cookies" in headers

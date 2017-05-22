@@ -7,6 +7,7 @@ import re
 import json
 import six
 import os
+import io
 
 APPS_FILE = os.path.join(os.path.dirname(__file__), 'apps.json')
 
@@ -17,7 +18,7 @@ def app_detect(url, client):
     except (NotAPage, RedirectedToExternal) as e:
         print(e)
 
-    with open(APPS_FILE) as cms_file:
+    with io.open(APPS_FILE, encoding='utf-8') as cms_file:
         data = json.load(cms_file)
 
     all_cats = data['categories']
@@ -45,7 +46,7 @@ def app_detect(url, client):
 def get_categories(app, all_cats):
     if app:
         cats = app.get('cats', [])
-        return [all_cats[c]['name'] for c in cats]
+        return [all_cats[c]['name_ru'] for c in cats]
 
 def type_switch(t):
     return {

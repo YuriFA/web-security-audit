@@ -23,4 +23,4 @@ def bitrix(url, client, log):
         return
 
     if res_page.document.find_all('a', {'id': 'p_minifileman_1'}):
-        log('vuln', 'cms_vuln', url_root, injections=['bx_1c_import.php?mode=query&action=getfiles&path=/'])
+        log('vuln', 'cms_vuln', url_root, injections=['bx_1c_import.php?mode=query&action=getfiles&path=/'], message='Необходимо пересмотреть исходный код файла bx_1c_import.php на наличие превышения привелегий', page_url=url)
