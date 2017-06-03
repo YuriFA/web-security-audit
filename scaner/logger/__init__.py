@@ -9,8 +9,8 @@ from ..attacks import ATTACK_INFO
 from jinja2 import Environment, FileSystemLoader
 
 LEVEL_NAMES = {
-    'warn': 'Warning',
-    'vuln': 'Vulnerability',
+    'warn': 'Предупреждение',
+    'vuln': 'Уязвимость',
 }
 
 REPORTS_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'reports')
@@ -21,11 +21,11 @@ TEMPLATE_ENVIRONMENT = Environment(
     loader=FileSystemLoader(os.path.join(PATH, 'templates')),
     trim_blocks=False)
 
-def entry_str(level, type, url, params, injections=None, request=None, message=None, _level=None, _type=None):
+def entry_str(level, type, url, params, injections=None, request=None, message=None, _level=None, _type=None, page_url=None):
     if not params:
-        return "{} {} in {}".format(level, type, url)
+        return "{} {} в {} на странице {}".format(level, type, url, page_url)
     else:
-        return "{} {} in {} on params {}".format(level, type, url, params)
+        return "{} {} в {} (параметры {}) на странице {}".format(level, type, url, params, page_url)
 
 def render_template(template_filename, context):
     return TEMPLATE_ENVIRONMENT.get_template(template_filename).render(context)
@@ -64,6 +64,7 @@ class Log(object):
             'injections': injections or [],
             'request': request,
             'message': message,
+            'page_url': page_url,
         }
 
         self.counter[level] += 1

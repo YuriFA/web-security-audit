@@ -6,7 +6,7 @@ from collections import deque
 from re import search
 
 class Crawler(object):
-    def __init__(self, target, client=None, whitelist=None, blacklist=set()):
+    def __init__(self, target, client=None, whitelist=None, blacklist=set(), additional_pages=[]):
         self.target = target
 
         if whitelist is None:
@@ -20,8 +20,12 @@ class Crawler(object):
         else:
             self.client = client
 
+        if additional_pages:
+            self.to_visit_links = deque(additional_pages)
+        else:
+            self.to_visit_links = deque()
+
         self.blacklist = blacklist
-        self.to_visit_links = deque()
         self.visited_links  = set()
         self.count = 0
 

@@ -1,0 +1,15 @@
+{
+    "url": "http://php.testsparker.com",
+    "auth": {
+        "url": "http://php.testsparker.com/auth/control.php",
+        "auth_data": {
+            "username": "admin",
+            "password": "admin123456"
+        }
+    },
+    "whitelist": [],
+    "pageonly": "N",
+    "print": "Y",
+    "csv_file": "audit.csv",
+    "html_file": "audit.html"
+}

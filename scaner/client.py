@@ -68,5 +68,3 @@ class Client(object):
             raise RedirectedToExternal()
 
         return Page(r)
-
-

@@ -3,9 +3,12 @@ from .compat import urlencode
 
 import collections
 import os.path
+import json
 import sys
+import io
 
 POST, GET = 'POST', 'GET'
+PATH = os.path.dirname(os.path.abspath(__file__))
 
 NOT_A_PAGE_CONTENT_TYPES = frozenset([
     'text/plain',
@@ -135,7 +138,6 @@ def get_all_path_links(url):
         url_parts[2] = path + '/'
         yield urlunparse(url_parts)
 
-
 def is_ascii(s):
      return not all(ord(char) < 128 for char in s)
 
@@ -150,3 +152,13 @@ def validate_url(url):
 
 def contains_url(tag):
     return any(k in ('src',) and not v is None for k, v in dict_iterate(tag.attrs))
+
+def read_config(config_file):
+    file_path = os.path.join(PATH, config_file)
+    with io.open(file_path, 'r', encoding='utf-8') as f:
+        values = json.load(f)
+
+    return values
+
+def check_boolean_option(option):
+    return True if option == 'Y' else False
