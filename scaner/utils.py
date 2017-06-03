@@ -2,7 +2,7 @@ from .compat import urlparse, urlunparse, parse_qsl, ParseResult
 from .compat import urlencode
 
 import collections
-import os.path
+import os
 import json
 import sys
 import io
@@ -162,3 +162,7 @@ def read_config(config_file):
 
 def check_boolean_option(option):
     return True if option == 'Y' else False
+
+def check_dir(dir_name):
+    if not os.path.exists(dir_name):
+        os.makedirs(dir_name)

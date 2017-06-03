@@ -4,7 +4,7 @@ import csv
 import os
 import io
 
-from ..utils import remove_url_params
+from ..utils import remove_url_params, check_dir
 from ..attacks import ATTACK_INFO
 from jinja2 import Environment, FileSystemLoader
 
@@ -14,6 +14,11 @@ LEVEL_NAMES = {
 }
 
 REPORTS_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'reports')
+HTML_DIR = os.path.join(REPORTS_DIR, 'html')
+
+check_dir(REPORTS_DIR)
+check_dir(HTML_DIR)
+
 
 PATH = os.path.dirname(os.path.abspath(__file__))
 TEMPLATE_ENVIRONMENT = Environment(
