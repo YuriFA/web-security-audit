@@ -111,4 +111,5 @@ ATTACK_INFO = {
 
 def all_attacks():
     return [xss, hpp, sql_error, sql_blind, csrf, crlf, lfi, directory_listing, breach, clickjack, cookiescan]
+    # return [xss]
     # return [xss, hpp, sql_error, csrf, crlf, lfi, directory_listing, breach, clickjack, cookiescan]

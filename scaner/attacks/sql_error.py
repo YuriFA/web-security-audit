@@ -3,7 +3,6 @@ from ..compat import urlparse
 from ..client import NotAPage, RedirectedToExternal
 
 import re
-import time
 
 PAYLOAD = "'"
 DBMS_ERRORS = {

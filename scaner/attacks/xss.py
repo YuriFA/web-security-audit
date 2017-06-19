@@ -100,5 +100,5 @@ def url_xss(url, client, log):
 
 def contains_injection(tag):
     return any(k in SCRIPTABLE_ATTRS and XSS_STRING in v \
-        or k in ('src', 'href') and "javascript:alert('xssed')" in v for k, v in dict_iterate(tag.attrs)) \
+        or k in ('src', 'href') and v == "javascript:alert('xssed')" for k, v in dict_iterate(tag.attrs)) \
         or tag.name == 'script' and list(tag.strings) and XSS_STRING in list(tag.strings)[0]
