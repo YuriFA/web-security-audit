@@ -57,8 +57,8 @@ def run(options):
         for page in all_pages:
             print('Проверка страницы: [{}] {}'.format(page.status_code, page.url))
             log.add_url(page.url, color='green')
-            # for attack in all_attacks():
-            #     attack(page, client, log)
+            for attack in all_attacks():
+                attack(page, client, log)
 
 
     except KeyboardInterrupt:
